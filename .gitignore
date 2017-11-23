@@ -1,0 +1,6 @@
+.vim/bundle
+
+.emacs.d/*
+!.emacs.d/init.el
+
+.DS_Store
