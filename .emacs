@@ -52,7 +52,10 @@
 		     etags-select
 		     rust-mode
 		     racer
-		     popwin))
+		     popwin
+		     coffee-mode
+		     slim-mode
+		     sass-mode))
 
 ; install the missing packages
 (dolist (package package-list)
@@ -62,7 +65,7 @@
 ;; --- End of Melpa ---
 
 ;; Custom Emacs Variables
-(set-default-font "Monaco 15" nil t)
+(set-default-font "Monaco 14" nil t)
 ;; (set-default-font "Fira Code 14" nil t)
 
 ;; aliases
@@ -104,12 +107,13 @@
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(global-ede-mode t)
  '(hl-sexp-background-color "#efebe9")
+ '(kaolin-hl-line-colored t)
  '(nrepl-message-colors
    (quote
     ("#183691" "#969896" "#a71d5d" "#969896" "#0086b3" "#795da3" "#a71d5d" "#969896")))
  '(package-selected-packages
    (quote
-    (protobuf-mode yaml-mode rebecca-theme popwin markdown-mode+ markdown-mode github-theme color-theme-sanityinc-tomorrow evil-magit magit evil-org dumb-jump evil-nerd-commenter etags-select fzf general counsel-projectile projectile-rails counsel swiper projectile helpful ivy robe company-mode discover-my-major ibuffer-vc expand-region company racer rust-mode rg evil-leader project-explorer material-theme dired-subtree evil-goggles neotree all-the-icons-dired all-the-icons ace-window enh-ruby-mode)))
+    (slim-mode sass-mode coffee-mode protobuf-mode yaml-mode rebecca-theme popwin markdown-mode+ markdown-mode github-theme color-theme-sanityinc-tomorrow evil-magit magit evil-org dumb-jump evil-nerd-commenter etags-select fzf general counsel-projectile projectile-rails counsel swiper projectile helpful ivy robe company-mode discover-my-major ibuffer-vc expand-region company racer rust-mode rg evil-leader project-explorer material-theme dired-subtree evil-goggles neotree all-the-icons-dired all-the-icons ace-window enh-ruby-mode)))
  '(pdf-view-midnight-colors (quote ("#969896" . "#f8eec7")))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
@@ -260,8 +264,16 @@
 (require 'popwin)
 (popwin-mode t)
 
+;; Yaml mode
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml.j2\\'" . yaml-mode))
+
+;; fix all whitespace problems
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
+;; 
+(require 'mode-local)
+(defvar-mode-local enh-ruby-mode projectile-tags-command "ripper-tags -R --exclude=node_modules --emacs")
 
 ;; ~ Keybindings setup ~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 (require 'general)
@@ -309,6 +321,3 @@
 (evil-ex-define-cmd "ls" 'ibuffer)
 
 ;; ~ Keybindings setup ~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(require 'mode-local)
-(defvar-mode-local enh-ruby-mode projectile-tags-command "ripper-tags -R --exclude=node_modules --emacs")
