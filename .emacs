@@ -6,7 +6,7 @@
 
 ; list the repositories containing them
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")))
+			 ("melpa" . "http://melpa.org/packages/")))
 
 (package-initialize)
 ; fetch the list of packages available (unless package-archive-contents (package-refresh-contents))
@@ -17,8 +17,8 @@
 		     which-key
 		     dumb-jump
 		     all-the-icons
-                     all-the-icons-dired
-                     ace-window
+		     all-the-icons-dired
+		     ace-window
 		     neotree
 		     markdown-mode
 		     markdown-mode+
@@ -44,7 +44,7 @@
 		     fzf
 		     projectile
 		     projectile-rails
-		     counsel-projectile 
+		     counsel-projectile
 		     rg
 		     robe
 		     enh-ruby-mode
@@ -55,7 +55,9 @@
 		     popwin
 		     coffee-mode
 		     slim-mode
-		     sass-mode))
+		     sass-mode
+		     alchemist
+		     smart-tabs-mode))
 
 ; install the missing packages
 (dolist (package package-list)
@@ -82,11 +84,28 @@
   (setq mac-command-modifier 'meta))
 
 ; backup settings
-; TODO: enable backup
-(setq make-backup-files nil ; backup a file the first time it is saved
+(setq backup-directory-alist '(("." . "~/.emacs-backup"))
+      make-backup-files t ; backup a file the first time it is saved
       backup-by-copying t
       version-control t
       delete-old-versions t)
+
+; auto-save files
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+; smart tab
+(autoload 'smart-tabs-mode "smart-tabs-mode"
+  "Intelligently indent with tabs, align with spaces!")
+(autoload 'smart-tabs-mode-enable "smart-tabs-mode")
+(autoload 'smart-tabs-advice "smart-tabs-mode")
+(autoload 'smart-tabs-insinuate "smart-tabs-mode")
+
+(smart-tabs-insinuate 'c 'c++ 'java 'javascript 'cperl 'python
+		      'ruby 'nxml)
+
 
 ; disable scrollbars
 (scroll-bar-mode 0)
@@ -113,7 +132,7 @@
     ("#183691" "#969896" "#a71d5d" "#969896" "#0086b3" "#795da3" "#a71d5d" "#969896")))
  '(package-selected-packages
    (quote
-    (slim-mode sass-mode coffee-mode protobuf-mode yaml-mode rebecca-theme popwin markdown-mode+ markdown-mode github-theme color-theme-sanityinc-tomorrow evil-magit magit evil-org dumb-jump evil-nerd-commenter etags-select fzf general counsel-projectile projectile-rails counsel swiper projectile helpful ivy robe company-mode discover-my-major ibuffer-vc expand-region company racer rust-mode rg evil-leader project-explorer material-theme dired-subtree evil-goggles neotree all-the-icons-dired all-the-icons ace-window enh-ruby-mode)))
+    (smart-tabs-mode smart-tab-mode alchemist slim-mode sass-mode coffee-mode protobuf-mode yaml-mode rebecca-theme popwin markdown-mode+ markdown-mode github-theme color-theme-sanityinc-tomorrow evil-magit magit evil-org dumb-jump evil-nerd-commenter etags-select fzf general counsel-projectile projectile-rails counsel swiper projectile helpful ivy robe company-mode discover-my-major ibuffer-vc expand-region company racer rust-mode rg evil-leader project-explorer material-theme dired-subtree evil-goggles neotree all-the-icons-dired all-the-icons ace-window enh-ruby-mode)))
  '(pdf-view-midnight-colors (quote ("#969896" . "#f8eec7")))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
@@ -213,7 +232,7 @@
 ;; enh-ruby-mode
 (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 (add-to-list 'auto-mode-alist
-             '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
+	     '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
 (setq enh-ruby-add-encoding-comment-on-save nil)
 (setq ruby-insert-encoding-magic-comment nil)
@@ -271,7 +290,7 @@
 ;; fix all whitespace problems
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-;; 
+;;
 (require 'mode-local)
 (defvar-mode-local enh-ruby-mode projectile-tags-command "ripper-tags -R --exclude=node_modules --emacs")
 
@@ -301,7 +320,7 @@
 (general-define-key :prefix project-leader
 		    "f" 'projectile-find-file
 		    "r" 'rg-project
-		    "d" 'fzf-projectile 
+		    "d" 'fzf-projectile
 		    "p" '(:keymap projectile-command-map :package projectile))
 
 (general-define-key :keymaps 'global
