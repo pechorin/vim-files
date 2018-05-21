@@ -17,20 +17,19 @@ filetype off
 call plug#begin('~/.vim/bundle') " vim plug
 " === Common plugins
 Plug 'scrooloose/nerdtree'
-Plug 'kien/ctrlp.vim'
 " Plug 'kana/vim-smartinput'
 Plug 'tpope/vim-commentary'
-Plug 'mileszs/ack.vim'
-Plug 'tyok/nerdtree-ack'
 Plug 'ervandew/supertab'
 Plug 'vim-scripts/CursorLineCurrentWindow'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
 Plug 'janko-m/vim-test'
 Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-projectionist'
 Plug 'jremmen/vim-ripgrep'
 Plug 'racer-rust/vim-racer'
+Plug 'junegunn/vim-easy-align'
+Plug 'eugen0329/vim-esearch'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " === Language support
 Plug 'rust-lang/rust.vim'
@@ -46,6 +45,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'slim-template/vim-slim'
 Plug 'mitsuhiko/jinja2'
+Plug 'elixir-editors/vim-elixir'
+Plug 'slashmili/alchemist.vim'
+Plug 'kchmck/vim-coffee-script'
+
 
 " === Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
@@ -53,6 +56,16 @@ Plug 'crusoexia/vim-dream'
 Plug 'raphamorim/lucario', {'rtp' : 'vim' }
 Plug 'thinkpixellab/flatland', {'rtp' : 'Vim/'}
 Plug 'hzchirs/vim-material'
+Plug 'rakr/vim-one'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'nanotech/jellybeans.vim'
+Plug 'dracula/vim'
+Plug 'dim13/smyck.vim'
+Plug 'rhysd/vim-color-spring-night'
+Plug 'jreybert/vimagit'
+Plug 'tpope/vim-fugitive'
+Plug 'nightsense/seabird'
+Plug 'andreypopp/vim-colors-plain'
 
 call plug#end()
 
@@ -116,7 +129,7 @@ set noswapfile      " no swap files
 
 " === GUI
 syntax on
-set guifont=Monaco:h13
+set guifont=Monaco:h14
 set guioptions-=T  " remove gui toolbar
 set guioptions-=l  " remove left-hand scrollbar
 set guioptions-=L  " remove left-hand scrollbar
@@ -138,9 +151,20 @@ let mapleader=","
 " === Ctrlp config
 let g:ctrlp_map = '<leader>m' " remap ctrlp call to <leader>m
 let g:ctrlp_dotfiles = 1      " don't scan .dot-folders
+let g:ctrlp_user_command = 'rg %s -i --files --no-heading'
+let g:ctrlp_use_caching = 0
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>n :CtrlPBufTag<CR>
 nmap <leader>v :CtrlPTag<CR>
+
+" ctrlp funky
+let g:ctrlp_funky_syntax_highlight = 1
+let g:ctrlp_funky_multi_buffers = 1
+let g:ctrlp_funky_ruby_rake_words = 1
+
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
 " === commentary.vim
 " just use <leader>c for comment/uncomment
@@ -207,13 +231,27 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ }
 
+" esearch
+let g:esearch = { 'adapter': 'rg', 'backend': 'vim8', 'out': 'qflist' }
+
 " Filetypes detection
 au BufNewFile,BufRead *.js.erb set filetype=javascript
 au BufNewFile,BufRead *.rs     set filetype=rust
 au BufNewFile,BufRead *.yml.j2 set filetype=yaml
+au BufNewFile,BufRead *.cjsx   set filetype=coffee
 
-set grepprg=rg\ --vimgrep
+" use rg
+set grepprg=rg\ --color=never
 
 " tags
-
 :hi CursorLine cterm=NONE
+
+"
+autocmd FileType yaml setlocal cursorcolumn
+autocmd FileType eruby.yaml setlocal cursorcolumn
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)

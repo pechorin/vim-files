@@ -122,6 +122,9 @@
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(beacon-color "#cc6666")
  '(custom-enabled-themes (quote (sanityinc-tomorrow-eighties)))
+ '(enh-ruby-add-encoding-comment-on-save nil)
+ '(enh-ruby-bounce-deep-indent nil)
+ '(enh-ruby-deep-indent-paren nil)
  '(fci-rule-color "#ECEFF1")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(global-ede-mode t)
@@ -165,7 +168,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(erm-syn-errline ((t (:underline "red3"))))
+ '(erm-syn-warnline ((t (:underline "sienna2")))))
 ;; End of custom-set-variables ;;
 
 ;; UTF-8 as default encoding
@@ -237,6 +241,9 @@
 (setq enh-ruby-add-encoding-comment-on-save nil)
 (setq ruby-insert-encoding-magic-comment nil)
 (add-hook 'ruby-mode-hook 'robe-mode)
+
+;; simplier indent for ruby
+(setq ruby-deep-indent-paren nil)
 
 ;; rg.el (ripgrep)
 (rg-enable-default-bindings (kbd "M-s"))
