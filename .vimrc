@@ -1,10 +1,14 @@
-" This is my primary dev environment.
+" == This is my primary dev environment.
 "
 " - leader key mapped to ,
 " - plugins managment via VimPlug
 " - support unix-like hotkeys ctrl-a/e/k for command line
 " - open tab via 'CMD+t'
 " - '<leader>c' to comment/uncomment line
+
+" == External Dependencies
+"   brew install ripgrep
+"   gem install ripper_tags
 "
 " == CtrlP
 " <leader>m -> file browser
@@ -48,6 +52,10 @@ Plug 'mitsuhiko/jinja2'
 Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
 Plug 'kchmck/vim-coffee-script'
+
+" === Tags support
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
 
 
 " === Colorschemes
@@ -255,3 +263,26 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" Tags settings
+let g:gutentags_define_advanced_commands = 1
+let g:gutentags_ctags_executable_ruby = 'ruby-tags'
+
+" Tagbar settings
+map <leader>x :TagbarToggle<CR> 
+
+if executable('ripper-tags')
+  let g:tagbar_type_ruby = {
+      \ 'kinds'      : ['m:modules',
+                      \ 'c:classes',
+                      \ 'C:constants',
+                      \ 'F:singleton methods',
+                      \ 'f:methods',
+                      \ 'a:aliases'],
+      \ 'kind2scope' : { 'c' : 'class',
+                       \ 'm' : 'class' },
+      \ 'scope2kind' : { 'class' : 'c' },
+      \ 'ctagsbin'   : 'ripper-tags',
+      \ 'ctagsargs'  : ['-f', '-']
+      \ }
+endif

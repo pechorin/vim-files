@@ -1,0 +1,15 @@
+#!/bin/sh
+# this is wrapper for providing --apend option for ripper-tags (ruby tags generator) for combaility with ctags interface
+if [[ $* = *"--append"* ]]; then
+  cat ./tags \
+    | (cat && ripper-tags -R --ignore-unsupported-options -f - ${*/--append}) \
+    | grep -v '^!_' \
+    | sort \
+    > tags~ && mv tags~ tags
+else
+  ripper-tags $* -R --ignore-unsupported-options
+fi
+
+
+
+
