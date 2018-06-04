@@ -22,18 +22,20 @@ call plug#begin('~/.vim/bundle') " vim plug
 " === Common plugins
 Plug 'scrooloose/nerdtree'
 " Plug 'kana/vim-smartinput'
-Plug 'tpope/vim-commentary'
-Plug 'ervandew/supertab'
-Plug 'vim-scripts/CursorLineCurrentWindow'
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary' " comments via <leader>-c
+Plug 'ervandew/supertab'    " completion with tab
+Plug 'vim-scripts/CursorLineCurrentWindow' " each window has separate cursor
+Plug 'tpope/vim-surround'  
 Plug 'tpope/vim-dispatch'
-Plug 'janko-m/vim-test'
+Plug 'janko-m/vim-test'  
 Plug 'itchyny/lightline.vim'
-Plug 'jremmen/vim-ripgrep'
-Plug 'racer-rust/vim-racer'
+Plug 'jremmen/vim-ripgrep'  " fast grep via rust
+Plug 'racer-rust/vim-racer' 
 Plug 'junegunn/vim-easy-align'
-Plug 'eugen0329/vim-esearch'
+Plug 'eugen0329/vim-esearch' " serch in project and nerdtree with <leader>ff
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'jreybert/vimagit'
+Plug 'tpope/vim-fugitive'
 
 " === Language support
 Plug 'rust-lang/rust.vim'
@@ -57,23 +59,13 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
-
 " === Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
-Plug 'crusoexia/vim-dream'
-Plug 'raphamorim/lucario', {'rtp' : 'vim' }
 Plug 'thinkpixellab/flatland', {'rtp' : 'Vim/'}
 Plug 'hzchirs/vim-material'
-Plug 'rakr/vim-one'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'nanotech/jellybeans.vim'
-Plug 'dracula/vim'
-Plug 'dim13/smyck.vim'
-Plug 'rhysd/vim-color-spring-night'
-Plug 'jreybert/vimagit'
-Plug 'tpope/vim-fugitive'
-Plug 'nightsense/seabird'
-Plug 'andreypopp/vim-colors-plain'
+Plug 'endel/vim-github-colorscheme'
+Plug 'nightsense/office'
 
 call plug#end()
 
@@ -144,9 +136,8 @@ set guioptions-=L  " remove left-hand scrollbar
 " set guioptions+=a  " automatically add selected text in the VISUAL mode to system copy-paste buffer
  set guioptions-=e  " remove gui tabs
 
-set background=dark
-" :silent! colorscheme dream-light
-:silent! colorscheme vim-material
+set background=light
+:silent! colorscheme=github
 
 " === NERDTree
 let NERDTreeShowHidden=1
