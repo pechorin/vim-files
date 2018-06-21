@@ -18,8 +18,7 @@
 set nocompatible " be iMproved
 filetype off
 
-call plug#begin('~/.vim/bundle') " vim plug
-" === Common plugins
+call plug#begin('~/.vim/bundle') " vim plug " === Common plugins
 Plug 'scrooloose/nerdtree'
 " Plug 'kana/vim-smartinput'
 Plug 'tpope/vim-commentary' " comments via <leader>-c
@@ -54,18 +53,16 @@ Plug 'mitsuhiko/jinja2'
 Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
 Plug 'kchmck/vim-coffee-script'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " === Tags support
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar'
+" Plug 'ludovicchabant/vim-gutentags' " temp disabled
 
 " === Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
-Plug 'thinkpixellab/flatland', {'rtp' : 'Vim/'}
-Plug 'hzchirs/vim-material'
-Plug 'nanotech/jellybeans.vim'
 Plug 'endel/vim-github-colorscheme'
-Plug 'nightsense/office'
+Plug 'danilo-augusto/vim-afterglow'
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -137,7 +134,7 @@ set guioptions-=L  " remove left-hand scrollbar
  set guioptions-=e  " remove gui tabs
 
 set background=light
-:silent! colorscheme=github
+colorscheme afterglow
 
 " === NERDTree
 let NERDTreeShowHidden=1
@@ -258,22 +255,4 @@ nmap ga <Plug>(EasyAlign)
 " Tags settings
 let g:gutentags_define_advanced_commands = 1
 let g:gutentags_ctags_executable_ruby = 'ruby-tags'
-
-" Tagbar settings
-map <leader>x :TagbarToggle<CR> 
-
-if executable('ripper-tags')
-  let g:tagbar_type_ruby = {
-      \ 'kinds'      : ['m:modules',
-                      \ 'c:classes',
-                      \ 'C:constants',
-                      \ 'F:singleton methods',
-                      \ 'f:methods',
-                      \ 'a:aliases'],
-      \ 'kind2scope' : { 'c' : 'class',
-                       \ 'm' : 'class' },
-      \ 'scope2kind' : { 'class' : 'c' },
-      \ 'ctagsbin'   : 'ripper-tags',
-      \ 'ctagsargs'  : ['-f', '-']
-      \ }
-endif
+let g:gutentags_trace = 1
