@@ -36,6 +36,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-fugitive'
 
+" fzf
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
 " === Language support
 Plug 'rust-lang/rust.vim'
 Plug 'vim-ruby/vim-ruby'
@@ -62,7 +66,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
 Plug 'endel/vim-github-colorscheme'
 Plug 'danilo-augusto/vim-afterglow'
-Plug 'chriskempson/base16-vim'
+Plug 'fenetikm/falcon'
 
 call plug#end()
 
@@ -133,8 +137,10 @@ set guioptions-=L  " remove left-hand scrollbar
 " set guioptions+=a  " automatically add selected text in the VISUAL mode to system copy-paste buffer
  set guioptions-=e  " remove gui tabs
 
-set background=light
-colorscheme afterglow
+" set background=light
+" colorscheme afterglow
+set background=dark
+colorscheme falcon
 
 " === NERDTree
 let NERDTreeShowHidden=1
@@ -256,3 +262,6 @@ nmap ga <Plug>(EasyAlign)
 let g:gutentags_define_advanced_commands = 1
 let g:gutentags_ctags_executable_ruby = 'ruby-tags'
 let g:gutentags_trace = 1
+
+" FZF
+nmap <leader>q :Files<CR>
