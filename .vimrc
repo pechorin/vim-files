@@ -24,17 +24,22 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary' " comments via <leader>-c
 Plug 'ervandew/supertab'    " completion with tab
 Plug 'vim-scripts/CursorLineCurrentWindow' " each window has separate cursor
-Plug 'tpope/vim-surround'  
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
-Plug 'janko-m/vim-test'  
+Plug 'janko-m/vim-test'
 Plug 'itchyny/lightline.vim'
 Plug 'jremmen/vim-ripgrep'  " fast grep via rust
-Plug 'racer-rust/vim-racer' 
+Plug 'racer-rust/vim-racer'
 Plug 'junegunn/vim-easy-align'
 Plug 'eugen0329/vim-esearch' " serch in project and nerdtree with <leader>ff
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-fugitive'
+
+Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'uplus/deoplete-solargraph'
 
 " fzf
 Plug '/usr/local/opt/fzf'
@@ -58,6 +63,7 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'garyburd/go-explorer'
 
 " === Tags support
 " Plug 'ludovicchabant/vim-gutentags' " temp disabled
@@ -65,8 +71,10 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " === Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
 Plug 'endel/vim-github-colorscheme'
+Plug 'oguzbilgic/sexy-railscasts-theme'
 Plug 'danilo-augusto/vim-afterglow'
-Plug 'fenetikm/falcon'
+Plug 'jacoborus/tender.vim'
+Plug 'yous/vim-open-color'
 
 call plug#end()
 
@@ -137,10 +145,8 @@ set guioptions-=L  " remove left-hand scrollbar
 " set guioptions+=a  " automatically add selected text in the VISUAL mode to system copy-paste buffer
  set guioptions-=e  " remove gui tabs
 
-" set background=light
-" colorscheme afterglow
-set background=dark
-colorscheme falcon
+set background=light
+colorscheme open-color
 
 " === NERDTree
 let NERDTreeShowHidden=1
@@ -265,3 +271,10 @@ let g:gutentags_trace = 1
 
 " FZF
 nmap <leader>q :Files<CR>
+
+" seul
+let g:seoul256_background = 256
+let g:deoplete#enable_at_startup = 1
+
+" auto-remove trailing whitespaces
+autocmd BufWritePre * :%s/\s\+$//e
