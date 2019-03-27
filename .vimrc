@@ -33,13 +33,8 @@ Plug 'racer-rust/vim-racer'
 Plug 'junegunn/vim-easy-align'
 Plug 'eugen0329/vim-esearch' " serch in project and nerdtree with <leader>ff
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'jreybert/vimagit'
 Plug 'tpope/vim-fugitive'
-
-Plug 'Shougo/deoplete.nvim'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'uplus/deoplete-solargraph'
+Plug 'KryDos/dim-jump', { 'branch': 'krydos-adaptation' }
 
 " fzf
 Plug '/usr/local/opt/fzf'
@@ -65,16 +60,16 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'garyburd/go-explorer'
 
-" === Tags support
-" Plug 'ludovicchabant/vim-gutentags' " temp disabled
-
 " === Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
 Plug 'endel/vim-github-colorscheme'
 Plug 'oguzbilgic/sexy-railscasts-theme'
 Plug 'danilo-augusto/vim-afterglow'
-Plug 'jacoborus/tender.vim'
-Plug 'yous/vim-open-color'
+Plug 'phanviet/vim-monokai-pro'
+Plug 'nanotech/jellybeans.vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'liuchengxu/space-vim-theme'
+Plug 'drewtempelmeyer/palenight.vim'
 
 call plug#end()
 
@@ -143,10 +138,14 @@ set guioptions-=T  " remove gui toolbar
 set guioptions-=l  " remove left-hand scrollbar
 set guioptions-=L  " remove left-hand scrollbar
 " set guioptions+=a  " automatically add selected text in the VISUAL mode to system copy-paste buffer
- set guioptions-=e  " remove gui tabs
+set guioptions-=e  " remove gui tabs
 
-set background=light
-colorscheme open-color
+let ayucolor="light"  " for light version of theme
+" let ayucolor="mirage" " for mirage version of theme
+" let ayucolor="dark"   " for dark version of theme
+
+set background=dark
+colorscheme palenight
 
 " === NERDTree
 let NERDTreeShowHidden=1
@@ -226,18 +225,16 @@ au FileType javascript setl sw=4 sw=4 sts=4
 let g:vim_markdown_folding_disabled=1
 
 " vim-test mappings
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+" nmap <silent> <leader>t :TestNearest<CR>
+" nmap <silent> <leader>T :TestFile<CR>
+" nmap <silent> <leader>a :TestSuite<CR>
+" nmap <silent> <leader>l :TestLast<CR>
+" nmap <silent> <leader>g :TestVisit<CR>
+
+nmap <leader>g :DimJumpPos<CR>
+nmap <leader>t :tabnew<CR>
 
 let test#strategy = "dispatch"
-
-" lightline
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ }
 
 " esearch
 let g:esearch = { 'adapter': 'rg', 'backend': 'vim8', 'out': 'qflist' }
@@ -247,6 +244,7 @@ au BufNewFile,BufRead *.js.erb set filetype=javascript
 au BufNewFile,BufRead *.rs     set filetype=rust
 au BufNewFile,BufRead *.yml.j2 set filetype=yaml
 au BufNewFile,BufRead *.cjsx   set filetype=coffee
+au BufNewFile,BufRead *.arb	   set ft=ruby
 
 " use rg
 set grepprg=rg\ --color=never
@@ -264,17 +262,10 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" Tags settings
-let g:gutentags_define_advanced_commands = 1
-let g:gutentags_ctags_executable_ruby = 'ruby-tags'
-let g:gutentags_trace = 1
-
 " FZF
 nmap <leader>q :Files<CR>
 
-" seul
-let g:seoul256_background = 256
-let g:deoplete#enable_at_startup = 1
-
 " auto-remove trailing whitespaces
 autocmd BufWritePre * :%s/\s\+$//e
+
+au BufNewFile,BufRead * let b:preferred_searcher = 'rg'
