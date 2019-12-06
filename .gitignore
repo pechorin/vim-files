@@ -1,6 +1,8 @@
 .vim/bundle
+.vim/sessions/*
 
-.emacs.d/*
+.emacs_old*
+.emacs.d*
 !.emacs.d/init.el
 
 .DS_Store

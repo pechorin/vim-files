@@ -1,31 +1,15 @@
-# My Editor Environment (MyEE)
+Конфиги моего dev окружения на osx, содержит в себе:
 
-Простой скрипт для развертывания конфигов emacs и vim на любой osx машине.
+- кастомный vim/nvim
+- bash скрипты для установки homebrew, fzf, ripgrep, cask и тому подобных утилит
+- всякая другая dotfiles-чехарда
 
-## prerequirements
-ruby && homebrew
+Памятка для себя:
 
-## Как использовать
+```
+# создание симлинков для конфигов
+bash ./dotfiles_install.sh
 
-  ```
-  git clone <repo> my_ee
-  cd my_ee
- 
-  # установка редакторов && необходимых библиотек 
-  bash ./run.sh install_toolset
-  
-  # если хотим создать бекап текущих home dir/files редакторов
-  bash ./run.sh backup_home_dirs
-  
-  # создаем симлинки (предыдущии home dir/files будут удалены)
-  bash ./run.sh install_symlinks
- 
-  # чтобы синхроинизировать свежие обновления с репозиторием (будет делать git pull --rebase перед каждым пушем)
-  bash ./run.sh sync
-  ```
-
-## notes on emacs и vim
-В основном конфиги настроены для работы с ruby/rust/js
-
-- испольуем vim plug для менеджмента плагинов
-- для emacs используем melpa, установка пакетов происходит сразу после старта emacs
+# установка всего dev софта
+bash ./install.sh
+```

@@ -1,19 +1,4 @@
-" == This is my primary dev environment.
-"
-" - leader key mapped to ,
-" - plugins managment via VimPlug
-" - support unix-like hotkeys ctrl-a/e/k for command line
-" - open tab via 'CMD+t'
-" - '<leader>c' to comment/uncomment line
-
-" == External Dependencies
-"   brew install ripgrep
-"   gem install ripper_tags
-"
-" == CtrlP
-" <leader>m -> file browser
-" <leader>b -> buffer browser
-" <leader>n -> current buffer tag browser
+" == custom vimrc
 
 set nocompatible " be iMproved
 filetype off
@@ -22,7 +7,7 @@ call plug#begin('~/.vim/bundle') " vim plug " === Common plugins
 Plug 'scrooloose/nerdtree'
 " Plug 'kana/vim-smartinput'
 Plug 'tpope/vim-commentary' " comments via <leader>-c
-Plug 'ervandew/supertab'    " completion with tab
+" Plug 'ervandew/supertab'    " completion with tab
 Plug 'vim-scripts/CursorLineCurrentWindow' " each window has separate cursor
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dispatch'
@@ -32,9 +17,20 @@ Plug 'jremmen/vim-ripgrep'  " fast grep via rust
 Plug 'racer-rust/vim-racer'
 Plug 'junegunn/vim-easy-align'
 Plug 'eugen0329/vim-esearch' " serch in project and nerdtree with <leader>ff
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'KryDos/dim-jump', { 'branch': 'krydos-adaptation' }
+Plug 'romainl/vim-cool'
+" Plug 'KryDos/dim-jump', { 'branch': 'krydos-adaptation' }
+Plug '/Users/vorobey/work/dim-jump'
+" Plug '/Users/vorobey/work/vim-dumb-jump'
+Plug 'rhysd/git-messenger.vim'
+Plug 'Kraust/floater.nvim'
+Plug 'junegunn/goyo.vim'
+Plug 'liuchengxu/vim-which-key'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'jceb/vim-orgmode'
+Plug 'majutsushi/tagbar'
+Plug 'stephenway/postcss.vim'
 
 " fzf
 Plug '/usr/local/opt/fzf'
@@ -51,6 +47,7 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'slim-template/vim-slim'
 Plug 'mitsuhiko/jinja2'
@@ -59,17 +56,19 @@ Plug 'slashmili/alchemist.vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'garyburd/go-explorer'
+Plug 'wavded/vim-stylus'
 
 " === Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
-Plug 'endel/vim-github-colorscheme'
-Plug 'oguzbilgic/sexy-railscasts-theme'
-Plug 'danilo-augusto/vim-afterglow'
-Plug 'phanviet/vim-monokai-pro'
-Plug 'nanotech/jellybeans.vim'
-Plug 'ayu-theme/ayu-vim'
-Plug 'liuchengxu/space-vim-theme'
-Plug 'drewtempelmeyer/palenight.vim'
+Plug 'hzchirs/vim-material'
+Plug 'jacoborus/tender.vim'
+Plug 'rhysd/vim-color-spring-night'
+Plug 'KeitaNakamura/neodark.vim'
+Plug 'cormacrelf/vim-colors-github'
+Plug 'dracula/vim'
+Plug 'kjssad/quantum.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'NLKNguyen/papercolor-theme'
 
 call plug#end()
 
@@ -130,62 +129,51 @@ set undolevels=1000 " use many muchos levels of undo
 set nobackup        " no backup files
 set nowritebackup   " only in case you don't want a backup file while editing
 set noswapfile      " no swap files
+set timeoutlen=500
 
 " === GUI
 syntax on
-set guifont=Monaco:h14
+
+if has("nvim")
+else
+  set guifont=Monaco:h14
+endif
+
 set guioptions-=T  " remove gui toolbar
 set guioptions-=l  " remove left-hand scrollbar
 set guioptions-=L  " remove left-hand scrollbar
 " set guioptions+=a  " automatically add selected text in the VISUAL mode to system copy-paste buffer
-set guioptions-=e  " remove gui tabs
+" set guioptions-=e  " remove gui tabs
 
-let ayucolor="light"  " for light version of theme
-" let ayucolor="mirage" " for mirage version of theme
-" let ayucolor="dark"   " for dark version of theme
+" term options
+" set termguicolors
 
-set background=dark
-colorscheme palenight
+" theme options
+
+
+let g:material_style='oceanic'
+
+colorscheme Tomorrow
+
+" if has('gui_macvim')
+"   set background=light
+"   colorscheme macvim
+" else
+"   set background=light
+"   colorscheme macvim
+" endif
 
 " === NERDTree
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1 " Disables display of the 'Bookmarks' label and 'Press ? for help' text.
 let NERDTreeDirArrows=1 " Tells the NERD tree to use arrows instead of + ~ chars when displaying directories.
 
+" === remap ; to :
+nmap ; :
+
 " === leader key
 let mapleader=","
-
-" === Ctrlp config
-let g:ctrlp_map = '<leader>m' " remap ctrlp call to <leader>m
-let g:ctrlp_dotfiles = 1      " don't scan .dot-folders
-let g:ctrlp_user_command = 'rg %s -i --files --no-heading'
-let g:ctrlp_use_caching = 0
-nmap <leader>b :CtrlPBuffer<CR>
-nmap <leader>n :CtrlPBufTag<CR>
-nmap <leader>v :CtrlPTag<CR>
-
-" ctrlp funky
-let g:ctrlp_funky_syntax_highlight = 1
-let g:ctrlp_funky_multi_buffers = 1
-let g:ctrlp_funky_ruby_rake_words = 1
-
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-
-" === commentary.vim
-" just use <leader>c for comment/uncomment
-nmap <leader>c <Plug>CommentaryLine
-vmap <leader>c <Plug>Commentary
-
-" === tagbar.vim
-nmap <leader>t :TagbarToggle<CR>
-let g:tagbar_autoclose = 1
-let g:tagbar_autofocus = 1
-let g:tagbar_autoshowtag = 1
-let g:tagbar_sort = 0
-let g:tagbar_compact = 1
-let g:tagbar_show_visibility = 1
+let maplocalleader= "\\"
 
 " https://github.com/r00k/dotfiles/blob/master/vimrc
 " Disable that goddamn 'Entering Ex mode. Type 'visual' to go to Normal mode.'
@@ -199,15 +187,9 @@ cnoremap <C-A>      <Home>
 cnoremap <C-E>      <End>
 cnoremap <C-K>      <C-U>
 
-" Ctags for Markdown
-let g:tagbar_type_markdown = {
-	\ 'ctagstype' : 'markdown',
-	\ 'kinds' : [
-		\ 'h:Heading_L1',
-		\ 'i:Heading_L2',
-		\ 'k:Heading_L3'
-	\ ]
-\ }
+set shell=/bin/bash
+
+set complete=.,w,b,u,t,i
 
 " hamljs
 au BufNewFile,BufRead *.lmx set filetype=haml
@@ -219,7 +201,7 @@ au BufNewFile,BufRead *.lmx set filetype=haml
 let g:used_javascript_libs = 'underscore, backbone, angularjs'
 
 " js tab == 4 spaces
-au FileType javascript setl sw=4 sw=4 sts=4
+au FileType javascript setl sw=2 sw=2 sts=2
 
 " markdown
 let g:vim_markdown_folding_disabled=1
@@ -230,31 +212,54 @@ let g:vim_markdown_folding_disabled=1
 " nmap <silent> <leader>a :TestSuite<CR>
 " nmap <silent> <leader>l :TestLast<CR>
 " nmap <silent> <leader>g :TestVisit<CR>
+" let test#strategy = "dispatch"
 
-nmap <leader>g :DimJumpPos<CR>
-nmap <leader>t :tabnew<CR>
-
-let test#strategy = "dispatch"
+"  ruby
+let ruby_operators        = 1
+let ruby_pseudo_operators = 1
 
 " esearch
-let g:esearch = { 'adapter': 'rg', 'backend': 'vim8', 'out': 'qflist' }
+if has('nvim')
+  let g:esearch = { 'adapter': 'rg', 'backend': 'nvim', 'out': 'qflist' }
+else
+  let g:esearch = { 'adapter': 'rg', 'backend': 'vim8', 'out': 'qflist' }
+endif
 
-" Filetypes detection
-au BufNewFile,BufRead *.js.erb set filetype=javascript
+" Customize fzf colors to match your color scheme
+" let g:fzf_colors =
+" \ { 'fg':      ['fg', 'Normal'],
+"   \ 'bg':      ['bg', 'Normal'],
+"   \ 'hl':      ['fg', 'Comment'],
+"   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+"   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+"   \ 'hl+':     ['fg', 'Statement'],
+"   \ 'info':    ['fg', 'PreProc'],
+"   \ 'border':  ['fg', 'Ignore'],
+"   \ 'prompt':  ['fg', 'Conditional'],
+"   \ 'pointer': ['fg', 'Exception'],
+"   \ 'marker':  ['fg', 'Keyword'],
+"   \ 'spinner': ['fg', 'Label'],
+"   \ 'header':  ['fg', 'Comment'] }
+
+
+" Filetypes detection au BufNewFile,BufRead *.js.erb set filetype=javascript
 au BufNewFile,BufRead *.rs     set filetype=rust
 au BufNewFile,BufRead *.yml.j2 set filetype=yaml
 au BufNewFile,BufRead *.cjsx   set filetype=coffee
+au BufNewFile,BufRead *.pcss   set filetype=postcss
 au BufNewFile,BufRead *.arb	   set ft=ruby
 
 " use rg
 set grepprg=rg\ --color=never
 
-" tags
 :hi CursorLine cterm=NONE
 
-"
+" pretty colymn hi for yaml modes
 autocmd FileType yaml setlocal cursorcolumn
 autocmd FileType eruby.yaml setlocal cursorcolumn
+
+" custom types autocmd mappinngs
+autocmd FileType nasm setlocal commentstring=;\ %s
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -262,10 +267,266 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" FZF
-nmap <leader>q :Files<CR>
-
 " auto-remove trailing whitespaces
 autocmd BufWritePre * :%s/\s\+$//e
 
-au BufNewFile,BufRead * let b:preferred_searcher = 'rg'
+" config prefered searcher for DimJump
+autocmd BufNewFile,BufRead * let b:preferred_searcher = 'rg'
+
+" for alternative Gemfiles
+autocmd BufNewFile,BufRead Gemfile_* let &filetype = 'ruby'
+
+" Start terminal in insert mode
+autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+
+
+if has("nvim")
+  " == cool popup from nvim 0.4
+  set wildoptions=pum
+  set pumblend=8
+  set inccommand=nosplit
+
+  " set floatblend=8
+
+  " == Floating FZF
+
+  " Reverse the layout to make the FZF list top-down
+  " let $FZF_DEFAULT_OPTS='--layout=reverse'
+
+  " Using the custom window creation function
+  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+  " Function to create the custom floating window
+  function! FloatingFZF()
+    " creates a scratch, unlisted, new, empty, unnamed buffer
+    " to be used in the floating window
+    let buf = nvim_create_buf(v:false, v:true)
+
+    " 90% of the height
+    let height = float2nr(&lines * 0.7)
+    " 60% of the height
+    let width = float2nr(&columns * 0.5)
+    " horizontal position (centralized)
+    let horizontal = float2nr((&columns - width) / 2)
+    " vertical position (one line down of the top)
+    let vertical = 2
+
+    let opts = {
+          \ 'relative': 'editor',
+          \ 'row': vertical,
+          \ 'col': horizontal,
+          \ 'width': width,
+          \ 'height': height
+          \ }
+
+    " open the new window, floating, and enter to it
+    call nvim_open_win(buf, v:true, opts)
+  endfunction
+endif
+
+let g:CoolTotalMatches = 1
+
+
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste', 'gutentags', 'method' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \   'gutentags': "gutentags#statusline"
+      \ },
+      \ }
+
+
+" --- Tags
+
+augroup MyGutentagsStatusLineRefresher
+    autocmd!
+    autocmd User GutentagsUpdating call lightline#update()
+    autocmd User GutentagsUpdated call lightline#update()
+augroup END
+
+let g:gutentags_define_advanced_commands = 1
+" let g:gutentags_trace = 1
+
+let g:gutentags_ctags_exclude = ['*.js', '*.jsx', '*.coffee', '*.js.erb', 'node_modules']
+
+" if executable('rg')
+"   let g:gutentags_file_list_command = 'rg --files'
+" end
+
+
+" --- Material theme different configs ---
+" TODO: add functions for each type of theme
+
+" Dark
+" set background=dark
+" colorscheme vim-material
+
+" Palenight
+" let g:material_style='palenight'
+" set background=dark
+" colorscheme vim-material
+
+" Oceanic
+" let g:material_style='oceanic'
+" set background=dark
+" colorscheme vim-material
+
+" Light
+" set background=light
+" colorscheme vim-material
+
+
+" --- Custom bindings ---
+
+" Buffers lists
+nmap <leader>b :Buffers<CR>
+
+" Open NERDTree for pwd
+nmap <leader>n :NERDTree<CR>
+
+" Open NERDTree for %
+nmap <leader>N :NERDTree %<CR>
+
+" comment line
+nmap <leader>c <Plug>CommentaryLine
+
+" comment block in visual mode
+vmap <leader>c <Plug>Commentary
+
+" open $MYVIMRC
+map <leader>ev :vsplit ~/.vimrc <CR>
+
+" eval current buffer (for dev testing)
+map <leader>ee :so % <CR>
+
+" FZF files for pwd
+nmap <leader>q :Files<CR>
+
+" fast helptags with FZF
+map <leader>sh :Helptags <CR>
+
+" fast theme switching
+map <leader>st :Color <CR>
+
+" map <leader>sx :Tags <CR>
+
+" new tab
+map <leader>T :tabnew<CR>
+
+" jump to definition
+nmap <leader>fd :DimJumpPos<CR>
+
+" map ESC for enter to normal mode inside terminal
+" tmap <ESC> <C-\><C-n>
+
+" - terminal keys -
+
+" improved keyboard support for navigation (especially terminal)
+" https://neovim.io/doc/user/nvim_terminal_emulator.html
+" tnoremap <Esc> <C-\><C-n>
+
+nnoremap <silent> <leader>tt :terminal<CR>I
+nnoremap <silent> <leader>tv :vnew<CR>:terminal<CR>I
+nnoremap <silent> <leader>tn :new<CR>:terminal<CR>I
+nnoremap <silent> <leader>ts :new<CR>:terminal<CR> :res 15<CR>I
+
+function! s:tags_sink(line)
+  let parts = split(a:line, '\t\zs')
+  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+  execute 'silent e' parts[1][:-2]
+  let [magic, &magic] = [&magic, 0]
+  execute excmd
+  let &magic = magic
+endfunction
+
+function! s:project_tags()
+call fzf#run({
+  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+  \            '| grep -v -a ^!',
+  \ 'options': '+m -d "\t"',
+  \ 'sink':    function('s:tags_sink'),
+  \ 'window': 'call FloatingFZF()'
+  \ })
+endfunction
+
+command! ProjectTags call s:project_tags()
+
+map <leader>sx :ProjectTags <CR>
+
+
+" --- LeaderGuider ---
+let g:which_key_map = {}
+
+let g:which_key_map.s = {
+      \ 'name' : '+select'
+      \ }
+
+let g:which_key_map.g = {
+      \ 'name': '+git'
+      \ }
+
+let g:which_key_map.e = {
+      \ 'name': '+eval',
+      \ 'v': [ "v", "vsplit ~/.vimrc" ],
+      \ 'e': [ "e", "eval current buffer" ]
+      \ }
+
+let g:which_key_map.f = {
+      \ 'name': '+find',
+      \ 'd': [ 'd', 'jump to definition' ],
+      \ 'f': [ 'f', 'run Esearch' ],
+      \ 'w': [ 'w', 'Esearch word under cursor' ],
+      \ }
+
+let g:which_key_map.t = {
+      \ 'name': '+terminal',
+      \ 't': [ "t", "terminal window" ],
+      \ 'v': [ "v", "terminal in VSplit" ],
+      \ 'n': [ "n", "terminal in Split" ]
+      \ }
+
+let g:which_key_map.z = [ 'z', 'zoom current buffer' ]
+
+call which_key#register(',', "g:which_key_map")
+
+" I don't use leader guide as primary tool,
+" but it's okay for help purpose.
+" Leader Bindings-map can be shown by typing `<leader>w`
+" or W for localleader mappings.
+nnoremap <silent> <leader>w      :<c-u>WhichKey ','<CR>
+nnoremap <silent> <localleader>W :<c-u>WhichKey '\\'<CR>
+
+" --- Custom scripts ---
+
+" source /Users/vorobey/my_ee/test.vim
+
+" --- coc.nvim
+let g:coc_node_path = $HOME . '/n/bin/node'
+call coc#config("npm.binPath", ($HOME . "/n/bin/npm"))
+" call coc#config("tsserver.npm", ($HOME . "/n/bin/npm"))
+
+" " use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+let g:ruby_host_prog = '/usr/local/Cellar/ruby/2.6.5/bin/ruby'
+
+let g:goyo_width = 100
+let g:goyo_height = 100
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" TODO: move this kind of home dirs conig to separate file
+
