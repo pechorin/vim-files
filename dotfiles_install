@@ -3,7 +3,10 @@ source ./helpers
 
 DOTFILES=(".vim" ".vimrc" ".ackrc" ".ctags" ".emacs")
 DOT_FILES_DIR="dotfiles"
+
 GOOGLE_DISK_ORGS="$HOME/Google Диск/orgs"
+GOOGLE_DISK_POSTS="$HOME/Google Диск/posts"
+SYMLINK_DIRS=("$GOOGLE_DISK_ORGS" "$GOOGLE_DISK_POSTS")
 
 echo_ok "Creating symlinks"
 
@@ -22,12 +25,18 @@ do
   fi
 done
 
+for i in ${!SYMLINK_DIRS[@]}
+do
+  item="${SYMLINK_DIRS[i]}"
 
-if [ -d "${GOOGLE_DISK_ORGS}" ]; then
-  echo_warn "creating symlink: ~/orgs from ${GOOGLE_DISK_ORGS}"
+  if [ -d "${item}" ]; then
+    target_folder="$(basename "$item")"
 
-  rm -rf ~/orgs;
-  ln -s "${GOOGLE_DISK_ORGS}" "${HOME}/orgs"
-fi
+    echo_warn "creating symlink: ~/$target_folder from $item"
+
+    rm -rf "$HOME/$target_folder";
+    ln -s "$GOOGLE_DISK_ORGS" "$HOME/$target_folder"
+  fi
+done
 
 # mkdir ~/.config
