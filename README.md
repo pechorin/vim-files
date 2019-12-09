@@ -8,8 +8,8 @@
 
 ```
 # создание симлинков для конфигов
-bash ./dotfiles_install.sh
+bash ./dotfiles_install
 
 # установка всего dev софта
-bash ./install.sh
+bash ./install
 ```
