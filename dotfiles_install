@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+source ./helpers
+
+DOTFILES=(".vim" ".vimrc" ".ackrc" ".ctags" ".emacs")
+DOT_FILES_DIR="dotfiles"
+GOOGLE_DISK_ORGS="$HOME/Google Диск/orgs"
+
+echo_ok "Creating symlinks"
+
+for item in ${DOTFILES[*]}
+do
+  target="${HOME}/${DOT_FILES_DIR}/${item}"
+
+  if [ -e $target ]
+  then
+      echo_warn "creating symlink: ${HOME}${item}"
+
+      original_source="${HOME}/${item}"
+
+      rm -rf $original_source
+      ln -s $target $original_source
+  fi
+done
+
+
+if [ -d "${GOOGLE_DISK_ORGS}" ]; then
+  echo_warn "creating symlink: ~/orgs from ${GOOGLE_DISK_ORGS}"
+
+  rm -rf ~/orgs;
+  ln -s "${GOOGLE_DISK_ORGS}" "${HOME}/orgs"
+fi
+
+# mkdir ~/.config

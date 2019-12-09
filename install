@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
-
-# helpers
-function echo_ok() { echo -e '\033[1;32m'"$1"'\033[0m'; }
-function echo_warn() { echo -e '\033[1;33m'"$1"'\033[0m'; }
-function echo_error() { echo -e '\033[1;31mERROR: '"$1"'\033[0m'; }
+source ./helpers
 
 echo_ok "Install starting. You may be asked for your password (for sudo)."
 
@@ -30,26 +26,26 @@ brew install cask
 brew cleanup
 brew tap caskroom/cask
 
-# CASKS=(
-# 	adobe-acrobat-reader
-# 	cakebrew
-# 	calibre
-# 	docker
-# 	google-chrome
-# 	iterm2
-# 	macvim
-# 	textmate
-# 	qbittorrent
-# 	skitch
-# 	skype
-# 	slack
-# 	sourcetree
-# 	sublime-text
-# 	vlc
-# )
+CASKS=(
+	adobe-acrobat-reader
+	cakebrew
+	calibre
+	docker
+	google-chrome
+	iterm2
+	macvim
+	textmate
+	qbittorrent
+	skitch
+	skype
+	slack
+	sourcetree
+	sublime-text
+	vlc
+)
 
-# echo_ok "Installing cask apps..."
-# brew cask install "${CASKS[@]}"
+echo_ok "Installing cask apps..."
+brew cask install "${CASKS[@]}"
 
 echo_ok "Installing fonts..."
 brew tap caskroom/fonts

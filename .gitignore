@@ -3,6 +3,8 @@
 
 .emacs_old*
 .emacs.d*
+.#*
+#*
 !.emacs.d/init.el
 
 .DS_Store
