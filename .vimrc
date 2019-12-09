@@ -91,7 +91,7 @@ set title          " change the terminal's title
 
 set visualbell     " Use visual bell instead of beeping
 
-set scrolloff=999  " makes vim centered like a iA Writer
+set scrolloff=15  " makes vim centered like a iA Writer
 set showtabline=1  " display tabline only if where is more then one tab
 
 set linebreak      "
