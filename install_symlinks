@@ -2,11 +2,17 @@
 DOTFILES_DIR="$HOME/dotfiles"
 source "$DOTFILES_DIR/helpers"
 
-# Symlinks sources
-DOTFILES=(".vim" ".vimrc" ".ackrc" ".ctags" ".emacs")
-GOOGLE_DISK_ORGS="$HOME/Google Диск/orgs"
-GOOGLE_DISK_POSTS="$HOME/Google Диск/posts"
-SYMLINK_DIRS=("$GOOGLE_DISK_ORGS" "$GOOGLE_DISK_POSTS")
+# Symlinks for dotfiles
+declare -a DOTFILES=(".vim"
+          ".vimrc"
+          ".ctags"
+          ".emacs")
+
+# Symlinks for folders
+declare -a SYMLINK_DIRS=("$HOME/Google Диск/orgs"
+              "$HOME/Google Диск/posts"
+              "$HOME/Google Drive/orgs"
+              "$HOME/Google Drive/posts")
 
 echo_ok "Creating symlinks"
 
@@ -29,13 +35,13 @@ for i in ${!SYMLINK_DIRS[@]}
 do
   item="${SYMLINK_DIRS[i]}"
 
-  if [ -d "${item}" ]; then
+  if [ -d "$item" ]; then
     target_folder="$(basename "$item")"
 
     echo_warn "symlinked: $HOME/$target_folder -> $item"
 
     rm -rf "$HOME/$target_folder";
-    ln -s "$GOOGLE_DISK_ORGS" "$HOME/$target_folder"
+    ln -s "$item" "$HOME/$target_folder"
   fi
 done
 
