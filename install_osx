@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-source ./helpers
+DOTFILES_DIR="$HOME/dotfiles"
+source "$DOTFILES_DIR/helpers"
 
 echo_ok "Install starting. You may be asked for your password (for sudo)."
 

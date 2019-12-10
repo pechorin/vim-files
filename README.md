@@ -1,15 +1,18 @@
-Конфиги моего dev окружения на osx, содержит в себе:
+Конфиги моего dev/server окружения на osx, содержит в себе:
 
 - кастомный vim/nvim
 - bash скрипты для установки homebrew, fzf, ripgrep, cask и тому подобных утилит
 - всякая другая dotfiles-чехарда
 
-Памятка для себя:
+Bash commands:
 
 ```
 # создание симлинков для конфигов
-bash ./dotfiles_install
+bash ~/dotfiles/install_symlinks
 
-# установка всего dev софта
-bash ./install
+# установка dev софта на osx тачке
+bash ~/dotfiles/install_osx
+
+# установка dev софта на server тачке
+bash ~/dotfiles/install_server
 ```

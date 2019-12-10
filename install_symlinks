@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-source ./helpers
+DOTFILES_DIR="$HOME/dotfiles"
+source "$DOTFILES_DIR/helpers"
 
+# Symlinks sources
 DOTFILES=(".vim" ".vimrc" ".ackrc" ".ctags" ".emacs")
-DOT_FILES_DIR="dotfiles"
-
 GOOGLE_DISK_ORGS="$HOME/Google Диск/orgs"
 GOOGLE_DISK_POSTS="$HOME/Google Диск/posts"
 SYMLINK_DIRS=("$GOOGLE_DISK_ORGS" "$GOOGLE_DISK_POSTS")
@@ -12,11 +12,11 @@ echo_ok "Creating symlinks"
 
 for item in ${DOTFILES[*]}
 do
-  target="${HOME}/${DOT_FILES_DIR}/${item}"
+  target="$DOTFILES_DIR/$item"
 
   if [ -e $target ]
   then
-      echo_warn "creating symlink: ${HOME}${item}"
+      echo_warn "symlinked: $HOME/${item} -> $target"
 
       original_source="${HOME}/${item}"
 
@@ -32,7 +32,7 @@ do
   if [ -d "${item}" ]; then
     target_folder="$(basename "$item")"
 
-    echo_warn "creating symlink: ~/$target_folder from $item"
+    echo_warn "symlinked: $HOME/$target_folder -> $item"
 
     rm -rf "$HOME/$target_folder";
     ln -s "$GOOGLE_DISK_ORGS" "$HOME/$target_folder"
