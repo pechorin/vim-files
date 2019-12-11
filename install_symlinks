@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 DOTFILES_DIR="$HOME/dotfiles"
 source "$DOTFILES_DIR/helpers"
 
