@@ -18,9 +18,11 @@ fi
 brew install bash bash-completion bash-git-prompt
 brew install git curl htop openssl
 
+brew install ripgrep # grep replacement
+brew install fd      # find replacement
+brew install exa     # ls replacement
+
 brew install fzf
-brew install ripgrep
-brew install fd
 brew install nvim --HEAD
 
 brew install cask

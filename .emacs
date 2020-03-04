@@ -9,29 +9,27 @@
 		     dumb-jump
 		     general ; for keybindings
 		     neotree
-		     markdown-mode
-		     markdown-mode+
+		     ;; markdown-mode
+		     ;; markdown-mode+
 		     evil
-		     evil-nerd-commenter
+		     ;; evil-nerd-commenter
 		     evil-org
 		     yaml-mode
 		     protobuf-mode
 		     helpful
-		     discover-my-major
-		     material-theme
+		     ;; material-theme
 		     color-theme-sanityinc-tomorrow
-		     github-theme
-		     kaolin-themes
-		     rebecca-theme
-		     ivy ; use Ivy instead of Ido
-		     swiper
-		     counsel
-		     fzf
-		     projectile
-		     projectile-rails
-		     counsel-projectile
-		     rg
-		     enh-ruby-mode
+		     ;; github-theme
+		     ;; kaolin-themes
+		     ;; rebecca-theme
+		     ;; ivy ; use Ivy instead of Ido
+		     ;; swiper
+		     ;; counsel
+		     ;; fzf
+		     ;; projectile
+		     ;; projectile-rails
+		     ;; counsel-projectile
+		     ;; enh-ruby-mode
 		     company
 		     slim-mode
 		     sass-mode
@@ -46,7 +44,10 @@
 ;; --- End of Melpa ---
 
 ;; Custom Emacs Variables
-(set-default-font "Monaco 14" nil t)
+;; (set-frame-font "Iosevka Light 15" nil t)
+(set-frame-font "Monaco 14" nil t)
+
+(global-visual-line-mode)
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 (defalias 'list-buffers 'ibuffer) ; always use ibuffer
@@ -84,18 +85,28 @@
 
 ;; Evil
 (evil-mode t)
-(setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes))
+;; (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes))
 
-(require 'evil-magit)
+(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
+
+;; (require 'evil-magit)
 
 ;; Ivy (instead of evil)
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
+;; (ivy-mode 1)
+;; (setq ivy-use-virtual-buffers t)
+;; (setq enable-recursive-minibuffers t)
 ;(global-set-key (kbd "C-c C-r") 'ivy-resume)
 ;(global-set-key (kbd "<f6>") 'ivy-resume)
 ;(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+;; (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 ;(global-set-key (kbd "<f1> f") 'counsel-describe-function)
 ;(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
 ;(global-set-key (kbd "<f1> l") 'counsel-find-library)
@@ -116,7 +127,7 @@
       neo-window-position 'left)
 
 ;; Projectile
-(projectile-mode)
+;; (projectile-mode)
 
 ;; enh-ruby-mode
 (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
@@ -125,13 +136,9 @@
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
 (setq enh-ruby-add-encoding-comment-on-save nil)
 (setq ruby-insert-encoding-magic-comment nil)
-(add-hook 'ruby-mode-hook 'robe-mode)
 
 ;; simplier indent for ruby
 (setq ruby-deep-indent-paren nil)
-
-;; rg.el (ripgrep)
-(rg-enable-default-bindings (kbd "M-s"))
 
 ;; evil org
 (require 'evil-org)
@@ -158,16 +165,6 @@
 (setq dumb-jump-selector 'ivy)
 (setq dumb-jump-force-searcher 'rg)
 
-;; Markdown
-(autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
-(autoload 'gfm-mode "markdown-mode"
-   "Major mode for editing GitHub Flavored Markdown files" t)
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-
 ;; Yaml mode
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml.j2\\'" . yaml-mode))
@@ -189,12 +186,24 @@
 		    "M-g i" 'dumb-jump-go-prompt
 		    "M-g x" 'dumb-jump-go-prefer-external
 		    "M-g z" 'dumb-jump-go-prefer-external-other-window)
+
+;; Org-mode
+(setq org-cycle-separator-lines 1)
+(setq org-directory "~/orgs")
+(setq org-agenda-files (list org-directory))
+(setq org-todo-keywords '((sequence "THINK" "TODO" "|" "DONE" "CANCEL")))
+(setq org-ellipsis "+")
+
+;; (define-key org-agenda-mode-map "k" 'org-agenda-previous-line)
+;; (define-key org-agenda-mode-map "j" 'org-agenda-next-line)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/orgs/dev.org"))))
+ '(package-selected-packages
+   '(yaml-mode which-key tablist smart-tabs-mode slim-mode sass-mode rg rebecca-theme protobuf-mode projectile-rails neotree material-theme markdown-mode+ kaolin-themes helpful github-theme general fzf evil-org evil-nerd-commenter evil-magit enh-ruby-mode dumb-jump discover-my-major counsel-projectile color-theme-sanityinc-tomorrow alchemist)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

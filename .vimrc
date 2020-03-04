@@ -19,16 +19,13 @@ Plug 'junegunn/vim-easy-align'
 Plug 'eugen0329/vim-esearch' " serch in project and nerdtree with <leader>ff
 Plug 'tpope/vim-fugitive'
 Plug 'romainl/vim-cool'
-" Plug 'KryDos/dim-jump', { 'branch': 'krydos-adaptation' }
-Plug '/Users/vorobey/work/dim-jump'
-" Plug '/Users/vorobey/work/vim-dumb-jump'
 Plug 'rhysd/git-messenger.vim'
 Plug 'Kraust/floater.nvim'
 Plug 'junegunn/goyo.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'jceb/vim-orgmode'
+Plug 'jceb/vim-orgmode'
 Plug 'majutsushi/tagbar'
 Plug 'stephenway/postcss.vim'
 
@@ -60,15 +57,15 @@ Plug 'wavded/vim-stylus'
 
 " === Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
-Plug 'hzchirs/vim-material'
-Plug 'jacoborus/tender.vim'
-Plug 'rhysd/vim-color-spring-night'
-Plug 'KeitaNakamura/neodark.vim'
-Plug 'cormacrelf/vim-colors-github'
-Plug 'dracula/vim'
-Plug 'kjssad/quantum.vim'
-Plug 'joshdick/onedark.vim'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'rakr/vim-one'
+Plug 'danilo-augusto/vim-afterglow'
+Plug 'KabbAmine/yowish.vim'
+Plug 'sainnhe/sonokai'
+Plug 'gilgigilgil/anderson.vim'
+Plug 'drewtempelmeyer/palenight.vim'
+
+" Plug 'pechorin/any-jump.vim'
+Plug '~/work/any-jump-nvim'
 
 call plug#end()
 
@@ -150,10 +147,7 @@ set guioptions-=L  " remove left-hand scrollbar
 
 " theme options
 
-
-let g:material_style='oceanic'
-
-colorscheme Tomorrow
+colorscheme palenight
 
 " if has('gui_macvim')
 "   set background=light
@@ -416,9 +410,9 @@ map <leader>st :Color <CR>
 
 " new tab
 map <leader>T :tabnew<CR>
+map <cmd>T :tabnew<CR>
 
-" jump to definition
-nmap <leader>fd :DimJumpPos<CR>
+map <leader>ee :so %<CR>
 
 " map ESC for enter to normal mode inside terminal
 " tmap <ESC> <C-\><C-n>
@@ -500,10 +494,6 @@ call which_key#register(',', "g:which_key_map")
 nnoremap <silent> <leader>w      :<c-u>WhichKey ','<CR>
 nnoremap <silent> <localleader>W :<c-u>WhichKey '\\'<CR>
 
-" --- Custom scripts ---
-
-" source /Users/vorobey/my_ee/test.vim
-
 " --- coc.nvim
 let g:coc_node_path = $HOME . '/n/bin/node'
 call coc#config("npm.binPath", ($HOME . "/n/bin/npm"))
@@ -528,5 +518,5 @@ let g:goyo_height = 100
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-" TODO: move this kind of home dirs conig to separate file
-
+" org-mode
+let g:org_agenda_files = ['~/orgs/*.org']
