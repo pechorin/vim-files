@@ -1,15 +1,17 @@
 " == custom vimrc
 
+let s:nvim = has('nvim')
+
 set nocompatible " be iMproved
 filetype off
 
 call plug#begin('~/.vim/bundle') " vim plug " === Common plugins
+
 Plug 'scrooloose/nerdtree'
-" Plug 'kana/vim-smartinput'
 Plug 'tpope/vim-commentary' " comments via <leader>-c
-" Plug 'ervandew/supertab'    " completion with tab
 Plug 'vim-scripts/CursorLineCurrentWindow' " each window has separate cursor
 Plug 'tpope/vim-surround'
+Plug 'itchyny/vim-cursorword'
 Plug 'tpope/vim-dispatch'
 Plug 'janko-m/vim-test'
 Plug 'itchyny/lightline.vim'
@@ -21,14 +23,23 @@ Plug 'tpope/vim-fugitive'
 Plug 'romainl/vim-cool'
 Plug 'rhysd/git-messenger.vim'
 Plug 'Kraust/floater.nvim'
-Plug 'junegunn/goyo.vim'
-Plug 'liuchengxu/vim-which-key'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'jceb/vim-orgmode'
 Plug 'majutsushi/tagbar'
-Plug 'stephenway/postcss.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'airblade/vim-gitgutter'
 
+" Plug 'kana/vim-smartinput'
+" Plug 'ervandew/supertab'    " completion with tab
+Plug 'ajh17/VimCompletesMe'
+"
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" future for for nvim 0.5:
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'mattn/vim-lsp-settings'
+"
 " fzf
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -54,16 +65,23 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'garyburd/go-explorer'
 Plug 'wavded/vim-stylus'
+Plug 'stephenway/postcss.vim'
 
 " === Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
-Plug 'rakr/vim-one'
 Plug 'danilo-augusto/vim-afterglow'
 Plug 'KabbAmine/yowish.vim'
 Plug 'sainnhe/sonokai'
-Plug 'gilgigilgil/anderson.vim'
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'lmintmate/blue-mood-vim'
+Plug 'phanviet/vim-monokai-pro'
+Plug 'joshdick/onedark.vim'
+Plug 'jpo/vim-railscasts-theme'
+Plug 'iCyMind/NeoSolarized'
+Plug 'aunsira/macvim-light'
+Plug 'kyoz/purify', { 'rtp': 'vim' }
 
+" Plugins i'm working on:
 " Plug 'pechorin/any-jump.vim'
 Plug '~/work/any-jump-nvim'
 
@@ -347,31 +365,9 @@ let g:gutentags_define_advanced_commands = 1
 
 let g:gutentags_ctags_exclude = ['*.js', '*.jsx', '*.coffee', '*.js.erb', 'node_modules']
 
-" if executable('rg')
-"   let g:gutentags_file_list_command = 'rg --files'
-" end
-
-
-" --- Material theme different configs ---
-" TODO: add functions for each type of theme
-
-" Dark
-" set background=dark
-" colorscheme vim-material
-
-" Palenight
-" let g:material_style='palenight'
-" set background=dark
-" colorscheme vim-material
-
-" Oceanic
-" let g:material_style='oceanic'
-" set background=dark
-" colorscheme vim-material
-
-" Light
-" set background=light
-" colorscheme vim-material
+if executable('rg')
+  let g:gutentags_file_list_command = 'rg --files'
+end
 
 
 " --- Custom bindings ---
@@ -406,13 +402,15 @@ map <leader>sh :Helptags <CR>
 " fast theme switching
 map <leader>st :Color <CR>
 
-" map <leader>sx :Tags <CR>
+map <leader>sx :Tags <CR>
 
 " new tab
 map <leader>T :tabnew<CR>
 map <cmd>T :tabnew<CR>
 
 map <leader>ee :so %<CR>
+
+map <leader>et :Tagbar<CR>
 
 " map ESC for enter to normal mode inside terminal
 " tmap <ESC> <C-\><C-n>
@@ -428,95 +426,35 @@ nnoremap <silent> <leader>tv :vnew<CR>:terminal<CR>I
 nnoremap <silent> <leader>tn :new<CR>:terminal<CR>I
 nnoremap <silent> <leader>ts :new<CR>:terminal<CR> :res 15<CR>I
 
-function! s:tags_sink(line)
-  let parts = split(a:line, '\t\zs')
-  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-  execute 'silent e' parts[1][:-2]
-  let [magic, &magic] = [&magic, 0]
-  execute excmd
-  let &magic = magic
-endfunction
-
-function! s:project_tags()
-call fzf#run({
-  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-  \            '| grep -v -a ^!',
-  \ 'options': '+m -d "\t"',
-  \ 'sink':    function('s:tags_sink'),
-  \ 'window': 'call FloatingFZF()'
-  \ })
-endfunction
-
-command! ProjectTags call s:project_tags()
-
-map <leader>sx :ProjectTags <CR>
-
-
-" --- LeaderGuider ---
-let g:which_key_map = {}
-
-let g:which_key_map.s = {
-      \ 'name' : '+select'
-      \ }
-
-let g:which_key_map.g = {
-      \ 'name': '+git'
-      \ }
-
-let g:which_key_map.e = {
-      \ 'name': '+eval',
-      \ 'v': [ "v", "vsplit ~/.vimrc" ],
-      \ 'e': [ "e", "eval current buffer" ]
-      \ }
-
-let g:which_key_map.f = {
-      \ 'name': '+find',
-      \ 'd': [ 'd', 'jump to definition' ],
-      \ 'f': [ 'f', 'run Esearch' ],
-      \ 'w': [ 'w', 'Esearch word under cursor' ],
-      \ }
-
-let g:which_key_map.t = {
-      \ 'name': '+terminal',
-      \ 't': [ "t", "terminal window" ],
-      \ 'v': [ "v", "terminal in VSplit" ],
-      \ 'n': [ "n", "terminal in Split" ]
-      \ }
-
-let g:which_key_map.z = [ 'z', 'zoom current buffer' ]
-
-call which_key#register(',', "g:which_key_map")
-
-" I don't use leader guide as primary tool,
-" but it's okay for help purpose.
-" Leader Bindings-map can be shown by typing `<leader>w`
-" or W for localleader mappings.
-nnoremap <silent> <leader>w      :<c-u>WhichKey ','<CR>
-nnoremap <silent> <localleader>W :<c-u>WhichKey '\\'<CR>
-
 " --- coc.nvim
+
+" explicitly set env
 let g:coc_node_path = $HOME . '/n/bin/node'
 call coc#config("npm.binPath", ($HOME . "/n/bin/npm"))
-" call coc#config("tsserver.npm", ($HOME . "/n/bin/npm"))
+call coc#config("tsserver.npm", ($HOME . "/n/bin/npm"))
 
-" " use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_coc_documentation()<CR>
 
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
+fu! s:show_coc_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfu
 
-let g:ruby_host_prog = '/usr/local/Cellar/ruby/2.6.5/bin/ruby'
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
-let g:goyo_width = 100
-let g:goyo_height = 100
+" --- gopls
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+let g:go_doc_popup_window = 1
 
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-
-" org-mode
+" --- org-mode
 let g:org_agenda_files = ['~/orgs/*.org']
+
+" --- any-jump.vim config
+let g:any_jump_ignored_files = ['*.tmp', '*.temp']
+let g:any_jump_search_prefered_engine = 'rg'
