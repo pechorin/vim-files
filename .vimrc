@@ -2,7 +2,14 @@
 
 let s:nvim = has('nvim')
 
-set nocompatible " be iMproved
+if !exists('s:profile_loads')
+  let s:profile_loads = 0
+endif
+
+if !s:nvim
+  set nocompatible " be iMproved
+endif
+
 filetype off
 
 call plug#begin('~/.vim/bundle') " vim plug " === Common plugins
@@ -35,11 +42,6 @@ Plug 'ajh17/VimCompletesMe'
 "
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" future for for nvim 0.5:
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'mattn/vim-lsp-settings'
-"
 " fzf
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -80,12 +82,19 @@ Plug 'jpo/vim-railscasts-theme'
 Plug 'iCyMind/NeoSolarized'
 Plug 'aunsira/macvim-light'
 Plug 'kyoz/purify', { 'rtp': 'vim' }
+Plug 'wadackel/vim-dogrun'
+Plug 'yasukotelin/shirotelin'
 
 " Plugins i'm working on:
 " Plug 'pechorin/any-jump.vim'
-Plug '~/work/any-jump-nvim'
+Plug '~/work/any-jump.vim'
 
 call plug#end()
+
+set updatetime=1000
+
+" Give more space for displaying messages.
+" set cmdheight=2
 
 filetype plugin indent on
 
@@ -149,8 +158,7 @@ set timeoutlen=500
 " === GUI
 syntax on
 
-if has("nvim")
-else
+if !has("nvim")
   set guifont=Monaco:h14
 endif
 
@@ -163,9 +171,10 @@ set guioptions-=L  " remove left-hand scrollbar
 " term options
 " set termguicolors
 
-" theme options
-
-colorscheme palenight
+" theme options, applied only first script load
+if s:profile_loads == 0
+  colorscheme palenight
+endif
 
 " if has('gui_macvim')
 "   set background=light
@@ -199,7 +208,9 @@ cnoremap <C-A>      <Home>
 cnoremap <C-E>      <End>
 cnoremap <C-K>      <C-U>
 
-set shell=/bin/bash
+if executable('/bin/zsh')
+  set shell=/bin/zsh\ -l
+end
 
 set complete=.,w,b,u,t,i
 
@@ -338,7 +349,6 @@ endif
 
 let g:CoolTotalMatches = 1
 
-
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -347,7 +357,7 @@ let g:lightline = {
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
-      \   'gutentags': "gutentags#statusline"
+      \   'gutentags': "gutentags#statusline",
       \ },
       \ }
 
@@ -428,15 +438,7 @@ nnoremap <silent> <leader>ts :new<CR>:terminal<CR> :res 15<CR>I
 
 " --- coc.nvim
 
-" explicitly set env
-let g:coc_node_path = $HOME . '/n/bin/node'
-call coc#config("npm.binPath", ($HOME . "/n/bin/npm"))
-call coc#config("tsserver.npm", ($HOME . "/n/bin/npm"))
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_coc_documentation()<CR>
-
-fu! s:show_coc_documentation()
+fu! g:ShowCocDocumentation() abort
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
@@ -444,13 +446,28 @@ fu! s:show_coc_documentation()
   endif
 endfu
 
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call g:ShowCocDocumentation()<CR>
+
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call g:ShowCocDocumentation()
 
 " --- gopls
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
-let g:go_doc_popup_window = 1
+
+let g:go_doc_popup_window                = 1
+let g:go_highlight_extra_types           = 1
+let g:go_highlight_operators             = 1
+let g:go_highlight_functions             = 1
+let g:go_highlight_function_parameters   = 1
+let g:go_highlight_function_calls        = 1
+let g:go_highlight_types                 = 1
+let g:go_highlight_fields                = 1
+let g:go_highlight_generate_tags         = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments  = 1
 
 " --- org-mode
 let g:org_agenda_files = ['~/orgs/*.org']
@@ -458,3 +475,6 @@ let g:org_agenda_files = ['~/orgs/*.org']
 " --- any-jump.vim config
 let g:any_jump_ignored_files = ['*.tmp', '*.temp']
 let g:any_jump_search_prefered_engine = 'rg'
+
+" --- end profile loading
+let s:profile_loads += 1
