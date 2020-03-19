@@ -1,9 +1,13 @@
-" == custom vimrc
+" == My custom vimscript
 
 let s:nvim = has('nvim')
 
 if !exists('s:profile_loads')
   let s:profile_loads = 0
+endif
+
+if s:profile_loads > 1
+  echo "reloading profile"
 endif
 
 if !s:nvim
@@ -12,20 +16,30 @@ endif
 
 filetype off
 
-call plug#begin('~/.vim/bundle') " vim plug " === Common plugins
+" initialize plugins
+call plug#begin('~/.vim/bundle')
+
+" === Common plugins
+
+" TODO: THINK: how to provide meta info about each plugin:
+"              - git repo
+"              - plugin category
+"              - keydings
+"              - description
+"              - init code
 
 Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-commentary' " comments via <leader>-c
-Plug 'vim-scripts/CursorLineCurrentWindow' " each window has separate cursor
+Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/CursorLineCurrentWindow'
 Plug 'tpope/vim-surround'
 Plug 'itchyny/vim-cursorword'
 Plug 'tpope/vim-dispatch'
 Plug 'janko-m/vim-test'
 Plug 'itchyny/lightline.vim'
-Plug 'jremmen/vim-ripgrep'  " fast grep via rust
+Plug 'jremmen/vim-ripgrep'
 Plug 'racer-rust/vim-racer'
 Plug 'junegunn/vim-easy-align'
-Plug 'eugen0329/vim-esearch' " serch in project and nerdtree with <leader>ff
+Plug 'eugen0329/vim-esearch'
 Plug 'tpope/vim-fugitive'
 Plug 'romainl/vim-cool'
 Plug 'rhysd/git-messenger.vim'
@@ -35,18 +49,19 @@ Plug 'jceb/vim-orgmode'
 Plug 'majutsushi/tagbar'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'airblade/vim-gitgutter'
-
-" Plug 'kana/vim-smartinput'
-" Plug 'ervandew/supertab'    " completion with tab
-Plug 'ajh17/VimCompletesMe'
-"
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" fzf
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
-" === Language support
+" NOTICE: if you prefer this kind of autocomplete plugins
+"         select which one you like:
+"
+" Plug 'kana/vim-smartinput'
+" Plug 'ervandew/supertab'
+Plug 'ajh17/VimCompletesMe'
+
+" === Languages
+
 Plug 'rust-lang/rust.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
@@ -277,6 +292,8 @@ set grepprg=rg\ --color=never
 
 :hi CursorLine cterm=NONE
 
+" TODO: add augroup custom?
+
 " pretty colymn hi for yaml modes
 autocmd FileType yaml setlocal cursorcolumn
 autocmd FileType eruby.yaml setlocal cursorcolumn
@@ -302,8 +319,14 @@ autocmd BufNewFile,BufRead Gemfile_* let &filetype = 'ruby'
 " Start terminal in insert mode
 autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
+" --- reload buffer on change
+augroup checktime
+    au!
+    autocmd BufEnter,CursorHold,CursorHoldI,CursorMoved,CursorMovedI,FocusGained,BufEnter,FocusLost,WinLeave * checktime
+augroup END
 
-if has("nvim")
+" TODO: implement vim support
+if s:nvim
   " == cool popup from nvim 0.4
   set wildoptions=pum
   set pumblend=8
@@ -349,6 +372,7 @@ endif
 
 let g:CoolTotalMatches = 1
 
+" --- Lightline settings
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -361,8 +385,7 @@ let g:lightline = {
       \ },
       \ }
 
-
-" --- Tags
+" --- Getuntags
 
 augroup MyGutentagsStatusLineRefresher
     autocmd!
@@ -379,8 +402,11 @@ if executable('rg')
   let g:gutentags_file_list_command = 'rg --files'
 end
 
-
 " --- Custom bindings ---
+
+" TODO: move to separate file?
+" THINK: add something like liderguide on emacs to do bindings and probide
+" documentation to which key?
 
 " Buffers lists
 nmap <leader>b :Buffers<CR>
@@ -471,6 +497,11 @@ let g:go_highlight_variable_assignments  = 1
 
 " --- org-mode
 let g:org_agenda_files = ['~/orgs/*.org']
+
+" --- ruby
+let g:ruby_operators        = 1
+let g:ruby_pseudo_operators = 1
+let g:ruby_no_expensive = 1
 
 " --- any-jump.vim config
 let g:any_jump_ignored_files = ['*.tmp', '*.temp']
