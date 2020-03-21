@@ -7,7 +7,7 @@ if !exists('s:profile_loads')
 endif
 
 if s:profile_loads > 1
-  echo "reloading profile"
+  echo "reloading profile " . string(s:profile_loads)
 endif
 
 if !s:nvim
@@ -28,6 +28,7 @@ call plug#begin('~/.vim/bundle')
 "              - description
 "              - init code
 
+" Plug 'skywind3000/asyncrun.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/CursorLineCurrentWindow'
@@ -191,14 +192,6 @@ if s:profile_loads == 0
   colorscheme palenight
 endif
 
-" if has('gui_macvim')
-"   set background=light
-"   colorscheme macvim
-" else
-"   set background=light
-"   colorscheme macvim
-" endif
-
 " === NERDTree
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1 " Disables display of the 'Bookmarks' label and 'Press ? for help' text.
@@ -229,28 +222,27 @@ end
 
 set complete=.,w,b,u,t,i
 
-" hamljs
+" === haml
 au BufNewFile,BufRead *.lmx set filetype=haml
 
-" some custome staff
-" autocmd FocusLost * :wa " Save on losing focus
-
-" javascript-libraries-syntax.vim
+" === javascript-libraries-syntax.vim
 let g:used_javascript_libs = 'underscore, backbone, angularjs'
 
-" js tab == 4 spaces
-au FileType javascript setl sw=2 sw=2 sts=2
-
-" markdown
+" === markdown
 let g:vim_markdown_folding_disabled=1
 
-" vim-test mappings
+" === vim-test
 " nmap <silent> <leader>t :TestNearest<CR>
-" nmap <silent> <leader>T :TestFile<CR>
 " nmap <silent> <leader>a :TestSuite<CR>
 " nmap <silent> <leader>l :TestLast<CR>
 " nmap <silent> <leader>g :TestVisit<CR>
-" let test#strategy = "dispatch"
+if s:nvim
+  let test#strategy = "neovim"
+  " let test#strategy = "terminal"
+  let test#neovim#term_position = "rightbelow 15"
+else
+  let test#neovim#term_position = "rightbelow"
+endif
 
 "  ruby
 let ruby_operators        = 1
@@ -297,6 +289,9 @@ set grepprg=rg\ --color=never
 " pretty colymn hi for yaml modes
 autocmd FileType yaml setlocal cursorcolumn
 autocmd FileType eruby.yaml setlocal cursorcolumn
+
+" js with 2 tabs - is ok
+autocmd FileType javascript setl sw=2 sw=2 sts=2
 
 " custom types autocmd mappinngs
 autocmd FileType nasm setlocal commentstring=;\ %s
@@ -408,45 +403,57 @@ end
 " THINK: add something like liderguide on emacs to do bindings and probide
 " documentation to which key?
 
+
+" ~ Navigation utilities mappings ~
+
 " Buffers lists
 nmap <leader>b :Buffers<CR>
 
-" Open NERDTree for pwd
+" Tagbar
+map <leader>et :Tagbar<CR>
+
+" NERDTree for current working dir
 nmap <leader>n :NERDTree<CR>
 
-" Open NERDTree for %
+" NERDTree for current file
 nmap <leader>N :NERDTree %<CR>
 
-" comment line
+
+" ~ Buffer functions mappings ~
+
+" comment current line
 nmap <leader>c <Plug>CommentaryLine
 
 " comment block in visual mode
 vmap <leader>c <Plug>Commentary
 
-" open $MYVIMRC
-map <leader>ev :vsplit ~/.vimrc <CR>
-
-" eval current buffer (for dev testing)
-map <leader>ee :so % <CR>
-
-" FZF files for pwd
-nmap <leader>q :Files<CR>
-
-" fast helptags with FZF
-map <leader>sh :Helptags <CR>
-
-" fast theme switching
-map <leader>st :Color <CR>
-
-map <leader>sx :Tags <CR>
+" run tests for current file
+nmap <silent> <leader>eT :TestFile<CR>
 
 " new tab
 map <leader>T :tabnew<CR>
 map <cmd>T :tabnew<CR>
 
+
+" ~ FZF mappings ~
+
+" current project files
+nmap <leader>q :Files<CR>
+
+" helptags
+map <leader>sh :Helptags <CR>
+
+" theme switcher
+map <leader>st :Color <CR>
+
+
+" ~ development mappings ~
+
+" eval current vimscrupt buffer
 map <leader>ee :so %<CR>
 
-map <leader>et :Tagbar<CR>
+" open $MYVIMRC
+map <leader>ev :vsplit ~/.vimrc <CR>
 
 " map ESC for enter to normal mode inside terminal
 " tmap <ESC> <C-\><C-n>
