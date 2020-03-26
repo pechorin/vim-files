@@ -122,17 +122,31 @@ Plug '~/work/any-jump.vim'
 
 call plug#end()
 
-set updatetime=1000
+" === External utils
 
-" Give more space for displaying messages.
-" set cmdheight=2
+" use rg
+if executable('rg')
+  set grepprg=rg\ --color=never
+else
+  echoe "Please install ripgrep"
+end
+
+" zsh
+if executable('/bin/zsh')
+  set shell=/bin/zsh\ -l
+end
 
 filetype plugin indent on
 
-" === Configurations
-" set nonumber         " display line numbers
-" set nonumber       " use <LINE_NUMBER>G to jump to <LINE_NUMBER> line
+" === Vim options
+
 set showmode       " always show what mode we're currently editing in
+
+" set completion options
+set complete=.,w,b,u,t,i
+
+" update interval
+set updatetime=1000
 
 set encoding=utf-8
 set fileencodings=utf-8,cp1251
@@ -207,54 +221,25 @@ if s:profile_loads == 0
   colorscheme palenight
 endif
 
-" === NERDTree
+" do not hl cursor in term
+hi CursorLine cterm=NONE
+
+" NERDTree
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1 " Disables display of the 'Bookmarks' label and 'Press ? for help' text.
 let NERDTreeDirArrows=1 " Tells the NERD tree to use arrows instead of + ~ chars when displaying directories.
 let NERDTreeIgnore=['\.git$']
 
-" === remap ; to :
-nmap ; :
 
-" === leader key
-let mapleader=","
-let maplocalleader= "\\"
-
-" https://github.com/r00k/dotfiles/blob/master/vimrc
-" Disable that goddamn 'Entering Ex mode. Type 'visual' to go to Normal mode.'
-" that I trigger 40x a day.
-map Q <Nop>
-" Disable K looking man stuff up
-" map K <Nop>
-
-" Bash like keys for the command line
-cnoremap <C-A>      <Home>
-cnoremap <C-E>      <End>
-cnoremap <C-K>      <C-U>
-
-if executable('/bin/zsh')
-  set shell=/bin/zsh\ -l
-end
-
-set complete=.,w,b,u,t,i
-
-" === haml
-au BufNewFile,BufRead *.lmx set filetype=haml
-
-" === javascript-libraries-syntax.vim
+" javascript-libraries-syntax.vim
 let g:used_javascript_libs = 'underscore, backbone, angularjs'
 
-" === markdown
+" markdown
 let g:vim_markdown_folding_disabled=1
 
-" === vim-test
-" nmap <silent> <leader>t :TestNearest<CR>
-" nmap <silent> <leader>a :TestSuite<CR>
-" nmap <silent> <leader>l :TestLast<CR>
-" nmap <silent> <leader>g :TestVisit<CR>
+" vim-test
 if s:nvim
   let test#strategy = "neovim"
-  " let test#strategy = "terminal"
   let test#neovim#term_position = "rightbelow 15"
 else
   let test#neovim#term_position = "rightbelow"
@@ -265,80 +250,63 @@ let ruby_operators        = 1
 let ruby_pseudo_operators = 1
 
 " esearch
-if has('nvim')
-  let g:esearch = { 'adapter': 'rg', 'backend': 'nvim', 'out': 'qflist' }
-else
-  let g:esearch = { 'adapter': 'rg', 'backend': 'vim8', 'out': 'qflist' }
-endif
+let g:esearch = { 'adapter': 'rg', 'backend': 'system', 'out': 'qflist' }
 
-" Customize fzf colors to match your color scheme
-" let g:fzf_colors =
-" \ { 'fg':      ['fg', 'Normal'],
-"   \ 'bg':      ['bg', 'Normal'],
-"   \ 'hl':      ['fg', 'Comment'],
-"   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-"   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-"   \ 'hl+':     ['fg', 'Statement'],
-"   \ 'info':    ['fg', 'PreProc'],
-"   \ 'border':  ['fg', 'Ignore'],
-"   \ 'prompt':  ['fg', 'Conditional'],
-"   \ 'pointer': ['fg', 'Exception'],
-"   \ 'marker':  ['fg', 'Keyword'],
-"   \ 'spinner': ['fg', 'Label'],
-"   \ 'header':  ['fg', 'Comment'] }
+" coc.nvim
 
+fu! g:ShowCocDocumentation() abort
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfu
 
-" Filetypes detection au BufNewFile,BufRead *.js.erb set filetype=javascript
-au BufNewFile,BufRead *.rs     set filetype=rust
-au BufNewFile,BufRead *.yml.j2 set filetype=yaml
-au BufNewFile,BufRead *.cjsx   set filetype=coffee
-au BufNewFile,BufRead *.pcss   set filetype=postcss
-au BufNewFile,BufRead *.arb	   set ft=ruby
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call g:ShowCocDocumentation()<CR>
 
-" use rg
-set grepprg=rg\ --color=never
+" Highlight the symbol and its references when holding the cursor.
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call g:ShowCocDocumentation()
 
-:hi CursorLine cterm=NONE
+" --- gopls
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
-" TODO: add augroup custom?
+let g:go_doc_popup_window                = 1
+let g:go_highlight_extra_types           = 1
+let g:go_highlight_operators             = 1
+let g:go_highlight_functions             = 1
+let g:go_highlight_format_strings        = 1
+let g:go_highlight_function_parameters   = 1
+let g:go_highlight_function_calls        = 1
+let g:go_highlight_types                 = 1
+let g:go_highlight_fields                = 1
+let g:go_highlight_generate_tags         = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments  = 1
 
-" pretty colymn hi for yaml modes
-autocmd FileType yaml setlocal cursorcolumn
-autocmd FileType eruby.yaml setlocal cursorcolumn
+let g:go_mod_fmt_autosave = 0
+let g:go_fmt_autosave = 0
 
-" js with 2 tabs - is ok
-autocmd FileType javascript setl sw=2 sw=2 sts=2
+" --- org-mode
+let g:org_agenda_files = ['~/orgs/*.org']
 
-" custom types autocmd mappinngs
-autocmd FileType nasm setlocal commentstring=;\ %s
+" --- ruby
+let g:ruby_operators        = 1
+let g:ruby_pseudo_operators = 1
+let g:ruby_no_expensive = 1
 
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
+" --- any-jump.vim config
+let g:any_jump_ignored_files = ['*.tmp', '*.temp']
+let g:any_jump_search_prefered_engine = 'rg'
 
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+"  fzf configuration
+let g:fzf_preview_window = ''
 
-" auto-remove trailing whitespaces
-autocmd BufWritePre * :%s/\s\+$//e
-
-" config prefered searcher for DimJump
-autocmd BufNewFile,BufRead * let b:preferred_searcher = 'rg'
-
-" for alternative Gemfiles
-autocmd BufNewFile,BufRead Gemfile_* let &filetype = 'ruby'
-
-" Start terminal in insert mode
-autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
-
-" --- reload buffer on change
-augroup checktime
-    au!
-    autocmd BufEnter,CursorHold,CursorHoldI,CursorMoved,CursorMovedI,FocusGained,BufEnter,FocusLost,WinLeave * checktime
-augroup END
-
-" TODO: implement vim support
+"  with floating windows support
 if s:nvim
-  " == cool popup from nvim 0.4
+  " TODO: implement vim support
   set wildoptions=pum
   set pumblend=8
   set inccommand=nosplit
@@ -413,11 +381,72 @@ if executable('rg')
   let g:gutentags_file_list_command = 'rg --files'
 end
 
-" --- Custom bindings ---
+" --- Custom bindings/mappings/autocommands ---
 
+" TODO: add augroup custom?
 " TODO: move to separate file?
-" THINK: add something like liderguide on emacs to do bindings and probide
-" documentation to which key?
+
+" remap ; to :
+nmap ; :
+
+" set leader key
+let mapleader=","
+let maplocalleader= "\\"
+
+" https://github.com/r00k/dotfiles/blob/master/vimrc
+" Disable that goddamn 'Entering Ex mode. Type 'visual' to go to Normal mode.'
+" that I trigger 40x a day.
+map Q <Nop>
+" Disable K looking man stuff up
+" map K <Nop>
+
+" Bash like keys for the command line
+cnoremap <C-A>      <Home>
+cnoremap <C-E>      <End>
+cnoremap <C-K>      <C-U>
+
+" === haml
+au BufNewFile,BufRead *.lmx set filetype=haml
+
+" pretty colymn hi for yaml modes
+autocmd FileType yaml setlocal cursorcolumn
+autocmd FileType eruby.yaml setlocal cursorcolumn
+
+" js with 2 tabs - is ok
+autocmd FileType javascript setl sw=2 sw=2 sts=2
+
+" custom types autocmd mappinngs
+autocmd FileType nasm setlocal commentstring=;\ %s
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" auto-remove trailing whitespaces
+autocmd BufWritePre * :%s/\s\+$//e
+
+" config prefered searcher for DimJump
+autocmd BufNewFile,BufRead * let b:preferred_searcher = 'rg'
+
+" for alternative Gemfiles
+autocmd BufNewFile,BufRead Gemfile_* let &filetype = 'ruby'
+
+" Start terminal in insert mode
+autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+
+au BufNewFile,BufRead *.rs     set filetype=rust
+au BufNewFile,BufRead *.yml.j2 set filetype=yaml
+au BufNewFile,BufRead *.cjsx   set filetype=coffee
+au BufNewFile,BufRead *.pcss   set filetype=postcss
+au BufNewFile,BufRead *.arb	   set ft=ruby
+
+" reload buffer on change
+augroup checktime
+    au!
+    autocmd BufEnter,CursorHold,CursorHoldI,CursorMoved,CursorMovedI,FocusGained,BufEnter,FocusLost,WinLeave * checktime
+augroup END
 
 
 " ~ Navigation utilities mappings ~
@@ -434,7 +463,6 @@ nmap <leader>n :NERDTree<CR>
 " NERDTree for current file
 nmap <leader>N :NERDTree %<CR>
 
-
 " ~ Buffer functions mappings ~
 
 " comment current line
@@ -450,7 +478,6 @@ nmap <silent> <leader>eT :TestFile<CR>
 map <leader>T :tabnew<CR>
 map <cmd>T :tabnew<CR>
 
-
 " ~ FZF mappings ~
 
 " current project files
@@ -461,7 +488,6 @@ map <leader>sh :Helptags <CR>
 
 " theme switcher
 map <leader>st :Color <CR>
-
 
 " ~ development mappings ~
 
@@ -484,55 +510,6 @@ nnoremap <silent> <leader>tt :terminal<CR>I
 nnoremap <silent> <leader>tv :vnew<CR>:terminal<CR>I
 nnoremap <silent> <leader>tn :new<CR>:terminal<CR>I
 nnoremap <silent> <leader>ts :new<CR>:terminal<CR> :res 15<CR>I
-
-" --- coc.nvim
-
-fu! g:ShowCocDocumentation() abort
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfu
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call g:ShowCocDocumentation()<CR>
-
-" Highlight the symbol and its references when holding the cursor.
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-" autocmd CursorHold * silent call g:ShowCocDocumentation()
-
-" --- gopls
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
-
-let g:go_doc_popup_window                = 1
-let g:go_highlight_extra_types           = 1
-let g:go_highlight_operators             = 1
-let g:go_highlight_functions             = 1
-let g:go_highlight_format_strings        = 1
-let g:go_highlight_function_parameters   = 1
-let g:go_highlight_function_calls        = 1
-let g:go_highlight_types                 = 1
-let g:go_highlight_fields                = 1
-let g:go_highlight_generate_tags         = 1
-let g:go_highlight_variable_declarations = 1
-let g:go_highlight_variable_assignments  = 1
-
-let g:go_mod_fmt_autosave = 0
-let g:go_fmt_autosave = 0
-
-" --- org-mode
-let g:org_agenda_files = ['~/orgs/*.org']
-
-" --- ruby
-let g:ruby_operators        = 1
-let g:ruby_pseudo_operators = 1
-let g:ruby_no_expensive = 1
-
-" --- any-jump.vim config
-let g:any_jump_ignored_files = ['*.tmp', '*.temp']
-let g:any_jump_search_prefered_engine = 'rg'
 
 " --- end profile loading
 let s:profile_loads += 1
