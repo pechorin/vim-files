@@ -28,32 +28,45 @@ call plug#begin('~/.vim/bundle')
 "              - description
 "              - init code
 
-" Plug 'skywind3000/asyncrun.vim'
+" General plugins
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/CursorLineCurrentWindow'
 Plug 'tpope/vim-surround'
-Plug 'itchyny/vim-cursorword'
-Plug 'tpope/vim-dispatch'
-Plug 'janko-m/vim-test'
 Plug 'itchyny/lightline.vim'
 Plug 'jremmen/vim-ripgrep'
-Plug 'racer-rust/vim-racer'
 Plug 'junegunn/vim-easy-align'
-Plug 'eugen0329/vim-esearch'
-Plug 'tpope/vim-fugitive'
-Plug 'romainl/vim-cool'
-Plug 'rhysd/git-messenger.vim'
-Plug 'Kraust/floater.nvim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'jceb/vim-orgmode'
-Plug 'majutsushi/tagbar'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'itchyny/vim-cursorword'
+
+" Searching
+Plug 'eugen0329/vim-esearch'
+Plug 'romainl/vim-cool'
+
+" Git support
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+
+" Tests
+Plug 'tpope/vim-dispatch'
+Plug 'janko-m/vim-test'
+
+" CTags support
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+
+" Lnaguge server protocol support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Fuzzy engine for fast selection menus
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
+" Db interactions
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+
+" Autocompltion
 " NOTICE: if you prefer this kind of autocomplete plugins
 "         select which one you like:
 "
@@ -63,9 +76,11 @@ Plug 'ajh17/VimCompletesMe'
 
 " === Languages
 
-Plug 'rust-lang/rust.vim'
+Plug 'jceb/vim-orgmode'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
+Plug 'racer-rust/vim-racer'
+Plug 'rust-lang/rust.vim'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-haml'
@@ -196,6 +211,7 @@ endif
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1 " Disables display of the 'Bookmarks' label and 'Press ? for help' text.
 let NERDTreeDirArrows=1 " Tells the NERD tree to use arrows instead of + ~ chars when displaying directories.
+let NERDTreeIgnore=['\.git$']
 
 " === remap ; to :
 nmap ; :
@@ -494,6 +510,7 @@ let g:go_doc_popup_window                = 1
 let g:go_highlight_extra_types           = 1
 let g:go_highlight_operators             = 1
 let g:go_highlight_functions             = 1
+let g:go_highlight_format_strings        = 1
 let g:go_highlight_function_parameters   = 1
 let g:go_highlight_function_calls        = 1
 let g:go_highlight_types                 = 1
@@ -501,6 +518,9 @@ let g:go_highlight_fields                = 1
 let g:go_highlight_generate_tags         = 1
 let g:go_highlight_variable_declarations = 1
 let g:go_highlight_variable_assignments  = 1
+
+let g:go_mod_fmt_autosave = 0
+let g:go_fmt_autosave = 0
 
 " --- org-mode
 let g:org_agenda_files = ['~/orgs/*.org']
