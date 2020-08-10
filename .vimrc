@@ -108,13 +108,11 @@ Plug 'sainnhe/sonokai'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'lmintmate/blue-mood-vim'
 Plug 'phanviet/vim-monokai-pro'
-Plug 'joshdick/onedark.vim'
 Plug 'jpo/vim-railscasts-theme'
 Plug 'iCyMind/NeoSolarized'
-Plug 'aunsira/macvim-light'
-Plug 'kyoz/purify', { 'rtp': 'vim' }
-Plug 'wadackel/vim-dogrun'
-Plug 'yasukotelin/shirotelin'
+Plug 'nightsense/cosmic_latte'
+Plug 'romgrk/github-light.vim'
+Plug 'liuchengxu/space-vim-theme'
 
 " Plugins i'm working on:
 " Plug 'pechorin/any-jump.vim'
@@ -286,8 +284,8 @@ let g:go_highlight_generate_tags         = 1
 let g:go_highlight_variable_declarations = 1
 let g:go_highlight_variable_assignments  = 1
 
-let g:go_mod_fmt_autosave = 0
-let g:go_fmt_autosave = 0
+let g:go_mod_fmt_autosave = 1
+let g:go_fmt_autosave = 1
 
 " --- org-mode
 let g:org_agenda_files = ['~/orgs/*.org']
