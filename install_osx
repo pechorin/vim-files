@@ -16,7 +16,7 @@ else
 fi
 
 brew install bash bash-completion bash-git-prompt
-brew install git curl htop openssl
+brew install git svn curl htop openssl
 
 brew install ripgrep # grep replacement
 brew install fd      # find replacement
@@ -32,8 +32,9 @@ brew cleanup
 brew tap homebrew/cask-fonts
 
 FONTS=(
-	font-fira-code
-	font-roboto
+  font-fira-code
+  font-roboto
+  font-cascadia-code
 )
 
 brew cask install "${FONTS[@]}"
