@@ -27,66 +27,17 @@ brew install nvim --HEAD
 
 brew install cask
 brew cleanup
-brew tap caskroom/cask
 
-CASKS=(
-	adobe-acrobat-reader
-	cakebrew
-	calibre
-	docker
-	google-chrome
-	iterm2
-	macvim
-	textmate
-	qbittorrent
-	skitch
-	skype
-	slack
-	sourcetree
-	sublime-text
-	vlc
-)
 
-echo_ok "Installing cask apps..."
-brew cask install "${CASKS[@]}"
+brew tap homebrew/cask-fonts
 
-echo_ok "Installing fonts..."
-brew tap caskroom/fonts
 FONTS=(
-	font-clear-sans
-	font-consolas-for-powerline
-	font-dejavu-sans-mono-for-powerline
 	font-fira-code
-	font-fira-mono-for-powerline
-	font-inconsolata
-	font-inconsolata-for-powerline
-	font-liberation-mono-for-powerline
-	font-menlo-for-powerline
 	font-roboto
 )
+
 brew cask install "${FONTS[@]}"
 
-echo_ok "Configuring OSX..."
-
-# Set fast key repeat rate
-# The step values that correspond to the sliders on the GUI are as follow (lower equals faster):
-# KeyRepeat: 120, 90, 60, 30, 12, 6, 2
-# InitialKeyRepeat: 120, 94, 68, 35, 25, 15
-defaults write NSGlobalDomain KeyRepeat -int 6
-defaults write NSGlobalDomain InitialKeyRepeat -int 25
-
-# Show filename extensions by default
-# defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
-# Expanded Save menu
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
-
-# Enable tap-to-click
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-
-# Disable "natural" scroll
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+echo_ok "Fonts installed"
 
 echo_ok "Complete"
