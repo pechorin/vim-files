@@ -56,7 +56,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
 " Lnaguge server protocol support
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Fuzzy engine for fast selection menus
 Plug '/usr/local/opt/fzf'
@@ -115,8 +115,8 @@ Plug 'romgrk/github-light.vim'
 Plug 'liuchengxu/space-vim-theme'
 
 " Plugins i'm working on:
-" Plug 'pechorin/any-jump.vim'
-Plug '~/work/any-jump.vim'
+Plug 'pechorin/any-jump.vim'
+" Plug '~/work/any-jump.vim'
 
 call plug#end()
 

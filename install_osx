@@ -15,20 +15,29 @@ else
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
-brew install bash bash-completion bash-git-prompt
-brew install git svn curl htop openssl
+# brew install bash bash-completion bash-git-prompt
+
+# version control
+brew install git svn
+
+# some regulars
+brew install curl htop openssl
 
 brew install ripgrep # grep replacement
 brew install fd      # find replacement
 brew install exa     # ls replacement
-
-brew install fzf
+brew install fzf     #
 brew install nvim --HEAD
-
 brew install cask
+
+# kubernetes
+brew install kubectl
+# kubernetes tail log viewer
+brew install stern
+
 brew cleanup
 
-
+# cool developer fonts
 brew tap homebrew/cask-fonts
 
 FONTS=(
