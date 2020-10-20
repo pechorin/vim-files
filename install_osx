@@ -44,6 +44,7 @@ FONTS=(
   font-fira-code
   font-roboto
   font-cascadia-code
+  font-jetbrains-mono
 )
 
 brew cask install "${FONTS[@]}"
