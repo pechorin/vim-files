@@ -20,6 +20,8 @@ fi
 # version control
 brew install git svn
 
+git config --global pull.rebase true
+
 # some regulars
 brew install curl htop openssl
 
