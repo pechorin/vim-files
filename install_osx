@@ -37,6 +37,10 @@ brew install kubectl
 # kubernetes tail log viewer
 brew install stern
 
+# zsh package manager
+# plugins list stored in .zsh_plugins.txt
+brew install antibody
+
 brew cleanup
 
 # cool developer fonts

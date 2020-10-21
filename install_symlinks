@@ -1,18 +1,10 @@
 #!/bin/bash
+
 DOTFILES_DIR="$HOME/dotfiles"
 source "$DOTFILES_DIR/helpers"
 
 # Symlinks for dotfiles
-declare -a DOTFILES=(".vim"
-          ".vimrc"
-          ".ctags"
-          ".emacs")
-
-# Symlinks for folders
-declare -a SYMLINK_DIRS=("$HOME/Google Диск/orgs"
-              "$HOME/Google Диск/posts"
-              "$HOME/Google Drive/orgs"
-              "$HOME/Google Drive/posts")
+declare -a DOTFILES=(".vim" ".vimrc" ".ctags" ".emacs" ".zsh_plugins.txt")
 
 echo_ok "Creating symlinks"
 
@@ -31,18 +23,5 @@ do
   fi
 done
 
-for i in ${!SYMLINK_DIRS[@]}
-do
-  item="${SYMLINK_DIRS[i]}"
-
-  if [ -d "$item" ]; then
-    target_folder="$(basename "$item")"
-
-    echo_warn "symlinked: $HOME/$target_folder -> $item"
-
-    rm -rf "$HOME/$target_folder";
-    ln -s "$item" "$HOME/$target_folder"
-  fi
-done
-
-# mkdir ~/.config
+mkdir -p ~/.config/nvim/
+touch    ~/.config/nvim/init.vim

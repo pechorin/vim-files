@@ -1,0 +1,7 @@
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/kubectl
+ohmyzsh/ohmyzsh path:plugins/brew
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
