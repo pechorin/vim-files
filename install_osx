@@ -31,6 +31,8 @@ brew install exa     # ls replacement
 brew install fzf     #
 brew install nvim --HEAD
 brew install cask
+brew install jq      # for json manipulations
+brew install ctags
 
 # kubernetes
 brew install kubectl
