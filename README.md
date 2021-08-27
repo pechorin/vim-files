@@ -1,22 +1,21 @@
 ### 🧩 My config for basic osx dev machine environment setup 💻
 
-*x-code should be installed*
-
-- custom vim/nvim (+ some sort of old emacs config)
-- run `install_symlinks` for setup dotfiles and homedirs
-  - .vim
-  - .vimrc
-  - & my personal staff like dropbox notes folders symlinks
-- run `install_osx` for install tools like `brew`, `ripgrep`, `stearn` and some developer fonts
-
 ```
-bash ~/dotfiles/install_symlinks
-bash ~/dotfiles/install_osx
-```
-### 🔌 Cool staff inside 🔌
+cd ~ && git clone https://github.com/pechorin/dotfiles
 
-- brew
-- nvim
-- ripgrep
-- stern
-- fonts ( font-fira-code font-cascadia-code font-jetbrains-mono font-roboto )
+~/dotfiles/install_osx  # install osx dev tools (brew, ripgrep, stern, k9s, dev fonts, etc)
+~/dotfiles/install_home # install home directory (.vim, .vimrc, vim plug manager, ctags, zsg plugins list, etc)
+```
+
+- X-code should be installed
+- using `/usr/local/bin/bash` instead of outdated osx system `/bin/bash`
+- custom vim/nvim configuration (with accent on modern neovim, but without lot of lua crazyness)
+- `~/dotfiles/bin` containts custom bash script helpers
+
+
+### TODO
+
+- init vim plug manager via curl/bash (storing inside git is bad tone)
+- add .config folder setup
+- add alacritty config
+- add .zshrc config

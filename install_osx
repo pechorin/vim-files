@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/usr/local/bin/bash
+
+# Install all software required for modern development (kind of)
+
 DOTFILES_DIR="$HOME/dotfiles"
 source "$DOTFILES_DIR/helpers"
 
@@ -33,6 +36,8 @@ brew install nvim --HEAD
 brew install cask
 brew install jq      # for json manipulations
 brew install ctags
+brew insrall rbenv
+brew install k9s
 
 # kubernetes
 brew install kubectl
@@ -53,10 +58,12 @@ FONTS=(
   font-roboto
   font-cascadia-code
   font-jetbrains-mono
+  font-iosevka
 )
 
-brew cask install "${FONTS[@]}"
+brew install --cask "${FONTS[@]}"
+
+brew install --cask openinterminal
 
 echo_ok "Fonts installed"
-
-echo_ok "Complete"
+echo_ok "OSX setup complete"

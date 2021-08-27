@@ -1,12 +1,6 @@
-.vim/bundle
+.vim/bundle/*
+.vim/autoload/*
 .vim/sessions/*
 
-.emacs_old*
-.emacs.d*
-.#*
-#*
-!.emacs.d/init.el
-
 .DS_Store
-
 tags
