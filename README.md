@@ -1,6 +1,6 @@
 ### 🧩 My config for basic osx dev machine environment setup 💻
 
-```
+```bash
 cd ~ && git clone https://github.com/pechorin/dotfiles
 
 ~/dotfiles/install_osx  # install osx dev tools (brew, ripgrep, stern, k9s, dev fonts, etc)

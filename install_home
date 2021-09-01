@@ -4,28 +4,36 @@
 
 # 1. Install symlinks
 
-DOTFILES_DIR="$HOME/dotfiles"
-source "$DOTFILES_DIR/helpers"
+dotfiles_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source "$dotfiles_dir/helpers"
 
-declare -a DOTFILES=(".vim" ".vimrc" ".ctags" ".emacs" ".zsh_plugins.txt")
+dotfiles=(
+  ".vim"
+  ".vimrc"
+  ".ctags"
+  ".zshenv"
+  ".zsh_plugins.txt"
+)
 
 echo_warn "Creating symlinks"
 
-for item in ${DOTFILES[*]}
+for item in ${dotfiles[*]}
 do
-  target="$DOTFILES_DIR/$item"
+  target="$dotfiles_dir/$item"
 
   if [ -e $target ]
   then
-      echo_warn "symlinked: $HOME/${item} -> $target"
+      echo_warn "Symlinking: $home/${item} -> $target"
+      new_link="${HOME}/${item}"
 
-      original_source="${HOME}/${item}"
-
-      rm -rf $original_source
-      ln -s $target $original_source
+      rm -rf $new_link
+      ln -s $target $new_link || { echo_error "Link creation failed" && exit 1; }
+      echo_ok "OK"
   fi
 done
 
+# 2. nvim init
+#    TODO: add echoing >> here (for nvim init content)
 mkdir -p ~/.config/nvim/
 touch    ~/.config/nvim/init.vim
 

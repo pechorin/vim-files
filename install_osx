@@ -2,8 +2,8 @@
 
 # Install all software required for modern development (kind of)
 
-DOTFILES_DIR="$HOME/dotfiles"
-source "$DOTFILES_DIR/helpers"
+dotfiles_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source "$dotfiles_dir/helpers"
 
 echo_ok "Install starting. You may be asked for your password (for sudo)."
 
@@ -18,37 +18,21 @@ else
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
-# brew install bash bash-completion bash-git-prompt
-
-# version control
-brew install git svn
-
+# TODO: это откуда-куда?
 git config --global pull.rebase true
 
-# some regulars
-brew install curl htop openssl
+brew install \
+  bash bash-completion bash-git-prompt \
+  git svn \
+  curl htop openssl \
+  ctags \
+  ripgrep fd exa fzf jq \
+  rbenv node \
+  kubectl k9s stern \
+  antibody \
+  cask
 
-brew install ripgrep # grep replacement
-brew install fd      # find replacement
-brew install exa     # ls replacement
-brew install fzf     #
 brew install nvim --HEAD
-brew install cask
-brew install jq      # for json manipulations
-brew install ctags
-brew insrall rbenv
-brew install k9s
-
-# kubernetes
-brew install kubectl
-# kubernetes tail log viewer
-brew install stern
-
-# zsh package manager
-# plugins list stored in .zsh_plugins.txt
-brew install antibody
-
-brew cleanup
 
 # cool developer fonts
 brew tap homebrew/cask-fonts
@@ -64,6 +48,8 @@ FONTS=(
 brew install --cask "${FONTS[@]}"
 
 brew install --cask openinterminal
+
+brew cleanup
 
 echo_ok "Fonts installed"
 echo_ok "OSX setup complete"

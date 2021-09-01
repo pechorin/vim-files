@@ -66,9 +66,11 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 " === Languages
+Plug 'tpope/vim-rbenv'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-rbenv'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-haml'
 Plug 'plasticboy/vim-markdown'
@@ -85,6 +87,8 @@ Plug 'slashmili/alchemist.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'rust-lang/rust.vim'
 Plug 'calviken/vim-gdscript3'
+Plug 'lepture/vim-jinja'
+Plug 'ap/vim-css-color'
 
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'chr4/nginx.vim'
@@ -479,8 +483,6 @@ map <leader>sh :Helptags <CR>
 " theme switcher
 map <leader>st :Color <CR>
 
-" ~ development mappings ~
-
 " eval current vimscrupt buffer
 map <leader>ee :so %<CR>
 
@@ -489,6 +491,10 @@ map <leader>ev :vsplit ~/.vimrc <CR>
 
 " redraw tree-sitter colors
 map <leader>ed :TSBufEnable highlight <CR>
+
+" fugitive.vim
+map <leader>gs :Git <CR>
+map <leader>gl :Git log <CR>
 
 " remap clipboard in osx
 noremap <Leader>y "*y
