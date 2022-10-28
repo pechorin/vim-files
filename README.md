@@ -1,21 +1,18 @@
-### 🧩 My config for basic osx dev machine environment setup 💻
+### 💻 vim/neovim setup for unix machines
 
 ```bash
-cd ~ && git clone https://github.com/pechorin/dotfiles
+cd ~ && git clone https://github.com/pechorin/vim-files
 
-~/dotfiles/install_osx  # install osx dev tools (brew, ripgrep, stern, k9s, dev fonts, etc)
-~/dotfiles/install_home # install home directory (.vim, .vimrc, vim plug manager, ctags, zsg plugins list, etc)
+# create symlinks for (.vim, .config/nvim/init.vim, .vimrc, ctags) in your home directory
+~/vim-files/install
 ```
 
 - X-code should be installed
 - using `/usr/local/bin/bash` instead of outdated osx system `/bin/bash`
-- custom vim/nvim configuration (with accent on modern neovim, but without lot of lua crazyness)
-- `~/dotfiles/bin` containts custom bash script helpers
+- custom vim/nvim configuration (with accent on modern neovim)
 
+---
 
-### TODO
+### Features
 
-- init vim plug manager via curl/bash (storing inside git is bad tone)
-- add .config folder setup
-- add alacritty config
-- add .zshrc config
+- TODO
