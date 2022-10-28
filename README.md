@@ -9,6 +9,15 @@ cd ~ && git clone https://github.com/pechorin/vim-files
 ~/vim-files/install
 ```
 
+### Requirements
+
+- git
+- bash
+- vim (neovim 0.7+ is preferrable)
+- ripgrep
+- ctags
+- for ruby dev: rbenv & solargraph
+
 ### Features
 
-- TODO
+TODO

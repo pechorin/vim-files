@@ -1,9 +1,8 @@
-" == My custom vimscript
-
-" = TODO =
-" - split initialization to files for big parts (like lsp)
+" = Vim/nvim setup
 
 let s:nvim = has('nvim')
+
+" TODO: is it still required?
 let s:enable_tree_sitter = v:true
 
 if !exists('s:profile_loads')
@@ -14,26 +13,18 @@ if s:profile_loads > 1
   echo "reloading profile " . string(s:profile_loads)
 endif
 
+" let text = substitute(text, '\n', '', 'g')
 if !s:nvim
   set nocompatible " be iMproved
 endif
 
 filetype off
 
-" Plugins
+" = Init Plugins
 set rtp+=~/.vim/bundle/Vundle.vim
 call plug#begin('~/.vim/bundle')
 
-" === Common plugins
-
-" TODO: THINK: how to provide meta info about each plugin:
-"              - git repo
-"              - plugin category
-"              - keydings
-"              - description
-"              - init code
-
-" General plugins
+" Common plugins
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/CursorLineCurrentWindow'
@@ -43,7 +34,8 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'junegunn/vim-easy-align'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-utils/vim-man'
-" Plug 'itchyny/vim-cursorword'
+Plug 'adelarsq/vim-matchit'
+Plug 'simeji/winresizer'
 
 " Searching
 Plug 'eugen0329/vim-esearch'
@@ -65,12 +57,11 @@ Plug 'majutsushi/tagbar'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
-" === Languages
+" == Languages
 Plug 'tpope/vim-rbenv'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-rbenv'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-haml'
 Plug 'plasticboy/vim-markdown'
@@ -83,41 +74,47 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'racer-rust/vim-racer'
 Plug 'rust-lang/rust.vim'
-Plug 'calviken/vim-gdscript3'
 Plug 'lepture/vim-jinja'
 Plug 'ap/vim-css-color'
+Plug 'pearofducks/ansible-vim'
+Plug 'ray-x/go.nvim'
 
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'chr4/nginx.vim'
 
-" === Colorschemes
+" == Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
 Plug 'danilo-augusto/vim-afterglow'
-Plug 'KabbAmine/yowish.vim'
-Plug 'sainnhe/sonokai'
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'mhartington/oceanic-next'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'savq/melange'
+Plug 'projekt0n/github-nvim-theme'
+Plug 'elvessousa/sobrio'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'gzagatti/vim-leuven-theme'
+Plug 'carakan/new-railscasts-theme'
 
-" === In-testing plugins
-Plug 'simeji/winresizer'
+" == color mono contrast schemes
+Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
+Plug 'kkga/vim-envy'
+Plug 'yasukotelin/shirotelin'
+
+" == In-testing plugins
 Plug 'folke/lsp-colors.nvim'
 Plug 'folke/which-key.nvim'
-Plug 'ray-x/go.nvim'
+Plug 'ggandor/leap.nvim'
 
 " Plugins i'm working on:
 Plug 'pechorin/any-jump.vim'
 
 if s:nvim
   Plug 'nvim-treesitter/nvim-treesitter'
-  Plug 'hrsh7th/nvim-compe'
   Plug 'neovim/nvim-lsp'
   Plug 'neovim/nvim-lspconfig'
   Plug 'ray-x/lsp_signature.nvim'
+  Plug 'hrsh7th/nvim-compe'
 end
 
 call plug#end()
@@ -138,7 +135,7 @@ end
 
 filetype plugin indent on
 
-" === Vim options
+" === General vim options
 
 set showmode       " always show what mode we're currently editing in
 
@@ -160,7 +157,7 @@ set title          " change the terminal's title
 
 set visualbell     " Use visual bell instead of beeping
 
-set scrolloff=15  " makes vim centered like a iA Writer
+" set scrolloff=15  " makes vim centered like a iA Writer
 set showtabline=1  " display tabline only if where is more then one tab
 
 set linebreak      "
@@ -222,14 +219,7 @@ set termguicolors
 
 " theme options, applied only first script load
 if s:profile_loads == 0
-  let g:sonokai_style = 'shusia'
-  let g:sonokai_enable_italic = 0
-  let g:sonokai_disable_italic_comment = 0
-
-  " colorscheme desert
   colorscheme Tomorrow
-  " colorscheme palenight
-  " colorscheme base16-railscasts
 endif
 
 " do not hl cursor in term
@@ -238,11 +228,10 @@ hi CursorLine cterm=NONE
 " NERDTree
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1 " Disables display of the 'Bookmarks' label and 'Press ? for help' text.
-let NERDTreeDirArrows=1 " Tells the NERD tree to use arrows instead of + ~ chars when displaying directories.
+let NERDTreeDirArrows=0 " Tells the NERD tree to use arrows instead of + ~ chars when displaying directories.
 let NERDTreeIgnore=['\.git$']
 let NERDTreeStatusline=0
 let NERDTreeWinSize=25
-
 
 " javascript-libraries-syntax.vim
 let g:used_javascript_libs = 'underscore, backbone, angularjs'
@@ -260,8 +249,11 @@ else
 endif
 
 "  ruby
-let ruby_operators        = 1
-let ruby_pseudo_operators = 1
+let g:ruby_path             = system('rbenv prefix')
+let g:ruby_host_prog        = system('rbenv prefix')
+let g:ruby_operators        = 1
+let g:ruby_pseudo_operators = 1
+let g:ruby_no_expensive     = 1
 
 " esearch
 let g:esearch = { 'adapter': 'rg', 'backend': 'system', 'out': 'qflist' }
@@ -301,7 +293,7 @@ let g:any_jump_search_prefered_engine = 'rg'
 "  fzf configuration
 let g:fzf_preview_window = ''
 
-"  with floating windows support
+"  fzf with floating windows support
 if s:nvim
   " TODO: implement vim support
   set wildoptions=pum
@@ -346,6 +338,7 @@ if s:nvim
   endfunction
 endif
 
+" TODO: what plugin is this?
 let g:CoolTotalMatches = 1
 
 " --- Lightline settings
@@ -353,10 +346,10 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste', 'gutentags', 'method' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
+      \   'gitbranch': 'Fugitive#Head',
       \   'gutentags': "gutentags#statusline",
       \ },
       \ }
@@ -378,141 +371,6 @@ if executable('rg')
   let g:gutentags_file_list_command = 'rg --files'
 end
 
-" --- Custom bindings/mappings/autocommands ---
-
-" TODO: add augroup custom?
-" TODO: move to separate file?
-
-" remap ; to :
-nmap ; :
-
-" set leader key
-let mapleader=","
-let maplocalleader= "\\"
-
-" https://github.com/r00k/dotfiles/blob/master/vimrc
-" Disable that goddamn 'Entering Ex mode. Type 'visual' to go to Normal mode.'
-" that I trigger 40x a day.
-map Q <Nop>
-" Disable K looking man stuff up
-" map K <Nop>
-
-" Bash like keys for the command line
-cnoremap <C-A>      <Home>
-cnoremap <C-E>      <End>
-cnoremap <C-K>      <C-U>
-
-" === haml
-au BufNewFile,BufRead *.lmx set filetype=haml
-
-" pretty colymn hi for yaml modes
-autocmd FileType yaml setlocal cursorcolumn
-autocmd FileType eruby.yaml setlocal cursorcolumn
-
-" js with 2 tabs - is ok
-autocmd FileType javascript setl sw=2 sw=2 sts=2
-
-" custom types autocmd mappinngs
-autocmd FileType nasm setlocal commentstring=;\ %s
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" auto-remove trailing whitespaces
-autocmd BufWritePre * :%s/\s\+$//e
-
-" config prefered searcher for DimJump
-autocmd BufNewFile,BufRead * let b:preferred_searcher = 'rg'
-
-" for alternative Gemfiles
-autocmd BufNewFile,BufRead Gemfile_* let &filetype = 'ruby'
-
-" Start terminal in insert mode
-autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
-
-au BufNewFile,BufRead *.rs     set filetype=rust
-au BufNewFile,BufRead *.yml.j2 set filetype=yaml
-au BufNewFile,BufRead *.cjsx   set filetype=coffee
-au BufNewFile,BufRead *.pcss   set filetype=postcss
-au BufNewFile,BufRead *.arb	   set ft=ruby
-
-" reload buffer on change
-augroup checktime
-  au!
-  autocmd BufEnter,CursorHold,CursorHoldI,CursorMoved,CursorMovedI,FocusGained,BufEnter,FocusLost,WinLeave * checktime
-augroup END
-
-
-" ~ Navigation utilities mappings ~
-
-" Buffers lists
-nmap <leader>b :Buffers<CR>
-
-" Tagbar
-map <leader>et :Tagbar<CR>
-
-" NERDTree for current working dir
-nmap <leader>n :NERDTree<CR>
-
-" NERDTree for current file
-nmap <leader>N :NERDTree %<CR>
-
-" ~ Buffer functions mappings ~
-
-" comment current line
-nmap <leader>c <Plug>CommentaryLine
-
-" comment block in visual mode
-vmap <leader>c <Plug>Commentary
-
-" new tab
-map <leader>t :tabnew<CR>
-map <cmd>t :tabnew<CR>
-
-" ~ FZF mappings ~
-
-" current project files
-nmap <leader>q :Files<CR>
-
-" helptags
-map <leader>sh :Helptags <CR>
-
-" theme switcher
-map <leader>st :Color <CR>
-
-" eval current vimscrupt buffer
-map <leader>ee :so %<CR>
-
-" open $MYVIMRC
-map <leader>ev :vsplit ~/.vimrc <CR>
-
-" redraw tree-sitter colors
-map <leader>ed :TSBufEnable highlight <CR>
-
-" fugitive.vim
-map <leader>gs :Git <CR>
-map <leader>gl :Git log <CR>
-
-" remap clipboard in osx
-noremap <Leader>y "*y
-noremap <Leader>p "*p
-noremap <Leader>Y "+y
-noremap <Leader>P "+p
-
-" tests runner
-nmap <silent> <leader>rf :TestFile<CR>
-nmap <silent> <leader>rn :TestNearest<CR>
-nmap <silent> <leader>rs :TestSuite<CR>
-nmap <silent> <leader>rl :TestLast<CR>
-
-" Show the quickfix window
-nnoremap <Leader>co :copen<CR>
-
-" Hide the quickfix window
-nnoremap <Leader>cc :cclose<CR>
 
 " tree-sitter
 if s:nvim && s:enable_tree_sitter == v:true
@@ -558,7 +416,7 @@ let g:compe.source.omni = v:false
 
 " hi MsgSeparator guifg=#ff00ff
 
-" experimetal lsp support:
+let g:terminal_key = '<c-=>'
 
 lua <<EOF
   local lsp_config = require'lspconfig'
@@ -619,10 +477,13 @@ lua <<EOF
     on_attach = on_attach
   }
 
+  -- TODO: this is crap :)
   lsp_config.solargraph.setup{
+    cmd = {vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph', 'stdio'},
     on_attach = on_attach,
     settings = {
-      useBunlder = true
+      commandPath = vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph',
+      useBunlder = true,
     }
   }
 
@@ -637,7 +498,7 @@ lua <<EOF
     test_template_dir = '', -- default to nil if not set; g:go_nvim_tests_template_dir  check gotests for details
     comment_placeholder = '' ,  -- comment_placeholder your cool placeholder
     verbose = false,  -- output loginf in messages
-    lsp_cfg = false, -- true: apply go.nvim non-default gopls setup
+    lsp_cfg = true, -- true: apply go.nvim non-default gopls setup
     lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
     lsp_on_attach = true, -- if a on_attach function provided:  attach on_attach function to gopls
                           -- true: will use go.nvim on_attach if true
@@ -649,6 +510,51 @@ lua <<EOF
     dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
     dap_debug_vt = true, -- set to true to enable dap virtual text
   })
+
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      -- delay update diagnostics
+      update_in_insert = false,
+    }
+  )
+
+  vim.diagnostic.config({
+    virtual_text = false,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = false,
+  })
+
+  -- Print diagnostics to message area
+  function PrintDiagnostics(opts, bufnr, line_nr, client_id)
+    bufnr = bufnr or 0
+    line_nr = line_nr or (vim.api.nvim_win_get_cursor(0)[1] - 1)
+    opts = opts or {['lnum'] = line_nr}
+
+    local line_diagnostics = vim.diagnostic.get(bufnr, opts)
+    if vim.tbl_isempty(line_diagnostics) then return end
+
+    local diagnostic_message = ""
+    for i, diagnostic in ipairs(line_diagnostics) do
+      diagnostic_message = diagnostic_message .. string.format("%d: %s", i, diagnostic.message or "")
+      print(diagnostic_message)
+      if i ~= #line_diagnostics then
+        diagnostic_message = diagnostic_message .. "\n"
+      end
+    end
+    vim.api.nvim_echo({{diagnostic_message, "Normal"}}, false, {})
+  end
+
+  vim.cmd [[ autocmd! CursorHold * lua PrintDiagnostics() ]]
+
+  -- Show line diagnostics automatically in hover window
+
+  vim.o.updatetime = 250
+  vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
+  -- leap.nvim
+  require('leap').add_default_mappings()
 EOF
 
 " --- end profile loading
@@ -657,3 +563,18 @@ let s:profile_loads += 1
 if !exists('s:known_links')
   let s:known_links = {}
 endif
+
+let g:any_jump_ignored_files = ['*.tmp', '*.temp', 'tags']
+
+" ~ Load configs
+let s:current_script = resolve(expand('<sfile>:p'))
+let s:scripts_path = substitute(s:current_script, '\.vimrc', '', '')
+let s:configs_path = s:scripts_path . '.vim/config/'
+
+let configs = ['mappings.vim', 'autocommands.vim']
+
+for config in configs
+  let config_path = s:configs_path . config
+  exec 'source' . config_path
+endfor
+
