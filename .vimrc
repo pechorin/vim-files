@@ -36,6 +36,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-utils/vim-man'
 Plug 'adelarsq/vim-matchit'
 Plug 'simeji/winresizer'
+Plug 'pechorin/any-jump.vim'
 
 " Searching
 Plug 'eugen0329/vim-esearch'
@@ -56,6 +57,9 @@ Plug 'majutsushi/tagbar'
 " Fuzzy engine for fast selection menus
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+
+" Table-mode support
+Plug 'dhruvasagar/vim-table-mode'
 
 " == Languages
 Plug 'tpope/vim-rbenv'
@@ -79,8 +83,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'lepture/vim-jinja'
 Plug 'ap/vim-css-color'
 Plug 'pearofducks/ansible-vim'
-Plug 'ray-x/go.nvim'
-
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'chr4/nginx.vim'
 
@@ -101,20 +103,16 @@ Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
 Plug 'kkga/vim-envy'
 Plug 'yasukotelin/shirotelin'
 
-" == In-testing plugins
-Plug 'folke/lsp-colors.nvim'
-Plug 'folke/which-key.nvim'
-Plug 'ggandor/leap.nvim'
-
-" Plugins i'm working on:
-Plug 'pechorin/any-jump.vim'
-
 if s:nvim
+  Plug 'ray-x/go.nvim'
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'neovim/nvim-lsp'
   Plug 'neovim/nvim-lspconfig'
   Plug 'ray-x/lsp_signature.nvim'
   Plug 'hrsh7th/nvim-compe'
+  Plug 'folke/lsp-colors.nvim'
+  Plug 'folke/which-key.nvim'
+  Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 end
 
 call plug#end()
@@ -289,6 +287,7 @@ let g:ruby_no_expensive = 1
 
 " --- any-jump.vim config
 let g:any_jump_search_prefered_engine = 'rg'
+let g:any_jump_ignored_files = ['*.tmp', '*.temp', 'tags']
 
 "  fzf configuration
 let g:fzf_preview_window = ''
@@ -375,7 +374,7 @@ end
 " tree-sitter
 if s:nvim && s:enable_tree_sitter == v:true
 lua <<EOF
-  require'nvim-treesitter.configs'.setup {
+  require('nvim-treesitter.configs').setup {
     ensure_installed = { "c", "cpp", "lua", "bash", "ruby", "go", "rust", "css", "html", "javascript", "json", "regex", "typescript", "vue", "python" },
      -- Modules and its options go here
     highlight = { enable = true },
@@ -383,7 +382,6 @@ lua <<EOF
     textobjects = { enable = true }
   }
 EOF
-
 end
 
 " nvim-compe
@@ -419,7 +417,7 @@ let g:compe.source.omni = v:false
 let g:terminal_key = '<c-=>'
 
 lua <<EOF
-  local lsp_config = require'lspconfig'
+  local lsp_config = require('lspconfig')
 
   vim.lsp.set_log_level("debug")
 
@@ -478,7 +476,7 @@ lua <<EOF
   }
 
   -- TODO: this is crap :)
-  lsp_config.solargraph.setup{
+  lsp_config.solargraph.setup {
     cmd = {vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph', 'stdio'},
     on_attach = on_attach,
     settings = {
@@ -553,8 +551,6 @@ lua <<EOF
   vim.o.updatetime = 250
   vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
-  -- leap.nvim
-  require('leap').add_default_mappings()
 EOF
 
 " --- end profile loading
@@ -564,17 +560,14 @@ if !exists('s:known_links')
   let s:known_links = {}
 endif
 
-let g:any_jump_ignored_files = ['*.tmp', '*.temp', 'tags']
-
 " ~ Load configs
 let s:current_script = resolve(expand('<sfile>:p'))
 let s:scripts_path = substitute(s:current_script, '\.vimrc', '', '')
-let s:configs_path = s:scripts_path . '.vim/config/'
+" let s:configs_path = s:scripts_path . '.vim/config/'
 
 let configs = ['mappings.vim', 'autocommands.vim']
 
 for config in configs
-  let config_path = s:configs_path . config
+  let config_path = s:scripts_path . config
   exec 'source' . config_path
 endfor
-

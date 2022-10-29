@@ -17,7 +17,19 @@ cd ~ && git clone https://github.com/pechorin/vim-files
 - ripgrep
 - ctags
 - for ruby dev: rbenv & solargraph
+- go runtime
+
+### Bindings and usage
+
+| key           | description                          |
+|---------------+--------------------------------------|
+| <kbd>,</kbd>  | leader key (for all custom mappings) |
+| <kbd>\\</kbd> | local leader key                     |
 
 ### Features
 
-TODO
+| feature        | description                      | notes                                                  |
+|----------------+----------------------------------+--------------------------------------------------------|
+| tree-sitter    | syntax hightlighting             |                                                        |
+| lsp            |                                  | language server via native nvim implementation         |
+| vim-table-mode | table mode editing like org-mode | enable via <kbd><leader>tm</kdb> or `:TableModeToggle` |

@@ -23,7 +23,7 @@ hi LineNr       guifg=#969696   guibg=#f0f0f0
 hi Question     guifg=#000000   guibg=#ffde37   gui=none
 hi StatusLine   guifg=#ffffff   guibg=#323232   gui=none
 hi StatusLineNC guifg=#f0f0f0   guibg=#646464   gui=none
-hi VertSplit    guifg=#f0f0f0   guibg=#646464   gui=none
+hi VertSplit    guifg=#f0f0f0   guibg=#ffffff   gui=none
 hi Title        guifg=#323232                   gui=none
 hi Visual       guifg=#ffffff   guibg=#1994d1
 hi VisualNOS    guifg=#000000   guibg=#1994d1   gui=none
