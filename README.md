@@ -24,7 +24,6 @@ cd ~ && git clone https://github.com/pechorin/vim-files
 | key           | description                          |
 |---------------|--------------------------------------|
 | <kbd>,</kbd>  | leader key (for all custom mappings) |
-| <kbd>\\</kbd> | local leader key                     |
 
 ### Features
 

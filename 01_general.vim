@@ -76,7 +76,7 @@ set nowritebackup   " only in case you don't want a backup file while editing
 set noswapfile      " no swap files
 set timeoutlen=500
 
-set completeopt=menuone,noselect
+set completeopt=menu,menuone,noselect
 
 set mouse=a
 

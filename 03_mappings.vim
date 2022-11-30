@@ -80,6 +80,9 @@ noremap <Leader>p "*p
 noremap <Leader>Y "+y
 noremap <Leader>P "+p
 
+" Close current buffer
+noremap <leader>x <cmd>bp\|bd#<CR>
+
 " tests runner
 nmap <silent> <leader>rf :TestFile<CR>
 nmap <silent> <leader>rn :TestNearest<CR>
@@ -104,3 +107,13 @@ nnoremap <C-ScrollWheelDown> :tabprevious<CR>
 "
 " from: https://vim.fandom.com/wiki/Search_for_visually_selected_text
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
+" Neotree
+nmap <leader>vp :Neotree<CR>
+nmap <leader>vb :Neotree buffers<CR>
+
+" glance.nvim
+nnoremap gR <CMD>Glance references<CR>
+nnoremap gD <CMD>Glance definitions<CR>
+nnoremap gY <CMD>Glance type_definitions<CR>
+nnoremap gM <CMD>Glance implementations<CR>

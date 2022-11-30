@@ -167,3 +167,21 @@ let g:table_mode_corner='|'
 lua <<EOF
   require("which-key").setup({})
 EOF
+
+" ~ vim hexokinase (display css/rgb colors)
+let g:Hexokinase_highlighters = ['background']
+
+" ~ neo-tree
+if s:nvim
+lua <<EOF
+  require("neo-tree").setup({
+    enable_git_status = true,
+    default_component_configs = {
+      indent = {},
+      folder_closed = ">",
+      folder_open = "-",
+      folder_empty = "ﰊ",
+    },
+  })
+EOF
+end

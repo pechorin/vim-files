@@ -34,6 +34,7 @@ Plug 'vim-utils/vim-man'
 Plug 'adelarsq/vim-matchit'
 Plug 'simeji/winresizer'
 Plug 'pechorin/any-jump.vim'
+Plug 'AndrewRadev/linediff.vim'
 
 " Searching
 Plug 'eugen0329/vim-esearch'
@@ -101,15 +102,30 @@ Plug 'kkga/vim-envy'
 Plug 'yasukotelin/shirotelin'
 
 if s:nvim
+  Plug 'nvim-tree/nvim-web-devicons'
   Plug 'ray-x/go.nvim'
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'neovim/nvim-lsp'
   Plug 'neovim/nvim-lspconfig'
   Plug 'ray-x/lsp_signature.nvim'
-  Plug 'hrsh7th/nvim-compe'
   Plug 'folke/lsp-colors.nvim'
   Plug 'folke/which-key.nvim'
-  Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+  Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' } " display colors inline
+
+  Plug 'nvim-lua/plenary.nvim'               " utilities
+  Plug 'MunifTanjim/nui.nvim'                " lua ui
+  Plug 'nvim-neo-tree/neo-tree.nvim'         " modern nerdtree
+  Plug 'rgroli/other.nvim'                   " open alternative file
+
+  " A window for previewing, navigating and editing your LSP locations
+  Plug 'dnlhc/glance.nvim'
+
+  " Code completion
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/nvim-cmp'
 end
 
 call plug#end()
