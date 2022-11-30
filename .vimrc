@@ -107,7 +107,7 @@ if s:nvim
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'neovim/nvim-lsp'
   Plug 'neovim/nvim-lspconfig'
-  Plug 'ray-x/lsp_signature.nvim'
+  " Plug 'ray-x/lsp_signature.nvim'
   Plug 'folke/lsp-colors.nvim'
   Plug 'folke/which-key.nvim'
   Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' } " display colors inline
@@ -125,6 +125,8 @@ if s:nvim
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+  Plug 'hrsh7th/cmp-nvim-lsp-document-symbol'
   Plug 'hrsh7th/nvim-cmp'
 end
 

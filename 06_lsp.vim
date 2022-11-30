@@ -21,15 +21,15 @@ lua <<EOF
     -- buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     -- buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 
-    require "lsp_signature".on_attach({
-      bind = true,
-      hint_prefix = "🔸",
-      max_width = 70,
-      extra_trigger_chars = {","},
-      handler_opts = {
-        border = "shadow"
-      }
-    })
+    -- require "lsp_signature".on_attach({
+    --   bind = true,
+    --   hint_prefix = "🔸",
+    --   max_width = 70,
+    --   extra_trigger_chars = {","},
+    --   handler_opts = {
+    --     border = "shadow"
+    --   }
+    -- })
   end
 
   lsp_config.rust_analyzer.setup {
