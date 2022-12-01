@@ -127,6 +127,7 @@ if s:nvim
   Plug 'hrsh7th/cmp-cmdline'
   Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
   Plug 'hrsh7th/cmp-nvim-lsp-document-symbol'
+  Plug 'delphinus/cmp-ctags'
   Plug 'hrsh7th/nvim-cmp'
 end
 
