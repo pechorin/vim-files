@@ -129,6 +129,9 @@ if s:nvim
   Plug 'hrsh7th/cmp-nvim-lsp-document-symbol'
   Plug 'delphinus/cmp-ctags'
   Plug 'hrsh7th/nvim-cmp'
+
+  " highlight the word under the cursor.
+  Plug 'xiyaowong/nvim-cursorword'
 end
 
 call plug#end()
@@ -136,21 +139,33 @@ call plug#end()
 " ~ load all config files
 let s:current_script = resolve(expand('<sfile>:p'))
 let s:scripts_path = substitute(s:current_script, '\.vimrc', '', '')
-" let s:configs_path = s:scripts_path . '.vim/config/'
 
-let configs = [
+let base_configs = [
   \ '01_general.vim',
   \ '02_autocommands.vim',
   \ '03_mappings.vim',
-  \ '04_plugins.vim',
-  \ '05_completion.vim',
-  \ '06_lsp.vim'
+  \ '04_plugins_settings.vim',
   \ ]
 
-for config in configs
+let lua_configs = [
+  \ '05_completion.lua',
+  \ '06_lsp.lua',
+  \ '07_glance.lua',
+  \ ]
+
+" load base vim settings
+for config in base_configs
   let config_path = s:scripts_path . config
   exec 'source' . config_path
 endfor
+
+" load nvim only settings
+if s:nvim
+  for config in lua_configs
+    let config_path = s:scripts_path . config
+    exec 'source' . config_path
+  endfor
+endif
 
 " theme options applied only on first script load
 if s:profile_loads == 0

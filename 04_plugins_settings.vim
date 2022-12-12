@@ -31,7 +31,13 @@ let g:ruby_pseudo_operators = 1
 let g:ruby_no_expensive     = 1
 
 " ~ esearch
-let g:esearch = { 'adapter': 'rg', 'backend': 'system', 'out': 'qflist' }
+let g:esearch = {}
+
+" Set the initial pattern content using the highlighted '/' pattern (if
+" v:hlsearch is true), the last searched pattern or the clipboard content.
+let g:esearch.prefill = ['hlsearch', 'last', 'clipboard']
+let g:esearch.live_update = v:true
+" let g:esearch.win_new = {esearch -> esearch#buf#goto_or_open(esearch.name, 'vnew')}
 
 " ~ Golang
 let g:go_code_completion_enabled = v:false " cause we use nvim-compe
@@ -185,3 +191,6 @@ lua <<EOF
   })
 EOF
 end
+
+" nvim-cursorword
+" hi default CursorWord cterm=underline gui=underline

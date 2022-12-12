@@ -1,4 +1,3 @@
-lua <<EOF
 local glance = require('glance')
 local actions = glance.actions
 
@@ -57,4 +56,3 @@ glance.setup({
     enable = true, -- Available strating from nvim-0.8+
   },
 })
-EOF
