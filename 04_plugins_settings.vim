@@ -183,11 +183,38 @@ lua <<EOF
   require("neo-tree").setup({
     enable_git_status = true,
     default_component_configs = {
-      indent = {},
-      folder_closed = ">",
-      folder_open = "-",
-      folder_empty = "ﰊ",
+      indent = {
+        indent_size = 2,
+        padding = 0,
+      },
+      icon = {
+        folder_closed = ">",
+        folder_open = "-",
+        folder_empty = "ﰊ",
+      },
+      modified = {
+        symbol = "[+]"
+      }
     },
+    window = {
+      width = 25
+    },
+    filesystem = {
+      filtered_items = {
+        visible = false,
+        hide_dotfiles = false,
+        hide_gitignored = false,
+        hide_by_name = {
+          "node_modules",
+          "tags",
+        },
+        never_show = {
+          ".DS_Store"
+        }
+      },
+      follow_current_file = true,
+      use_libuv_file_watcher = true,
+    }
   })
 EOF
 end

@@ -34,6 +34,7 @@ Plug 'vim-utils/vim-man'
 Plug 'adelarsq/vim-matchit'
 Plug 'simeji/winresizer'
 Plug 'pechorin/any-jump.vim'
+" Plug '~/work/any-jump.vim'
 Plug 'AndrewRadev/linediff.vim'
 
 " Searching
@@ -42,7 +43,6 @@ Plug 'romainl/vim-cool'
 
 " Git support
 Plug 'tpope/vim-fugitive'
-Plug 'jreybert/vimagit'
 
 " Tests
 Plug 'tpope/vim-dispatch'

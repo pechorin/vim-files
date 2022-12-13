@@ -109,8 +109,10 @@ nnoremap <C-ScrollWheelDown> :tabprevious<CR>
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " Neotree
-nmap <leader>vp :Neotree<CR>
-nmap <leader>vb :Neotree buffers<CR>
+nmap <leader>m :Neotree<CR>
+nmap <leader>M :Neotree %<CR>
+nmap <leader>, :Neotree buffers<CR>
+nmap <leader>. :Neotree float git_status<CR>
 
 " glance.nvim
 nnoremap gR <CMD>Glance references<CR>
