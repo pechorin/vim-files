@@ -37,28 +37,6 @@ let g:esearch = {}
 " v:hlsearch is true), the last searched pattern or the clipboard content.
 let g:esearch.prefill = ['hlsearch', 'last', 'clipboard']
 let g:esearch.live_update = v:true
-" let g:esearch.win_new = {esearch -> esearch#buf#goto_or_open(esearch.name, 'vnew')}
-
-" ~ Golang
-let g:go_code_completion_enabled = v:false " cause we use nvim-compe
-let g:go_test_show_name          = v:true
-let g:go_doc_popup_window        = v:true
-let g:go_fold_enable             = []
-
-let g:go_highlight_extra_types           = 1
-let g:go_highlight_operators             = 1
-let g:go_highlight_functions             = 1
-let g:go_highlight_function_parameters   = 1
-let g:go_highlight_function_calls        = 1
-let g:go_highlight_types                 = 1
-let g:go_highlight_fields                = 1
-" let g:go_highlight_format_strings        = 1
-" let g:go_highlight_generate_tags         = 1
-" let g:go_highlight_variable_declarations = 1
-" let g:go_highlight_variable_assignments  = 1
-
-let g:go_mod_fmt_autosave = 1
-let g:go_fmt_autosave = 1
 
 " ~ org-mode
 let g:org_agenda_files = ['~/orgs/*.org']
@@ -177,45 +155,65 @@ EOF
 " ~ vim hexokinase (display css/rgb colors)
 let g:Hexokinase_highlighters = ['background']
 
-" ~ neo-tree
 if s:nvim
 lua <<EOF
-  require("neo-tree").setup({
-    enable_git_status = true,
-    default_component_configs = {
-      indent = {
-        indent_size = 2,
-        padding = 0,
+
+-- ~ neo-tree
+require("neo-tree").setup({
+  enable_git_status = true,
+  default_component_configs = {
+    indent = {
+      indent_size = 2,
+      padding = 0,
+    },
+    icon = {
+      folder_closed = ">",
+      folder_open = "-",
+      folder_empty = "ﰊ",
+    },
+    modified = {
+      symbol = "[+]"
+    }
+  },
+  window = {
+    width = 25
+  },
+  filesystem = {
+    filtered_items = {
+      visible = false,
+      hide_dotfiles = false,
+      hide_gitignored = false,
+      hide_by_name = {
+        "node_modules",
+        "tags",
       },
-      icon = {
-        folder_closed = ">",
-        folder_open = "-",
-        folder_empty = "ﰊ",
-      },
-      modified = {
-        symbol = "[+]"
+      never_show = {
+        ".DS_Store"
       }
     },
-    window = {
-      width = 25
-    },
-    filesystem = {
-      filtered_items = {
-        visible = false,
-        hide_dotfiles = false,
-        hide_gitignored = false,
-        hide_by_name = {
-          "node_modules",
-          "tags",
-        },
-        never_show = {
-          ".DS_Store"
-        }
-      },
-      follow_current_file = true,
-      use_libuv_file_watcher = true,
-    }
-  })
+    follow_current_file = true,
+    use_libuv_file_watcher = true,
+  }
+})
+
+-- ~ ray-x/go.nvim
+require('go').setup({
+  -- goimport = 'gopls', -- if set to 'gopls' will use golsp format
+  -- gofmt = 'gopls', -- if set to gopls will use golsp format
+  -- lsp_cfg = true,
+  -- lsp_on_attach = true,
+})
+
+-- format on save
+local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+   require('go.format').gofmt()
+  end,
+  group = format_sync_grp,
+})
+
 EOF
 end
 
