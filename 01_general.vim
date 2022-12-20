@@ -98,3 +98,9 @@ set termguicolors
 
 " do not hl cursor in term
 hi CursorLine cterm=NONE
+
+" completion options
+set wildoptions=pum
+set pumblend=0
+set inccommand=nosplit
+" set floatblend=8

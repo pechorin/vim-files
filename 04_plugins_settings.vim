@@ -50,56 +50,6 @@ let g:ruby_no_expensive = 1
 let g:any_jump_search_prefered_engine = 'rg'
 let g:any_jump_ignored_files = ['*.tmp', '*.temp', 'tags']
 
-" ~  fzf configuration
-let g:fzf_preview_window = ''
-
-" ~ fzf with floating windows support
-if s:nvim
-  " TODO: implement vim support
-  set wildoptions=pum
-  set pumblend=0
-  set inccommand=nosplit
-
-  " set floatblend=8
-
-  " == Floating FZF
-
-  " Reverse the layout to make the FZF list top-down
-  " let $FZF_DEFAULT_OPTS='--layout=reverse'
-
-  " Using the custom window creation function
-  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-
-  " Function to create the custom floating window
-  function! FloatingFZF()
-    " creates a scratch, unlisted, new, empty, unnamed buffer
-    " to be used in the floating window
-    let buf = nvim_create_buf(v:false, v:true)
-
-    " 90% of the height
-    let height = float2nr(&lines * 0.7)
-    " 60% of the height
-    let width = float2nr(&columns * 0.5)
-    " horizontal position (centralized)
-    let horizontal = float2nr((&columns - width) / 2)
-    " vertical position (one line down of the top)
-    let vertical = 2
-
-    let opts = {
-          \ 'relative': 'editor',
-          \ 'row': vertical,
-          \ 'col': horizontal,
-          \ 'width': width,
-          \ 'height': height
-          \ }
-
-    " open the new window, floating, and enter to it
-    call nvim_open_win(buf, v:true, opts)
-  endfunction
-endif
-
-" TODO: what plugin is this?
-let g:CoolTotalMatches = 1
 
 " ~ Lightline settings
 let g:lightline = {
@@ -132,11 +82,18 @@ end
 if s:nvim
 lua <<EOF
   require('nvim-treesitter.configs').setup {
-    ensure_installed = { "c", "cpp", "lua", "bash", "ruby", "go", "rust", "css", "html", "javascript", "json", "regex", "typescript", "vue", "python" },
-     -- Modules and its options go here
-    highlight = { enable = true },
-    incremental_selection = { enable = true },
-    textobjects = { enable = true }
+    ensure_installed = {
+      "c", "cpp", "lua", "bash", "ruby",
+      "go", "rust", "css", "html", "javascript",
+      "json", "regex", "typescript", "vue", "python"
+    },
+
+    -- Install parsers synchronously (only applied to `ensure_installed`)
+    sync_install = true,
+    auto_install = true,
+    highlight = {
+      enable = true,
+    }
   }
 EOF
 end
@@ -212,6 +169,69 @@ vim.api.nvim_create_autocmd("BufWritePre", {
    require('go.format').gofmt()
   end,
   group = format_sync_grp,
+})
+
+-- ~ symbols-outline.nvim
+require("symbols-outline").setup({
+  highlight_hovered_item = true,
+  show_guides = true,
+  auto_preview = false,
+  position = 'right',
+  relative_width = true,
+  width = 25,
+  auto_close = false,
+  show_numbers = false,
+  show_relative_numbers = false,
+  show_symbol_details = true,
+  preview_bg_highlight = 'Pmenu',
+  autofold_depth = nil,
+  auto_unfold_hover = true,
+  fold_markers = { '', '' },
+  wrap = false,
+  keymaps = { -- These keymaps can be a string or a table for multiple keys
+    close = {"<Esc>", "q"},
+    goto_location = "<Cr>",
+    focus_location = "o",
+    hover_symbol = "<C-space>",
+    toggle_preview = "K",
+    rename_symbol = "r",
+    code_actions = "a",
+    fold = "h",
+    unfold = "l",
+    fold_all = "W",
+    unfold_all = "E",
+    fold_reset = "R",
+  },
+  lsp_blacklist = {},
+  symbol_blacklist = {},
+  symbols = {
+    File = {icon = "", hl = "TSURI"},
+    Module = {icon = "", hl = "TSNamespace"},
+    Namespace = {icon = "", hl = "TSNamespace"},
+    Package = {icon = "", hl = "TSNamespace"},
+    Class = {icon = "𝓒", hl = "TSType"},
+    Method = {icon = "ƒ", hl = "TSMethod"},
+    Property = {icon = "", hl = "TSMethod"},
+    Field = {icon = "", hl = "TSField"},
+    Constructor = {icon = "", hl = "TSConstructor"},
+    Enum = {icon = "ℰ", hl = "TSType"},
+    Interface = {icon = "ﰮ", hl = "TSType"},
+    Function = {icon = "", hl = "TSFunction"},
+    Variable = {icon = "", hl = "TSConstant"},
+    Constant = {icon = "", hl = "TSConstant"},
+    String = {icon = "𝓐", hl = "TSString"},
+    Number = {icon = "#", hl = "TSNumber"},
+    Boolean = {icon = "⊨", hl = "TSBoolean"},
+    Array = {icon = "", hl = "TSConstant"},
+    Object = {icon = "⦿", hl = "TSType"},
+    Key = {icon = "🔐", hl = "TSType"},
+    Null = {icon = "NULL", hl = "TSType"},
+    EnumMember = {icon = "", hl = "TSField"},
+    Struct = {icon = "𝓢", hl = "TSType"},
+    Event = {icon = "🗲", hl = "TSType"},
+    Operator = {icon = "+", hl = "TSOperator"},
+    TypeParameter = {icon = "𝙏", hl = "TSParameter"}
+  }
 })
 
 EOF

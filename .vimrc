@@ -132,6 +132,9 @@ if s:nvim
 
   " highlight the word under the cursor.
   Plug 'xiyaowong/nvim-cursorword'
+
+  " A tree like view for symbols using lsp
+  Plug 'simrat39/symbols-outline.nvim'
 end
 
 call plug#end()
@@ -148,6 +151,7 @@ let base_configs = [
   \ ]
 
 let lua_configs = [
+  \ '04_fzf.vim',
   \ '05_completion.lua',
   \ '06_lsp.lua',
   \ '07_glance.lua',

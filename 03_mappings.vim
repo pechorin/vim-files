@@ -72,7 +72,8 @@ map <leader>ev :vsplit ~/.vimrc <CR>
 map <leader>ed :TSBufEnable highlight <CR>
 
 " Git mappings
-nmap <leader>g :Git<CR>
+nmap <leader>gg :Git<CR>
+nmap <leader>gb :Git blame<CR>
 
 " remap clipboard in osx
 noremap <Leader>y "*y
