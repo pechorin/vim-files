@@ -151,6 +151,7 @@ let base_configs = [
   \ ]
 
 let lua_configs = [
+  \ '04_plugins_settings.lua',
   \ '04_fzf.vim',
   \ '05_completion.lua',
   \ '06_lsp.lua',
