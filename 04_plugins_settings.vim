@@ -78,11 +78,6 @@ if executable('rg')
   let g:gutentags_file_list_command = 'rg --files'
 end
 
-if s:nvim
-lua <<EOF
-EOF
-end
-
 " hi MsgSeparator guifg=#ff00ff
 
 let g:terminal_key = '<c-=>'

@@ -96,12 +96,13 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'gzagatti/vim-leuven-theme'
 Plug 'carakan/new-railscasts-theme'
 
-" == color mono contrast schemes
+" == Mono contrast schemes
 Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
 Plug 'kkga/vim-envy'
 Plug 'yasukotelin/shirotelin'
 
 if s:nvim
+  " Lsp & Tree-sitter support
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'ray-x/go.nvim'
   Plug 'nvim-treesitter/nvim-treesitter'
@@ -109,13 +110,17 @@ if s:nvim
   Plug 'neovim/nvim-lspconfig'
   " Plug 'ray-x/lsp_signature.nvim'
   Plug 'folke/lsp-colors.nvim'
+
+  " Display key definitions in cool menu
   Plug 'folke/which-key.nvim'
-  Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' } " display colors inline
+
+  " display colors inline
+  Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
   Plug 'nvim-lua/plenary.nvim'               " utilities
   Plug 'MunifTanjim/nui.nvim'                " lua ui
   Plug 'nvim-neo-tree/neo-tree.nvim'         " modern nerdtree
-  Plug 'rgroli/other.nvim'                   " open alternative file
+  Plug 'rgroli/other.nvim'                   " open alternative file TODO: not working
 
   " A window for previewing, navigating and editing your LSP locations
   Plug 'dnlhc/glance.nvim'
@@ -133,7 +138,7 @@ if s:nvim
   " highlight the word under the cursor.
   Plug 'xiyaowong/nvim-cursorword'
 
-  " A tree like view for symbols using lsp
+  " A tree like view for symbols using lsp TODO: not working
   Plug 'simrat39/symbols-outline.nvim'
 end
 
