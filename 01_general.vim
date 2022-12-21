@@ -83,13 +83,9 @@ set mouse=a
 " === GUI
 syntax on
 
-if !has("nvim")
-  set guifont=Monaco:h14
-endif
-
-set guioptions-=T  " remove gui toolbar
-set guioptions-=l  " remove left-hand scrollbar
-set guioptions-=L  " remove left-hand scrollbar
+" set guioptions-=T  " remove gui toolbar
+" set guioptions-=l  " remove left-hand scrollbar
+" set guioptions-=L  " remove left-hand scrollbar
 " set guioptions+=a  " automatically add selected text in the VISUAL mode to system copy-paste buffer
 " set guioptions-=e  " remove gui tabs
 
@@ -99,8 +95,10 @@ set termguicolors
 " do not hl cursor in term
 hi CursorLine cterm=NONE
 
-" completion options
-set wildoptions=pum
-set pumblend=0
-set inccommand=nosplit
-" set floatblend=8
+if has('nvim')
+  " completion options
+  set wildoptions=pum
+  set pumblend=0
+  set inccommand=nosplit
+  " set floatblend=8
+endif

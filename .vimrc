@@ -88,18 +88,17 @@ Plug 'chr4/nginx.vim'
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
 Plug 'danilo-augusto/vim-afterglow'
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'savq/melange'
 Plug 'projekt0n/github-nvim-theme'
 Plug 'elvessousa/sobrio'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'gzagatti/vim-leuven-theme'
 Plug 'carakan/new-railscasts-theme'
+Plug 'atelierbram/Base2Tone-vim'
 
 " == Mono contrast schemes
 Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
 Plug 'kkga/vim-envy'
-Plug 'yasukotelin/shirotelin'
 
 if s:nvim
   " Lsp & Tree-sitter support
@@ -140,6 +139,9 @@ if s:nvim
 
   " A tree like view for symbols using lsp TODO: not working
   Plug 'simrat39/symbols-outline.nvim'
+
+  " Plugins development
+  Plug 'folke/neodev.nvim'
 end
 
 call plug#end()
