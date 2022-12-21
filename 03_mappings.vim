@@ -1,7 +1,8 @@
 " ~ Custom bindings/mappings
 "
 
-let s:nvim = has('nvim')
+let s:nvim  = has('nvim')
+let s:debug = v:false
 
 " Safe and universal keybind mapper
 " for vim: regular mapping
@@ -12,18 +13,36 @@ let s:modes_mapping = {
       \"vmap":     ['v'],
       \"xmap":     ['x'],
       \"cmap":     ['c'],
+      \"smap":     ['s'],
+      \"omap":     ['o'],
+      \"imap":     ['i'],
+      \"lmap":     ['l'],
+      \"tmap":     ['t'],
       \"noremap":  ['',  { "noremap": v:true }],
       \"nnoremap": ['n', { "noremap": v:true }],
       \"vnoremap": ['v', { "noremap": v:true }],
       \"xnoremap": ['x', { "noremap": v:true }],
       \"cnoremap": ['c', { "noremap": v:true }],
+      \"snoremap": ['s', { "noremap": v:true }],
+      \"onoremap": ['o', { "noremap": v:true }],
+      \"inoremap": ['i', { "noremap": v:true }],
+      \"lnoremap": ['l', { "noremap": v:true }],
+      \"tnoremap": ['t', { "noremap": v:true }],
+      \}
+
+" TODO:
+let s:modes_aliases =  {
+      \'': ['n', 'v', 'o'],
+      \'n': ['n'],
+      \'v': ['v'],
+      \'x': ['x'],
+      \'c': ['c'],
       \}
 
 let s:mapping_options = ["<buffer>", "<nowait>", "<silent>", "<script>", "<expr>", "<unique>"]
 let s:command_desc_regexp = "[\"|\'][[:alnum:][:blank:],.]\*[\"|\']$"
-let s:debug = v:false
 
-fu! g:SafeKeypMap(...)
+fu! s:safe_key_map(...)
   let l:options = {}
 
   let l:maybe_desc = matchstr(a:1, s:command_desc_regexp)
@@ -55,6 +74,9 @@ fu! g:SafeKeypMap(...)
     let l:mode_mapping = get(s:modes_mapping, l:cmd)
     let l:mode = l:mode_mapping[0]
 
+    if type(l:mode) != v:t_string
+      echoer 'mode mapping not defined for [' .. l:cmd .. ']'
+    endif
 
     if len(l:mode_mapping) > 1
       let l:options = extend(l:options, l:mode_mapping[1])
@@ -63,10 +85,6 @@ fu! g:SafeKeypMap(...)
     let l:splitted = split(l:lhs_rhs, ' ')
     let l:lhs = l:splitted[0]
     let l:rhs = l:splitted[1:-1]
-
-    if type(l:mode) != v:t_string
-      echoer 'mode mapping not defined for [' .. l:cmd .. ']'
-    endif
 
     if s:debug
       echo "final call -> nvim_set_keymap " ..
@@ -82,7 +100,7 @@ fu! g:SafeKeypMap(...)
   endif
 endfu
 
-command! -nargs=* KeyMap call g:SafeKeypMap(<q-args>)
+command! -nargs=* KeyMap call s:safe_key_map(<q-args>)
 
 " remap ; to :
 nmap ; :
