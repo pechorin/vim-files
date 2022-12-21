@@ -106,3 +106,13 @@ vim.diagnostic.config({
 -- Show line diagnostics automatically in hover window
 vim.o.updatetime = 250
 vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
+-- vim dev
+lsp_config.vimls.setup({})
+
+-- nvim dev
+require("neodev").setup({
+  -- add any options here, or leave empty to use the default settings
+})
+
+lsp_config.sumneko_lua.setup({})

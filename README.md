@@ -18,6 +18,8 @@ cd ~ && git clone https://github.com/pechorin/vim-files
 - ctags
 - for ruby dev: rbenv & solargraph
 - go runtime
+- `npm install -g vim-language-server`
+- `brew install lua-language-server`
 
 ### Bindings and usage
 
