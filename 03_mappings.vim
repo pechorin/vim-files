@@ -1,122 +1,200 @@
 " ~ Custom bindings/mappings
+"
+
+let s:nvim = has('nvim')
+
+" Safe and universal keybind mapper
+" for vim: regular mapping
+" for nvim: mapping with desc attribute
+let s:modes_mapping = {
+      \"map":      [''],
+      \"nmap":     ['n'],
+      \"vmap":     ['v'],
+      \"xmap":     ['x'],
+      \"cmap":     ['c'],
+      \"noremap":  ['',  { "noremap": v:true }],
+      \"nnoremap": ['n', { "noremap": v:true }],
+      \"vnoremap": ['v', { "noremap": v:true }],
+      \"xnoremap": ['x', { "noremap": v:true }],
+      \"cnoremap": ['c', { "noremap": v:true }],
+      \}
+
+let s:mapping_options = ["<buffer>", "<nowait>", "<silent>", "<script>", "<expr>", "<unique>"]
+let s:command_desc_regexp = "[\"|\'][[:alnum:][:blank:],.]\*[\"|\']$"
+let s:debug = v:false
+
+fu! g:SafeKeypMap(...)
+  let l:options = {}
+
+  let l:maybe_desc = matchstr(a:1, s:command_desc_regexp)
+
+  if len(l:maybe_desc)
+    let l:maybe_desc = substitute(l:maybe_desc, "'", '', 'g')
+    let l:maybe_desc = substitute(l:maybe_desc, "\"", '', 'g')
+    let l:options['desc'] = l:maybe_desc
+  endif
+
+  let l:without_desc = substitute(a:1, s:command_desc_regexp, '', '')
+
+  if s:nvim
+    let l:lhs_rhs = l:without_desc
+
+    for map_opt in s:mapping_options
+      let l:m = matchstr(l:lhs_rhs, map_opt)
+
+      if len(l:m)
+        let l:opt_name = substitute(map_opt, '<', '', '')
+        let l:opt_name = substitute(l:opt_name, '>', '', '')
+        let l:lhs_rhs  = substitute(l:lhs_rhs, map_opt .. ' ', '', '')
+        let l:options[l:opt_name] = v:true
+      endif
+    endfor
+
+    let l:cmd = matchstr(l:lhs_rhs, "^[[:alnum:]]\*")
+    let l:lhs_rhs = substitute(l:without_desc, l:cmd, '', '')
+    let l:mode_mapping = get(s:modes_mapping, l:cmd)
+    let l:mode = l:mode_mapping[0]
+
+
+    if len(l:mode_mapping) > 1
+      let l:options = extend(l:options, l:mode_mapping[1])
+    endif
+
+    let l:splitted = split(l:lhs_rhs, ' ')
+    let l:lhs = l:splitted[0]
+    let l:rhs = l:splitted[1:-1]
+
+    if type(l:mode) != v:t_string
+      echoer 'mode mapping not defined for [' .. l:cmd .. ']'
+    endif
+
+    if s:debug
+      echo "final call -> nvim_set_keymap " ..
+            \ l:mode .. ' ' ..
+            \ l:lhs .. ' ' ..
+            \ join(l:rhs, ' ') .. ' ' ..
+            \ string(l:options)
+    end
+
+    call nvim_set_keymap(l:mode, l:lhs, join(l:rhs, ' '), l:options)
+  else
+    execute l:without_desc
+  endif
+endfu
+
+command! -nargs=* KeyMap call g:SafeKeypMap(<q-args>)
 
 " remap ; to :
 nmap ; :
 
-" set leader key
+" set leader key for custom commands
 let mapleader=","
-let maplocalleader= "\\"
 
 " https://github.com/r00k/dotfiles/blob/master/vimrc
 " Disable that goddamn 'Entering Ex mode. Type 'visual' to go to Normal mode.'
 " that I trigger 40x a day.
-map Q <Nop>
+nmap Q <Nop>
+
 " Disable K looking man stuff up
-" map K <Nop>
+nmap K <Nop>
 
 " Bash like keys for the command line
-cnoremap <C-A>      <Home>
-cnoremap <C-E>      <End>
-cnoremap <C-K>      <C-U>
+KeyMap cnoremap <C-A> <Home>
+KeyMap cnoremap <C-E> <End>
+KeyMap cnoremap <C-K> <C-U>
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
+KeyMap xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+KeyMap nmap ga <Plug>(EasyAlign)
 
 " ~ Navigation utilities mappings ~
 
 " Buffers lists
-nmap <leader>b :Buffers<CR>
+KeyMap nmap <leader>b :Buffers<CR> "FZF Buffers"
 
 " Tagbar
-map <leader>et :Tagbar<CR>
+KeyMap nmap <leader>et :Tagbar<CR> "Tagbar"
 
 " NERDTree for current working dir
-nmap <leader>n :NERDTree<CR>
+KeyMap nmap <leader>n :NERDTree<CR> "NERDTree for project"
 
 " NERDTree for current file
-nmap <leader>N :NERDTree %<CR>
+KeyMap nmap <leader>N :NERDTree %<CR> "NERDTree for current file"
 
 " ~ Buffer functions mappings ~
 
 " comment current line
-nmap <leader>c <Plug>CommentaryLine
+KeyMap nmap <leader>c <Plug>CommentaryLine "Comment current line"
 
 " comment block in visual mode
-vmap <leader>c <Plug>Commentary
+KeyMap vmap <leader>c <Plug>Commentary "Comment visualy selected text"
 
 " new tab
-map <leader>t :tabnew<CR>
-map <cmd>t :tabnew<CR>
+KeyMap nmap <leader>t :tabnew<CR> "Create new tab"
+KeyMap nmap <cmd>t :tabnew<CR> "Create new tax"
 
 " ~ FZF mappings ~
 
 " current project files
-nmap <leader>q :Files<CR>
+KeyMap nmap <leader>q :Files<CR> "FZF Project files"
 
 " helptags
-map <leader>sh :Helptags <CR>
+KeyMap nmap <leader>sh :Helptags <CR> "FZF Help tags"
 
 " theme switcher
-map <leader>st :Color <CR>
+KeyMap nmap <leader>st :Color <CR> "FZF Color themes"
 
 " eval current vimscrupt buffer
-map <leader>ee :so %<CR>
+KeyMap nmap <leader>ee :so %<CR> "Eval current file as vimscript"
 
 " open $MYVIMRC
-map <leader>ev :vsplit ~/.vimrc <CR>
-
-" redraw tree-sitter colors
-map <leader>ed :TSBufEnable highlight <CR>
+KeyMap nmap <leader>ev :vsplit ~/.vimrc <CR> "Open $MYVIMRC in vsplit"
 
 " Git mappings
-nmap <leader>gg :Git<CR>
-nmap <leader>gb :Git blame<CR>
+KeyMap nmap <leader>gg :Git<CR> "Open Git"
+KeyMap nmap <leader>gb :Git blame<CR> "Git blame for file"
 
 " remap clipboard in osx
-noremap <Leader>y "*y
-noremap <Leader>p "*p
-noremap <Leader>Y "+y
-noremap <Leader>P "+p
+KeyMap noremap <Leader>y "*y
+KeyMap noremap <Leader>p "*p
+KeyMap noremap <Leader>Y "+y
+KeyMap noremap <Leader>P "+p
 
 " Close current buffer
-noremap <leader>x <cmd>bp\|bd#<CR>
+KeyMap noremap <leader>x <cmd>bp\|bd#<CR> "Kill current buffer"
 
 " tests runner
-nmap <silent> <leader>rf :TestFile<CR>
-nmap <silent> <leader>rn :TestNearest<CR>
-nmap <silent> <leader>rs :TestSuite<CR>
-nmap <silent> <leader>rl :TestLast<CR>
+KeyMap nmap <silent> <leader>rf :TestFile<CR> "Test file"
+KeyMap nmap <silent> <leader>rn :TestNearest<CR> "Test nearest"
+KeyMap nmap <silent> <leader>rs :TestSuite<CR> "Test suite"
+KeyMap nmap <silent> <leader>rl :TestLast<CR> "Test last"
 
 " Show the quickfix window
-nnoremap <Leader>co :copen<CR>
+KeyMap nnoremap <Leader>co :copen<CR> "Show quickfix"
 
 " Hide the quickfix window
-nnoremap <Leader>cc :cclose<CR>
+KeyMap nnoremap <Leader>cc :cclose<CR> "Hide quickfix"
 
 " run AnyJump on ctrl+click
-nnoremap <C-LeftMouse> :AnyJump<CR>
+KeyMap nnoremap <C-LeftMouse> :AnyJump<CR> "Run AnyJump on ctrl+click"
 
 " ctrl+mousewheel for tab switching
-nnoremap <C-ScrollWheelUp> :tabnext<CR>
-nnoremap <C-ScrollWheelDown> :tabprevious<CR>
+KeyMap nnoremap <C-ScrollWheelUp> :tabnext<CR> "ctrl+mousewheel for tab switching"
+KeyMap nnoremap <C-ScrollWheelDown> :tabprevious<CR> "ctrl+mousewheel for tab switching"
 
-" Search visual selected text via:
-"   visual select text then press //
-"
 " from: https://vim.fandom.com/wiki/Search_for_visually_selected_text
-vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+KeyMap vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR> "Search visual selected text via //"
 
 " Neotree
-nmap <leader>m :Neotree<CR>
-nmap <leader>M :Neotree %<CR>
-nmap <leader>, :Neotree buffers<CR>
-nmap <leader>. :Neotree float git_status<CR>
+KeyMap nmap <leader>m :Neotree<CR> "Neotree"
+KeyMap nmap <leader>M :Neotree %<CR> "Neotree for current file"
+KeyMap nmap <leader>, :Neotree buffers<CR> "Neotree buffers"
+KeyMap nmap <leader>. :Neotree float git_status<CR> "Neotree git"
 
 " glance.nvim
-nnoremap gR <CMD>Glance references<CR>
-nnoremap gD <CMD>Glance definitions<CR>
-nnoremap gY <CMD>Glance type_definitions<CR>
-nnoremap gM <CMD>Glance implementations<CR>
+KeyMap nnoremap gR <CMD>Glance references<CR> "Glance reference"
+KeyMap nnoremap gD <CMD>Glance definitions<CR> "Glance definitions"
+KeyMap nnoremap gY <CMD>Glance type_definitions<CR> "Glance type definitions"
+KeyMap nnoremap gM <CMD>Glance implementations<CR> "Glance implementations"
