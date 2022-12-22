@@ -22,7 +22,7 @@ set showmode       " always show what mode we're currently editing in
 set complete=.,w,b,u,t,i
 
 " update interval
-set updatetime=1000
+set updatetime=500
 
 set encoding=utf-8
 set fileencodings=utf-8,cp1251
@@ -74,7 +74,7 @@ set undolevels=1000 " use many muchos levels of undo
 set nobackup        " no backup files
 set nowritebackup   " only in case you don't want a backup file while editing
 set noswapfile      " no swap files
-set timeoutlen=500
+set timeoutlen=250
 
 set completeopt=menu,menuone,noselect
 

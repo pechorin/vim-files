@@ -64,13 +64,15 @@ fu! s:safe_key_map(...)
       if len(l:m)
         let l:opt_name = substitute(map_opt, '<', '', '')
         let l:opt_name = substitute(l:opt_name, '>', '', '')
-        let l:lhs_rhs  = substitute(l:lhs_rhs, map_opt .. ' ', '', '')
+        let l:lhs_rhs  = substitute(l:lhs_rhs, map_opt, '', '')
+        let l:lhs_rhs  = substitute(l:lhs_rhs, '  ', ' ', '')
+
         let l:options[l:opt_name] = v:true
       endif
     endfor
 
     let l:cmd = matchstr(l:lhs_rhs, "^[[:alnum:]]\*")
-    let l:lhs_rhs = substitute(l:without_desc, l:cmd, '', '')
+    let l:lhs_rhs = substitute(l:lhs_rhs, l:cmd, '', '')
     let l:mode_mapping = get(s:modes_mapping, l:cmd)
     let l:mode = l:mode_mapping[0]
 
@@ -168,22 +170,22 @@ KeyMap nmap <leader>st :Color <CR> "FZF Color themes"
 KeyMap nmap <leader>ee :so %<CR> "Eval current file as vimscript"
 
 " open $MYVIMRC
-KeyMap nmap <leader>ev :vsplit ~/.vimrc <CR> "Open $MYVIMRC in vsplit"
+KeyMap nmap <leader>ev :e ~/.vimrc <CR> "Open $MYVIMRC in current buffer"
 
 " Git mappings
 KeyMap nmap <leader>gg :Git<CR> "Open Git"
 KeyMap nmap <leader>gb :Git blame<CR> "Git blame for file"
 
 " remap clipboard in osx
-KeyMap noremap <Leader>y "*y
-KeyMap noremap <Leader>p "*p
-KeyMap noremap <Leader>Y "+y
-KeyMap noremap <Leader>P "+p
+KeyMap noremap <Leader>y "*y 'Copy to system clipboard'
+KeyMap noremap <Leader>p "*p 'Paste from system clipboard'
+KeyMap noremap <Leader>Y "+y 'Copy to editor clipboard'
+KeyMap noremap <Leader>P "+p 'Paste from editor clipboard'
 
 " Close current buffer
 KeyMap noremap <leader>x <cmd>bp\|bd#<CR> "Kill current buffer"
 
-" tests runner
+" Tests runner
 KeyMap nmap <silent> <leader>rf :TestFile<CR> "Test file"
 KeyMap nmap <silent> <leader>rn :TestNearest<CR> "Test nearest"
 KeyMap nmap <silent> <leader>rs :TestSuite<CR> "Test suite"
