@@ -278,18 +278,15 @@ nmap Q <Nop>
 nmap K <Nop>
 
 " Bash like keys for the command line
-KeyMap cnoremap <C-A> <Home>
-KeyMap cnoremap <C-E> <End>
-KeyMap cnoremap <C-K> <C-U>
+KeyMap cnoremap <C-A> <Home> "Bash-like CTRL+A for command line"
+KeyMap cnoremap <C-E> <End>  "Bash-like CTRL+E for command line"
+KeyMap cnoremap <C-K> <C-U>  "Bash-like CTRL+K for command line"
 
-KeyMap xmap ga <Plug>(EasyAlign) "Align in visual mode (e.g. vipga)"
+KeyMap xmap ga <Plug>(EasyAlign) "Align in visual mode (e.g. `vipga`)"
 
-KeyMap nmap ga <Plug>(EasyAlign) "Align for a motion/text object (e.g. gaip)"
+KeyMap nmap ga <Plug>(EasyAlign) "Align for a motion/text object (e.g. `gaip`)"
 
 " ~ Navigation utilities mappings ~
-
-" Buffers lists
-KeyMap nmap <leader>b :Buffers<CR> "FZF Buffers"
 
 " Tagbar
 KeyMap nmap <leader>et :Tagbar<CR> "Tagbar"
@@ -299,6 +296,12 @@ KeyMap nmap <leader>n :NERDTree<CR> "NERDTree for project"
 
 " NERDTree for current file
 KeyMap nmap <leader>N :NERDTree %<CR> "NERDTree for current file"
+
+" Neotree
+KeyMap nmap <leader>m :Neotree<CR> "Neotree"
+KeyMap nmap <leader>M :Neotree %<CR> "Neotree for current file"
+KeyMap nmap <leader>, :Neotree buffers<CR> "Neotree buffers"
+KeyMap nmap <leader>. :Neotree float git_status<CR> "Neotree git"
 
 " ~ Buffer functions mappings ~
 
@@ -310,9 +313,16 @@ KeyMap vmap <leader>c <Plug>Commentary "Comment visualy selected text"
 
 " new tab
 KeyMap nmap <leader>t :tabnew<CR> "Create new tab"
-KeyMap nmap <cmd>t :tabnew<CR> "Create new tax"
+KeyMap nmap <cmd>t :tabnew<CR> "Create new tab"
+
+" ctrl+mousewheel for tab switching
+KeyMap nnoremap <C-ScrollWheelUp> :tabnext<CR> "ctrl+mousewheel for tab switching"
+KeyMap nnoremap <C-ScrollWheelDown> :tabprevious<CR> "ctrl+mousewheel for tab switching"
 
 " ~ FZF mappings ~
+
+" Buffers lists
+KeyMap nmap <leader>b :Buffers<CR> "FZF Buffers"
 
 " current project files
 KeyMap nmap <leader>q :Files<CR> "FZF Project files"
@@ -324,10 +334,10 @@ KeyMap nmap <leader>sh :Helptags <CR> "FZF Help tags"
 KeyMap nmap <leader>st :Color <CR> "FZF Color themes"
 
 " eval current vimscrupt buffer
-KeyMap nmap <leader>ee :so %<CR> "Eval current file as vimscript"
+KeyMap nmap <leader>ee :so %<CR> "(vimrc) Eval current file as vimscript"
 
 " open $MYVIMRC
-KeyMap nmap <leader>ev :e ~/.vimrc <CR> "Open $MYVIMRC in current buffer"
+KeyMap nmap <leader>ev :e ~/.vimrc <CR> "(vimrc) Open $MYVIMRC in current buffer"
 
 " Git mappings
 KeyMap nmap <leader>gg :Git<CR> "Open Git"
@@ -349,30 +359,20 @@ KeyMap nmap <silent> <leader>rn :TestNearest<CR> "Test nearest"
 KeyMap nmap <silent> <leader>rs :TestSuite<CR> "Test suite"
 KeyMap nmap <silent> <leader>rl :TestLast<CR> "Test last"
 
-" Show the quickfix window
-KeyMap nnoremap <Leader>co :copen<CR> "Show quickfix"
-
-" Hide the quickfix window
-KeyMap nnoremap <Leader>cc :cclose<CR> "Hide quickfix"
-
 " run AnyJump on ctrl+click
 KeyMap nnoremap <C-LeftMouse> :AnyJump<CR> "Run AnyJump on ctrl+click"
 
-" ctrl+mousewheel for tab switching
-KeyMap nnoremap <C-ScrollWheelUp> :tabnext<CR> "ctrl+mousewheel for tab switching"
-KeyMap nnoremap <C-ScrollWheelDown> :tabprevious<CR> "ctrl+mousewheel for tab switching"
-
 " from: https://vim.fandom.com/wiki/Search_for_visually_selected_text
 KeyMap vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR> "Search visual selected text via //"
-
-" Neotree
-KeyMap nmap <leader>m :Neotree<CR> "Neotree"
-KeyMap nmap <leader>M :Neotree %<CR> "Neotree for current file"
-KeyMap nmap <leader>, :Neotree buffers<CR> "Neotree buffers"
-KeyMap nmap <leader>. :Neotree float git_status<CR> "Neotree git"
 
 " glance.nvim
 KeyMap nnoremap gR <CMD>Glance references<CR> "Glance reference"
 KeyMap nnoremap gD <CMD>Glance definitions<CR> "Glance definitions"
 KeyMap nnoremap gY <CMD>Glance type_definitions<CR> "Glance type definitions"
 KeyMap nnoremap gM <CMD>Glance implementations<CR> "Glance implementations"
+
+" Show the quickfix window
+KeyMap nnoremap <Leader>co :copen<CR> "Show quickfix"
+
+" Hide the quickfix window
+KeyMap nnoremap <Leader>cc :cclose<CR> "Hide quickfix"
