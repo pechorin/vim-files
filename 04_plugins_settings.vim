@@ -16,8 +16,8 @@ let g:vim_markdown_folding_disabled=1
 
 " ~ vim-test
 if s:nvim
-  let test#strategy = "dispatch"
-  let test#neovim#term_position = "rightbelow 15"
+  let test#strategy = "neovim"
+  let test#neovim#term_position = "rightbelow 20"
   let test#preserve_screen = 1
 else
   let test#neovim#term_position = "rightbelow"

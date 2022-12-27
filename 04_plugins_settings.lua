@@ -136,3 +136,9 @@ require("symbols-outline").setup({
     TypeParameter = {icon = "𝙏", hl = "TSParameter"}
   }
 })
+
+-- Autopairs
+require("nvim-autopairs").setup({})
+
+-- Surroundings
+require("nvim-surround").setup({})

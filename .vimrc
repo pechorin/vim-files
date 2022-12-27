@@ -142,6 +142,12 @@ if s:nvim
 
   " Plugins development
   Plug 'folke/neodev.nvim'
+
+  " Auto close quotes and other pairs
+  Plug 'windwp/nvim-autopairs'
+
+  " Change surrodings on fly
+  Plug 'kylechui/nvim-surround'
 end
 
 call plug#end()
