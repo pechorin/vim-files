@@ -12,7 +12,7 @@ if executable('/bin/zsh')
   set shell=/bin/zsh\ -l
 end
 
-filetype plugin indent on
+" filetype plugin indent on
 
 " === General vim options
 
@@ -81,7 +81,7 @@ set completeopt=menu,menuone,noselect
 set mouse=a
 
 " === GUI
-syntax on
+" syntax on
 
 " set guioptions-=T  " remove gui toolbar
 " set guioptions-=l  " remove left-hand scrollbar

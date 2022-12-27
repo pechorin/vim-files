@@ -33,8 +33,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-utils/vim-man'
 Plug 'adelarsq/vim-matchit'
 Plug 'simeji/winresizer'
-Plug 'pechorin/any-jump.vim'
-" Plug '~/work/any-jump.vim'
 Plug 'AndrewRadev/linediff.vim'
 
 " Searching
@@ -93,12 +91,18 @@ Plug 'projekt0n/github-nvim-theme'
 Plug 'elvessousa/sobrio'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'gzagatti/vim-leuven-theme'
-Plug 'carakan/new-railscasts-theme'
-Plug 'atelierbram/Base2Tone-vim'
+Plug 'rakr/vim-one'
 
 " == Mono contrast schemes
 Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
 Plug 'kkga/vim-envy'
+
+" == In development plugins
+Plug 'pechorin/any-jump.vim'
+" Plug '~/work/any-jump.vim'
+
+" Plug 'pechorin/any-jump.vim'
+Plug '~/work/u-keymapper.vim'
 
 if s:nvim
   " Lsp & Tree-sitter support
@@ -174,14 +178,14 @@ let lua_configs = [
 " load base vim settings
 for config in base_configs
   let config_path = s:scripts_path . config
-  exec 'source' . config_path
+  exe 'source' . config_path
 endfor
 
 " load nvim only settings
 if s:nvim
   for config in lua_configs
     let config_path = s:scripts_path . config
-    exec 'source' . config_path
+    exe 'source' . config_path
   endfor
 endif
 
