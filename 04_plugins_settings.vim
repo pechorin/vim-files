@@ -52,24 +52,27 @@ let g:any_jump_ignored_files = ['*.tmp', '*.temp', 'tags']
 
 
 " ~ Lightline settings
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste', 'gutentags', 'method' ],
-      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'Fugitive#Head',
-      \   'gutentags': "gutentags#statusline",
-      \ },
-      \ }
+" only for vim, nvim use lualine.lua
+if s:nvim != v:true
+  let g:lightline = {
+        \ 'colorscheme': 'powerline',
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste', 'gutentags', 'method' ],
+        \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
+        \ },
+        \ 'component_function': {
+        \   'gitbranch': 'Fugitive#Head',
+        \   'gutentags': "gutentags#statusline",
+        \ },
+        \ }
 
-" ~ Getuntags
-augroup MyGutentagsStatusLineRefresher
-    autocmd!
-    autocmd User GutentagsUpdating call lightline#update()
-    autocmd User GutentagsUpdated call lightline#update()
-augroup END
+  " ~ Getuntags
+  augroup MyGutentagsStatusLineRefresher
+      autocmd!
+      autocmd User GutentagsUpdating call lightline#update()
+      autocmd User GutentagsUpdated call lightline#update()
+  augroup END
+end
 
 let g:gutentags_define_advanced_commands = 1
 let g:gutentags_ctags_exclude = ['*.js', '*.jsx', '*.coffee', '*.js.erb', 'node_modules']
@@ -79,8 +82,6 @@ if executable('rg')
 end
 
 " hi MsgSeparator guifg=#ff00ff
-
-let g:terminal_key = '<c-=>'
 
 " ~ vim-table-mode
 let g:table_mode_corner='|'

@@ -32,7 +32,11 @@ Plug 'junegunn/vim-easy-align'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-utils/vim-man'
 Plug 'adelarsq/vim-matchit'
+
+" Resize windows with ctrl+e
 Plug 'simeji/winresizer'
+
+" Diff between lines
 Plug 'AndrewRadev/linediff.vim'
 
 " Searching
@@ -99,20 +103,30 @@ Plug 'kkga/vim-envy'
 
 " == In development plugins
 Plug 'pechorin/any-jump.vim'
-" Plug '~/work/any-jump.vim'
+Plug 'pechorin/u-keymapper.vim'
 
-" Plug 'pechorin/any-jump.vim'
-Plug '~/work/u-keymapper.vim'
+" Plug '~/work/any-jump.vim'
+" Plug '~/work/u-keymapper.vim'
 
 if s:nvim
+  " General toolkits
+  Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+  Plug 'nvim-lua/plenary.nvim'               " utilities
+  Plug 'MunifTanjim/nui.nvim'                " lua ui
+
+  " Plugins development
+  Plug 'folke/neodev.nvim'
+
   " Lsp & Tree-sitter support
   Plug 'nvim-tree/nvim-web-devicons'
-  Plug 'ray-x/go.nvim'
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'neovim/nvim-lsp'
   Plug 'neovim/nvim-lspconfig'
   " Plug 'ray-x/lsp_signature.nvim'
   Plug 'folke/lsp-colors.nvim'
+
+  " Golang support
+  Plug 'ray-x/go.nvim'
 
   " Display key definitions in cool menu
   Plug 'folke/which-key.nvim'
@@ -120,10 +134,11 @@ if s:nvim
   " display colors inline
   Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
-  Plug 'nvim-lua/plenary.nvim'               " utilities
-  Plug 'MunifTanjim/nui.nvim'                " lua ui
-  Plug 'nvim-neo-tree/neo-tree.nvim'         " modern nerdtree
-  Plug 'rgroli/other.nvim'                   " open alternative file TODO: not working
+  " modern nerdtree
+  Plug 'nvim-neo-tree/neo-tree.nvim'
+
+  " open alternative file TODO: not working
+  Plug 'rgroli/other.nvim'
 
   " A window for previewing, navigating and editing your LSP locations
   Plug 'dnlhc/glance.nvim'
@@ -144,14 +159,24 @@ if s:nvim
   " A tree like view for symbols using lsp TODO: not working
   Plug 'simrat39/symbols-outline.nvim'
 
-  " Plugins development
-  Plug 'folke/neodev.nvim'
-
   " Auto close quotes and other pairs
   Plug 'windwp/nvim-autopairs'
 
   " Change surrodings on fly
   Plug 'kylechui/nvim-surround'
+
+  " Cool sidebar
+  Plug 'sidebar-nvim/sidebar.nvim'
+
+  " Testing utils
+  Plug 'nvim-neotest/neotest'
+  Plug 'olimorris/neotest-rspec'
+
+  " Move faster with unique f/F indicators for each word on the line.
+  Plug 'jinh0/eyeliner.nvim'
+
+  " Lualine
+  Plug 'nvim-lualine/lualine.nvim'
 end
 
 call plug#end()
@@ -173,6 +198,7 @@ let lua_configs = [
   \ '05_completion.lua',
   \ '06_lsp.lua',
   \ '07_glance.lua',
+  \ '08_statusline.lua',
   \ ]
 
 " load base vim settings

@@ -28,11 +28,11 @@ autocmd BufNewFile,BufRead * let b:preferred_searcher = 'rg'
 " for alternative Gemfiles
 autocmd BufNewFile,BufRead Gemfile_* let &filetype = 'ruby'
 
-" Start terminal in insert mode
-autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
-
 " reload buffer on change
 augroup checktime
   au!
   autocmd BufEnter,CursorHold,CursorHoldI,CursorMoved,CursorMovedI,FocusGained,BufEnter,FocusLost,WinLeave * checktime
 augroup END
+
+" automatically enter insert mode on new terminals
+autocmd TermOpen * startinsert

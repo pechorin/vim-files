@@ -22,7 +22,7 @@ set showmode       " always show what mode we're currently editing in
 set complete=.,w,b,u,t,i
 
 " update interval
-set updatetime=500
+set updatetime=200
 
 set encoding=utf-8
 set fileencodings=utf-8,cp1251

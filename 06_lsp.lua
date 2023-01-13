@@ -58,10 +58,10 @@ lsp_config.gopls.setup {
 
 -- TODO: this is crap :)
 lsp_config.solargraph.setup {
-  cmd = {vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph', 'stdio'},
+  -- cmd = {vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph', 'stdio'},
   on_attach = on_attach,
   settings = {
-    commandPath = vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph',
+    -- commandPath = vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph',
     useBunlder = true,
   }
 }
@@ -96,16 +96,12 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 vim.diagnostic.config({
-  virtual_text = false,
-  signs = false,
-  underline = true,
+  virtual_text = true,
+  signs = true,
+  underline = false,
   update_in_insert = false,
   severity_sort = false,
 })
-
--- Show line diagnostics automatically in hover window
-vim.o.updatetime = 250
-vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
 -- vim dev
 lsp_config.vimls.setup({})

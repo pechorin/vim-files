@@ -58,15 +58,15 @@ KeyMapGroup "Commenting"
 KeyMapGroupEnd
 
 KeyMapGroup "FZF navigation"
-  KeyMap nmap <leader>b :Buffers<CR> "FZF Buffers"
-  KeyMap nmap <leader>q :Files<CR> "FZF Project files"
+  KeyMap nmap <leader>b :Buffers<CR> "fzf Buffers"
+  KeyMap nmap <leader>q :Files<CR> "fzf Project files"
 KeyMapGroupEnd
 
 " eval current vimscrupt buffer
 KeyMapGroup <leader>e "Vim manipulations"
-  KeyMap nmap <leader>ev :Color <CR> "FZF Color themes"
+  KeyMap nmap <leader>ev :Color <CR> "fzf colorschemes select"
   KeyMap nmap <leader>ee :so %<CR> "(vimrc) Eval current file as vimscript"
-  KeyMap nmap <leader>ev :e ~/.vimrc <CR> "(vimrc) Open $MYVIMRC in current buffer"
+  KeyMap nmap <leader>eb :e ~/.vimrc <CR> "(vimrc) Open $MYVIMRC in current buffer"
 KeyMapGroupEnd
 
 KeyMapGroup <leader>g "Git Mappings"
@@ -87,6 +87,10 @@ KeyMapGroup <leader>r "Tests runners"
   KeyMap nmap <silent> <leader>rn :TestNearest<CR> "Test nearest"
   KeyMap nmap <silent> <leader>rs :TestSuite<CR> "Test suite"
   KeyMap nmap <silent> <leader>rl :TestLast<CR> "Test last"
+KeyMapGroupEnd
+
+KeyMapGroup "Terminal mode"
+  KeyMap tnoremap <Esc> <C-\><C-n> "Exit to normal mode from terminal with esc"
 KeyMapGroupEnd
 
 " from: https://vim.fandom.com/wiki/Search_for_visually_selected_text
