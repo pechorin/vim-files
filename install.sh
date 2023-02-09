@@ -39,8 +39,9 @@ done
 #    TODO: add echoing >> here (for nvim init content)
 mkdir -p ~/.config/nvim/
 
-nvim_init_file = "${HOME}/config/nvim/init.vim"
+nvim_init_file="${HOME}/.config/nvim/init.vim"
 if ! [ -f "${nvim_init_file}" ]; then
+  mkdir -p "${HOME}/.config/nvim/"
   cp "${dotfiles_dir}/init.vim" "${nvim_init_file}"
 fi
 
