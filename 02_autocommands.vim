@@ -36,3 +36,8 @@ augroup END
 
 " automatically enter insert mode on new terminals
 autocmd TermOpen * startinsert
+
+" go back to insert mode when entering the terminal window
+autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+
+tnoremap <C-w> <C-\><C-o><C-w>

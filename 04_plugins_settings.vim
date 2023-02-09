@@ -17,11 +17,16 @@ let g:vim_markdown_folding_disabled=1
 " ~ vim-test
 if s:nvim
   let test#strategy = "neovim"
-  let test#neovim#term_position = "rightbelow 20"
+  let test#neovim#term_position = "rightbelow 25"
   let test#preserve_screen = 1
+  let test#neovim#start_normal = 1
 else
   let test#neovim#term_position = "rightbelow"
 endif
+
+let test#ruby#rspec#options = {
+  \ 'file': '--format documentation',
+\}
 
 " ~ ruby
 let g:ruby_path             = system('rbenv prefix')

@@ -85,16 +85,18 @@ Plug 'ap/vim-css-color'
 Plug 'pearofducks/ansible-vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'chr4/nginx.vim'
+Plug 'slim-template/vim-slim'
 
 " == Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
 Plug 'danilo-augusto/vim-afterglow'
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'savq/melange'
+Plug 'savq/melange-nvim'
 Plug 'projekt0n/github-nvim-theme'
 Plug 'elvessousa/sobrio'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'gzagatti/vim-leuven-theme'
+" Plug 'gzagatti/vim-leuven-theme'
+Plug '~/work/vim-leuven-theme'
 Plug 'rakr/vim-one'
 
 " == Mono contrast schemes
@@ -108,6 +110,9 @@ Plug 'pechorin/u-keymapper.vim'
 " Plug '~/work/any-jump.vim'
 " Plug '~/work/u-keymapper.vim'
 
+" Cycle thought text objects
+Plug 'gcmt/wildfire.vim'
+
 if s:nvim
   " General toolkits
   Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
@@ -120,6 +125,7 @@ if s:nvim
   " Lsp & Tree-sitter support
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-treesitter/nvim-treesitter'
+  Plug 'nvim-treesitter/playground'
   Plug 'neovim/nvim-lsp'
   Plug 'neovim/nvim-lspconfig'
   " Plug 'ray-x/lsp_signature.nvim'
@@ -177,6 +183,8 @@ if s:nvim
 
   " Lualine
   Plug 'nvim-lualine/lualine.nvim'
+
+  " Nvim only colorschemes
 end
 
 call plug#end()
@@ -222,3 +230,10 @@ endif
 
 " ~ end profile loading
 let s:profile_loads += 1
+
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
