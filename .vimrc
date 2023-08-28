@@ -55,7 +55,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
 " Fuzzy engine for fast selection menus
-Plug '/usr/local/opt/fzf'
+Plug '/opt/homebrew/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Table-mode support
@@ -89,23 +89,13 @@ Plug 'slim-template/vim-slim'
 
 " == Colorschemes
 Plug 'ChrisKempson/Tomorrow-Theme', { 'rtp' : 'vim' }
-Plug 'danilo-augusto/vim-afterglow'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'savq/melange-nvim'
-Plug 'projekt0n/github-nvim-theme'
-Plug 'elvessousa/sobrio'
-Plug 'NLKNguyen/papercolor-theme'
-" Plug 'gzagatti/vim-leuven-theme'
-Plug '~/work/vim-leuven-theme'
-Plug 'rakr/vim-one'
-
-" == Mono contrast schemes
-Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
+Plug 'davidosomething/vim-colors-meh'
 Plug 'kkga/vim-envy'
 
 " == In development plugins
 Plug 'pechorin/any-jump.vim'
 Plug 'pechorin/u-keymapper.vim'
+Plug 'pechorin/vim-leuven-theme'
 
 " Plug '~/work/any-jump.vim'
 " Plug '~/work/u-keymapper.vim'
@@ -138,16 +128,11 @@ if s:nvim
   Plug 'folke/which-key.nvim'
 
   " display colors inline
-  Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+  " archived
+  " Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
   " modern nerdtree
   Plug 'nvim-neo-tree/neo-tree.nvim'
-
-  " open alternative file TODO: not working
-  Plug 'rgroli/other.nvim'
-
-  " A window for previewing, navigating and editing your LSP locations
-  Plug 'dnlhc/glance.nvim'
 
   " Code completion
   Plug 'hrsh7th/cmp-nvim-lsp'
@@ -156,14 +141,10 @@ if s:nvim
   Plug 'hrsh7th/cmp-cmdline'
   Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
   Plug 'hrsh7th/cmp-nvim-lsp-document-symbol'
-  Plug 'delphinus/cmp-ctags'
+  Plug 'quangnguyen30192/cmp-nvim-tags'
   Plug 'hrsh7th/nvim-cmp'
-
-  " highlight the word under the cursor.
-  Plug 'xiyaowong/nvim-cursorword'
-
-  " A tree like view for symbols using lsp TODO: not working
-  Plug 'simrat39/symbols-outline.nvim'
+  Plug 'ray-x/cmp-treesitter'
+  Plug 'hrsh7th/cmp-omni'
 
   " Auto close quotes and other pairs
   Plug 'windwp/nvim-autopairs'
@@ -181,10 +162,19 @@ if s:nvim
   " Move faster with unique f/F indicators for each word on the line.
   Plug 'jinh0/eyeliner.nvim'
 
-  " Lualine
+  " Ui
   Plug 'nvim-lualine/lualine.nvim'
 
-  " Nvim only colorschemes
+  " Command runner with ui
+  Plug 'stevearc/overseer.nvim'
+
+  Plug 'dgagn/diagflow.nvim'
+  Plug 'mfussenegger/nvim-lint'
+
+  " Nvim colorschemes
+  Plug 'Mofiqul/vscode.nvim'
+  Plug 'navarasu/onedark.nvim'
+  Plug 'RRethy/nvim-base16'
 end
 
 call plug#end()
@@ -197,16 +187,16 @@ let base_configs = [
   \ '01_general.vim',
   \ '02_autocommands.vim',
   \ '03_mappings.vim',
-  \ '04_plugins_settings.vim',
+  \ '04_plugins.vim',
+  \ '05_neovide_gui.vim'
   \ ]
 
 let lua_configs = [
-  \ '04_plugins_settings.lua',
+  \ '04_plugins.lua',
   \ '04_fzf.vim',
   \ '05_completion.lua',
   \ '06_lsp.lua',
-  \ '07_glance.lua',
-  \ '08_statusline.lua',
+  \ '07_statusline.lua',
   \ ]
 
 " load base vim settings
@@ -225,7 +215,11 @@ endif
 
 " theme options applied only on first script load
 if s:profile_loads == 0
-  colorscheme Tomorrow
+  if s:nvim
+    colorscheme base16-tomorrow
+  else
+    colorscheme Tomorrow
+  endif
 endif
 
 " ~ end profile loading
@@ -237,3 +231,8 @@ function! SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun

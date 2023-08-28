@@ -20,6 +20,7 @@ set showmode       " always show what mode we're currently editing in
 
 " set completion options
 set complete=.,w,b,u,t,i
+set omnifunc=syntaxcomplete#Complete
 
 " update interval
 set updatetime=200

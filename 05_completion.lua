@@ -7,6 +7,20 @@ local has_words_before = function()
 end
 
 cmp.setup({
+  sources = cmp.config.sources({
+    { name = 'buffer' },
+    { name = 'tags' },
+    -- { name = 'omni', option = { disable_omnifuncs = { 'v:lua.vim.lsp.omnifunc' } } },
+    { name = 'path' },
+    { name = 'treesitter' },
+    -- { name = "rg" },
+    -- { name = 'nvim_lsp' },
+    -- { name = 'nvim_lsp_signature_help' },
+    -- { name = 'vsnip' }, -- For vsnip users.
+    -- { name = 'luasnip' }, -- For luasnip users.
+    -- { name = 'ultisnips' }, -- For ultisnips users.
+    -- { name = 'snippy' }, -- For snippy users.
+  }),
   -- snippet = {
   --   REQUIRED - you must specify a snippet engine
   --   expand = function(args)
@@ -48,17 +62,6 @@ cmp.setup({
       end
     end,
   }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'cmp-ctags' },
-    { name = 'buffer' },
-    -- { name = 'nvim_lsp_signature_help' },
-    -- { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-  }, {
-  })
 })
 
 -- Set configuration for specific filetype.
@@ -75,7 +78,7 @@ cmp.setup.cmdline({ '/', '?' }, {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = 'buffer' },
-    { name = 'nvim_lsp_document_symbol' },
+    -- { name = 'nvim_lsp_document_symbol' },
   }
 })
 
@@ -84,14 +87,15 @@ cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
     { name = 'path' },
+  }, {
     { name = 'cmdline' },
   })
 })
 
--- Set up lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- -- Set up lspconfig.
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig').solargraph.setup {
-  capabilities = capabilities
-}
+-- -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+-- require('lspconfig').solargraph.setup {
+--   capabilities = capabilities
+-- }

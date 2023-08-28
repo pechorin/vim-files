@@ -13,7 +13,7 @@ au BufNewFile,BufRead *.lmx    set filetype=haml
 autocmd FileType yaml setlocal cursorcolumn
 autocmd FileType eruby.yaml setlocal cursorcolumn
 
-" js with 2 tabs - is ok
+" js with 2 tabs
 autocmd FileType javascript setl sw=2 sw=2 sts=2
 
 " custom types autocmd mappinngs
