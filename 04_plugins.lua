@@ -1,5 +1,5 @@
 -- ~ which key
-require("which-key").setup({})
+-- require("which-key").setup({})
 
 -- ~ tree-sitter
 require('nvim-treesitter.configs').setup {

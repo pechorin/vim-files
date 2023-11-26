@@ -3,9 +3,9 @@ require('lualine').setup({
     theme = 'auto',
     globalstatus = true,
     refresh = {
-      statusline = 1000,
-      tabline = 1000,
-      winbar = 10000,
+      statusline = 3000,
+      tabline = 3000,
+      winbar = 3000,
     }
   },
   sections = {
@@ -14,7 +14,8 @@ require('lualine').setup({
     },
     lualine_b = {'branch', 'diff'},
     lualine_c = {},
-    lualine_x = {'fileformat', 'encoding', 'filetype', 'diagnostics'},
+    lualine_x = {'fileformat', 'encoding', 'filetype'},
+    -- lualine_x = {'fileformat', 'encoding', 'filetype', 'diagnostics'},
     lualine_y = {'progress'},
     lualine_z = {'location'}
   },

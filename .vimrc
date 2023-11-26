@@ -26,7 +26,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/CursorLineCurrentWindow'
 Plug 'tpope/vim-surround'
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'junegunn/vim-easy-align'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -125,7 +125,7 @@ if s:nvim
   Plug 'ray-x/go.nvim'
 
   " Display key definitions in cool menu
-  Plug 'folke/which-key.nvim'
+  " Plug 'folke/which-key.nvim'
 
   " display colors inline
   " archived
@@ -175,6 +175,10 @@ if s:nvim
   Plug 'Mofiqul/vscode.nvim'
   Plug 'navarasu/onedark.nvim'
   Plug 'RRethy/nvim-base16'
+
+  Plug 'wfxr/minimap.vim'
+
+  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 end
 
 call plug#end()
@@ -198,6 +202,7 @@ let lua_configs = [
   \ '06_lsp.lua',
   \ '07_statusline.lua',
   \ ]
+
 
 " load base vim settings
 for config in base_configs

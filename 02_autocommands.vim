@@ -2,42 +2,50 @@
 
 " TODO: add augroup custom?
 
-au BufNewFile,BufRead *.rs     set filetype=rust
-au BufNewFile,BufRead *.yml.j2 set filetype=yaml
-au BufNewFile,BufRead *.cjsx   set filetype=coffee
-au BufNewFile,BufRead *.pcss   set filetype=postcss
-au BufNewFile,BufRead *.arb	   set ft=ruby
-au BufNewFile,BufRead *.lmx    set filetype=haml
-
-" pretty colymn hi for yaml modes
-autocmd FileType yaml setlocal cursorcolumn
-autocmd FileType eruby.yaml setlocal cursorcolumn
-
-" js with 2 tabs
-autocmd FileType javascript setl sw=2 sw=2 sts=2
-
-" custom types autocmd mappinngs
-autocmd FileType nasm setlocal commentstring=;\ %s
-
-" auto-remove trailing whitespaces
-autocmd BufWritePre * :%s/\s\+$//e
-
-" config prefered searcher for AnyJump
-autocmd BufNewFile,BufRead * let b:preferred_searcher = 'rg'
-
-" for alternative Gemfiles
-autocmd BufNewFile,BufRead Gemfile_* let &filetype = 'ruby'
-
-" reload buffer on change
-augroup checktime
+augroup language_detection
   au!
-  autocmd BufEnter,CursorHold,CursorHoldI,CursorMoved,CursorMovedI,FocusGained,BufEnter,FocusLost,WinLeave * checktime
+
+  au BufNewFile,BufRead *.rs     set filetype=rust
+  au BufNewFile,BufRead *.yml.j2 set filetype=yaml
+  au BufNewFile,BufRead *.cjsx   set filetype=coffee
+  au BufNewFile,BufRead *.pcss   set filetype=postcss
+  au BufNewFile,BufRead *.arb	   set ft=ruby
+  au BufNewFile,BufRead *.lmx    set filetype=haml
+
+  " for alternative Gemfiles
+  au BufNewFile,BufRead Gemfile_* let &filetype = 'ruby'
 augroup END
 
-" automatically enter insert mode on new terminals
-autocmd TermOpen * startinsert
+augroup languages_settings
+  au!
 
-" go back to insert mode when entering the terminal window
-autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+  " pretty colymn hi for yaml modes
+  au FileType yaml setlocal cursorcolumn
+  au FileType eruby.yaml setlocal cursorcolumn
 
-tnoremap <C-w> <C-\><C-o><C-w>
+  " js with 2 tabs
+  au FileType javascript setl sw=2 sw=2 sts=2
+augroup END
+
+augroup reload_buffer_on_change
+  au!
+  au BufEnter,CursorHold,CursorHoldI,CursorMoved,CursorMovedI,FocusGained,BufEnter,FocusLost,WinLeave * checktime
+augroup END
+
+augroup auto_remove_trailing_whitespaces
+  au BufWritePre * :%s/\s\+$//e
+augroup END
+
+augroup terminal_settings
+  autocmd!
+
+  autocmd BufWinEnter,WinEnter term://* startinsert
+  autocmd BufLeave term://* stopinsert
+
+  " go back to insert mode when entering the terminal window
+  autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
+augroup END
+
+" config prefered searcher for AnyJump
+au BufNewFile,BufRead * let b:preferred_searcher = 'rg'
+

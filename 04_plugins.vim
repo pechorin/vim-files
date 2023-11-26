@@ -76,26 +76,26 @@ let g:any_jump_ignored_files = ['*.tmp', '*.temp', 'tags']
 
 " ~ Lightline settings
 " only for vim, nvim use lualine.lua
-if s:nvim != v:true
-  let g:lightline = {
-        \ 'colorscheme': 'powerline',
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste', 'gutentags', 'method' ],
-        \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
-        \ },
-        \ 'component_function': {
-        \   'gitbranch': 'Fugitive#Head',
-        \   'gutentags': "gutentags#statusline",
-        \ },
-        \ }
+" if s:nvim != v:true
+"   let g:lightline = {
+"         \ 'colorscheme': 'powerline',
+"         \ 'active': {
+"         \   'left': [ [ 'mode', 'paste', 'gutentags', 'method' ],
+"         \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
+"         \ },
+"         \ 'component_function': {
+"         \   'gitbranch': 'Fugitive#Head',
+"         \   'gutentags': "gutentags#statusline",
+"         \ },
+"         \ }
 
-  " ~ Getuntags
-  augroup MyGutentagsStatusLineRefresher
-      autocmd!
-      autocmd User GutentagsUpdating call lightline#update()
-      autocmd User GutentagsUpdated call lightline#update()
-  augroup END
-end
+"   " ~ Getuntags
+"   augroup MyGutentagsStatusLineRefresher
+"       autocmd!
+"       autocmd User GutentagsUpdating call lightline#update()
+"       autocmd User GutentagsUpdated call lightline#update()
+"   augroup END
+" end
 
 let g:gutentags_define_advanced_commands = 1
 let g:gutentags_ctags_exclude = ['*.js', '*.jsx', '*.coffee', '*.js.erb', 'node_modules']
@@ -114,4 +114,7 @@ let g:onedark_config = { 'style': 'warmer' }
 
 " nvim-cursorword
 " hi default CursorWord cterm=underline gui=underline
-hi default CursorWord cterm=underline guifg=#ff00ff
+" hi default CursorWord cterm=underline guifg=#ff00ff
+
+" minimap
+let g:minimap_git_colors = v:true

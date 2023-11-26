@@ -1,4 +1,5 @@
 " ~ FZF
+set rtp+=/usr/local/opt/fzf
 
 " Disable preview window
 let g:fzf_preview_window = ''

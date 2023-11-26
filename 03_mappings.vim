@@ -89,9 +89,12 @@ KeyMapGroup <leader>r "Tests runners"
   KeyMap nmap <silent> <leader>rl :TestLast<CR> "Test last"
 KeyMapGroupEnd
 
-" KeyMapGroup "Terminal mode"
-"   KeyMap tnoremap <Esc> <C-\><C-n> "Exit to normal mode from terminal with esc"
-" KeyMapGroupEnd
+KeyMapGroup "Terminal mode"
+  " KeyMap tnoremap <Esc> <C-\><C-n> "Exit to normal mode from terminal with esc"
+
+  " make C-w C-w works in term
+  KeyMap tnoremap <C-w> <C-\><C-o><C-w> "Make C-w C-w works in term"
+KeyMapGroupEnd
 
 " from: https://vim.fandom.com/wiki/Search_for_visually_selected_text
 KeyMap vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR> "Search visual selected text via //"
@@ -102,12 +105,19 @@ KeyMap nnoremap <Leader>co :copen<CR> "Show quickfix"
 " Hide the quickfix window
 KeyMap nnoremap <Leader>cc :cclose<CR> "Hide quickfix"
 
-" glance.nvim
-KeyMap nnoremap gR <CMD>Glance references<CR> "Glance reference"
-KeyMap nnoremap gD <CMD>Glance definitions<CR> "Glance definitions"
-KeyMap nnoremap gY <CMD>Glance type_definitions<CR> "Glance type definitions"
-KeyMap nnoremap gM <CMD>Glance implementations<CR> "Glance implementations"
-
 " Cycle through text objects
 KeyMap map <SPACE> <Plug>(wildfire-fuel) "This selects the next closest text object"
 KeyMap vmap <C-SPACE> <Plug>(wildfire-water) "This selects the previous closest text object"
+
+" Minimap
+KeyMap nmap <leader>l :MinimapToggle<CR> "Toggle minimap"
+
+KeyMapGroup <leader>g "Telescope"
+  KeyMap nnoremap <leader>gf <cmd>Telescope find_files<cr> "Files"
+  KeyMap nnoremap <leader>gb <cmd>Telescope buffers<cr> "Buffers"
+  KeyMap nnoremap <leader>gl <cmd>Telescope oldfiles<cr> "Old files"
+  KeyMap nnoremap <leader>gc <cmd>Telescope colorscheme<cr> "Colors"
+  KeyMap nnoremap <leader>gk <cmd>Telescope keymaps<cr> "Keys"
+  KeyMap nnoremap <leader>gh <cmd>Telescope git_commits<cr> "Git commits"
+  KeyMap nnoremap <leader>gs <cmd>Telescope git_status<cr> "Git status"
+KeyMapGroupEnd
