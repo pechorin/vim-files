@@ -175,6 +175,7 @@ if s:nvim
   Plug 'Mofiqul/vscode.nvim'
   Plug 'navarasu/onedark.nvim'
   Plug 'RRethy/nvim-base16'
+  Plug 'projekt0n/github-nvim-theme'
 
   Plug 'wfxr/minimap.vim'
 

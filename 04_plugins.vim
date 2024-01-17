@@ -118,3 +118,7 @@ let g:onedark_config = { 'style': 'warmer' }
 
 " minimap
 let g:minimap_git_colors = v:true
+
+" winresize
+let g:winresizer_vert_resize = 25
+let g:winresizer_horiz_resize = 5
