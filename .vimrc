@@ -1,5 +1,11 @@
 " = Vim/nvim setup
 
+" ~ load all config files
+let s:current_script = resolve(expand('<sfile>:p'))
+let s:scripts_path = substitute(s:current_script, '\.vimrc', '', '')
+
+exec 'source ' . s:scripts_path . 'init.lua'
+
 let s:nvim = has('nvim')
 
 if !exists('s:profile_loads')
@@ -183,10 +189,6 @@ if s:nvim
 end
 
 call plug#end()
-
-" ~ load all config files
-let s:current_script = resolve(expand('<sfile>:p'))
-let s:scripts_path = substitute(s:current_script, '\.vimrc', '', '')
 
 let base_configs = [
   \ '01_general.vim',
