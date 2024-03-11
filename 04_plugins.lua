@@ -122,3 +122,5 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
 -- })
 
 vim.diagnostic.config({ virtual_text = true, underline = false, signs = true })
+
+require("scope").setup({})

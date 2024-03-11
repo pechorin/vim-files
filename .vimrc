@@ -186,6 +186,8 @@ if s:nvim
   Plug 'wfxr/minimap.vim'
 
   Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+
+  Plug 'tiagovla/scope.nvim' " make buffers scoped to tab page
 end
 
 call plug#end()
