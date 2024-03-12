@@ -36,7 +36,7 @@ require("neo-tree").setup({
     }
   },
   window = {
-    width = 25
+    width = 30
   },
   filesystem = {
     filtered_items = {
@@ -51,9 +51,11 @@ require("neo-tree").setup({
         ".DS_Store"
       }
     },
-    follow_current_file = true,
+    follow_current_file = { enable = false },
     use_libuv_file_watcher = true,
-  }
+  },
+  source_selector = { winbar = true },
+  sources = { "filesystem", "buffers", "git_status" }
 })
 
 -- ~ ray-x/go.nvim
@@ -124,3 +126,7 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
 vim.diagnostic.config({ virtual_text = true, underline = false, signs = true })
 
 require("scope").setup({})
+
+require("registers").setup()
+
+require("yanky").setup({})

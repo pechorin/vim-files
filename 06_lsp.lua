@@ -1,35 +1,35 @@
--- local lsp_config = require('lspconfig')
+local lsp_config = require('lspconfig')
 
--- vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("debug")
 
--- local on_attach = function(client, bufnr)
---   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
---   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
---   local opts = { noremap=true, silent=true }
+  local opts = { noremap=true, silent=true }
 
---   -- buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
---   -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
---   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
---   -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
---   -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
---   -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
---   -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
---   -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
---   -- buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
---   -- buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
---   -- buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  -- buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  -- buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  -- buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  -- buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 
---   -- require "lsp_signature".on_attach({
---   --   bind = true,
---   --   hint_prefix = "🔸",
---   --   max_width = 70,
---   --   extra_trigger_chars = {","},
---   --   handler_opts = {
---   --     border = "shadow"
---   --   }
---   -- })
--- end
+  -- require "lsp_signature".on_attach({
+  --   bind = true,
+  --   hint_prefix = "🔸",
+  --   max_width = 70,
+  --   extra_trigger_chars = {","},
+  --   handler_opts = {
+  --     border = "shadow"
+  --   }
+  -- })
+end
 
 -- lsp_config.rust_analyzer.setup {
 --     cmd = { "rust-analyzer" },
@@ -56,15 +56,15 @@
 --   on_attach = on_attach
 -- }
 
--- -- TODO: this is crap :)
--- lsp_config.solargraph.setup {
---   -- cmd = {vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph', 'stdio'},
---   on_attach = on_attach,
---   settings = {
---     -- commandPath = vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph',
---     useBunlder = true,
---   }
--- }
+-- TODO: this is crap :)
+lsp_config.solargraph.setup {
+  -- cmd = {vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph', 'stdio'},
+  on_attach = on_attach,
+  settings = {
+    -- commandPath = vim.fn.getenv('HOME') .. '/.rbenv/versions/2.7.6/bin/solargraph',
+    useBunlder = true,
+  }
+}
 
 -- require('go').setup({
 --   goimport='goimports', -- goimport command
@@ -88,27 +88,27 @@
 --   dap_debug_vt = true, -- set to true to enable dap virtual text
 -- })
 
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
---   vim.lsp.diagnostic.on_publish_diagnostics, {
---     -- delay update diagnostics
---     update_in_insert = false,
---   }
--- )
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- delay update diagnostics
+    update_in_insert = false,
+  }
+)
 
--- vim.diagnostic.config({
---   virtual_text = true,
---   signs = true,
---   underline = false,
---   update_in_insert = false,
---   severity_sort = false,
--- })
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = false,
+  update_in_insert = false,
+  severity_sort = false,
+})
 
--- -- vim dev
--- lsp_config.vimls.setup({})
+-- vim dev
+lsp_config.vimls.setup({})
 
--- -- nvim dev
--- require("neodev").setup({
---   -- add any options here, or leave empty to use the default settings
--- })
+-- nvim dev
+require("neodev").setup({
+  -- add any options here, or leave empty to use the default settings
+})
 
--- lsp_config.lua_ls.setup({})
+lsp_config.lua_ls.setup({})

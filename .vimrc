@@ -114,6 +114,7 @@ if s:nvim
   Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
   Plug 'nvim-lua/plenary.nvim'               " utilities
   Plug 'MunifTanjim/nui.nvim'                " lua ui
+  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 
   " Plugins development
   Plug 'folke/neodev.nvim'
@@ -126,6 +127,7 @@ if s:nvim
   Plug 'neovim/nvim-lspconfig'
   " Plug 'ray-x/lsp_signature.nvim'
   Plug 'folke/lsp-colors.nvim'
+  Plug 'onsails/lspkind.nvim'
 
   " Golang support
   Plug 'ray-x/go.nvim'
@@ -185,9 +187,13 @@ if s:nvim
 
   Plug 'wfxr/minimap.vim'
 
-  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 
   Plug 'tiagovla/scope.nvim' " make buffers scoped to tab page
+
+  Plug 'tversteeg/registers.nvim'
+  Plug 'gbprod/yanky.nvim'
+
+  Plug 'folke/trouble.nvim'
 end
 
 call plug#end()
