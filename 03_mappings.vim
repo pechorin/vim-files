@@ -113,11 +113,17 @@ KeyMap vmap <C-SPACE> <Plug>(wildfire-water) "This selects the previous closest 
 KeyMap nmap <leader>l :MinimapToggle<CR> "Toggle minimap"
 
 KeyMapGroup <leader>g "Telescope"
+  KeyMap nnoremap <leader>gT <cmd>Telescope<cr> "Telescope"
   KeyMap nnoremap <leader>gf <cmd>Telescope find_files<cr> "Files"
   KeyMap nnoremap <leader>gb <cmd>Telescope buffers<cr> "Buffers"
   KeyMap nnoremap <leader>gl <cmd>Telescope oldfiles<cr> "Old files"
-  KeyMap nnoremap <leader>gc <cmd>Telescope colorscheme<cr> "Colors"
+  KeyMap nnoremap <leader>gc <cmd>Telescope themes<cr> "Themes"
   KeyMap nnoremap <leader>gk <cmd>Telescope keymaps<cr> "Keys"
   KeyMap nnoremap <leader>gh <cmd>Telescope git_commits<cr> "Git commits"
   KeyMap nnoremap <leader>gs <cmd>Telescope git_status<cr> "Git status"
+  KeyMap nnoremap <leader>gr <cmd>Telescope registers<cr> "Keys"
+  KeyMap nnoremap <leader>gd <cmd>Telescope diagnostics<cr> "Keys"
 KeyMapGroupEnd
+
+KeyMap nmap ]b <Plug>(buf-surf-forward) "Bufsurf next buffer"
+KeyMap nmap [b <Plug>(buf-surf-back) "Bufsurf prev buffer"

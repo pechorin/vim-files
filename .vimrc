@@ -109,12 +109,13 @@ Plug 'pechorin/vim-leuven-theme'
 " Cycle thought text objects
 Plug 'gcmt/wildfire.vim'
 
+Plug 'ton/vim-bufsurf'
+
 if s:nvim
   " General toolkits
   Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
   Plug 'nvim-lua/plenary.nvim'               " utilities
   Plug 'MunifTanjim/nui.nvim'                " lua ui
-  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 
   " Plugins development
   Plug 'folke/neodev.nvim'
@@ -133,7 +134,7 @@ if s:nvim
   Plug 'ray-x/go.nvim'
 
   " Display key definitions in cool menu
-  " Plug 'folke/which-key.nvim'
+  Plug 'folke/which-key.nvim'
 
   " display colors inline
   " archived
@@ -185,15 +186,22 @@ if s:nvim
   Plug 'RRethy/nvim-base16'
   Plug 'projekt0n/github-nvim-theme'
 
+  " Code minimap
   Plug 'wfxr/minimap.vim'
 
+  " make buffers scoped to tab page
+  Plug 'tiagovla/scope.nvim'
 
-  Plug 'tiagovla/scope.nvim' " make buffers scoped to tab page
-
+  " Registers and Yank ring plugins
   Plug 'tversteeg/registers.nvim'
   Plug 'gbprod/yanky.nvim'
 
+  " Get list of all troubles
   Plug 'folke/trouble.nvim'
+
+  " Telescope
+  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+  Plug 'andrew-george/telescope-themes'
 end
 
 call plug#end()
