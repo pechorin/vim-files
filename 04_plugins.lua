@@ -5,10 +5,7 @@
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
     "c", "cpp", "lua", "bash", "ruby",
-    "go", "rust", "css", "html", "javascript",
-    "json", "regex", "typescript", "vue", "python",
-    "embedded_template", "sql"
-  },
+    "go", "rust", "css", "html", "javascript", "json", "regex", "typescript", "vue", "python", "embedded_template", "sql" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = true,
@@ -127,14 +124,14 @@ vim.diagnostic.config({ virtual_text = true, underline = false, signs = true })
 
 require("scope").setup({})
 
-require("registers").setup()
-
 require("yanky").setup({})
 
 -- Telescope
 local telescope = require('telescope')
 
 telescope.load_extension('themes')
+telescope.load_extension('telescope-alternate')
+telescope.load_extension("git_file_history")
 
 telescope.setup({
   defaults = {
@@ -158,6 +155,59 @@ telescope.setup({
       enable_previewer = false,
       enable_live_preview = true,
       persist = { enable = false }
-    }
+    },
+    ["telescope-alternate"] = {
+      -- TODO: setup: https://github.com/otavioschwanck/telescope-alternate.nvim
+      -- mappings = {
+      --   ...your mappings
+      -- },
+      presets = { 'rails', 'rspec' }
+    },
   }
 })
+
+require("fidget").setup({})
+
+require("search").setup({
+  -- TODO: setup https://github.com/FabianWirth/search.nvim
+})
+
+-- tabline
+-- TODO
+
+
+-- Hover
+require("hover").setup {
+    init = function()
+        -- Require providers
+        require("hover.providers.lsp")
+        -- require('hover.providers.gh')
+        -- require('hover.providers.gh_user')
+        -- require('hover.providers.jira')
+        -- require('hover.providers.man')
+        -- require('hover.providers.dictionary')
+    end,
+    preview_opts = {
+        -- border = 'none'
+        -- border = 'shadow'
+        border = 'solid'
+    },
+    -- Whether the contents of a currently open hover window should be moved
+    -- to a :h preview-window when pressing the hover keymap.
+    preview_window = false,
+    title = false,
+    mouse_providers = {
+        'LSP'
+    },
+    mouse_delay = 1000
+}
+
+-- Setup keymaps
+vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
+vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
+vim.keymap.set("n", "<C-p>", function() require("hover").hover_switch("previous") end, {desc = "hover.nvim (previous source)"})
+vim.keymap.set("n", "<C-n>", function() require("hover").hover_switch("next") end, {desc = "hover.nvim (next source)"})
+
+-- Mouse support
+vim.keymap.set('n', '<MouseMove>', require('hover').hover_mouse, { desc = "hover.nvim (mouse)" })
+vim.o.mousemoveevent = true

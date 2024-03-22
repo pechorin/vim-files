@@ -127,3 +127,5 @@ KeyMapGroupEnd
 
 KeyMap nmap ]b <Plug>(buf-surf-forward) "Bufsurf next buffer"
 KeyMap nmap [b <Plug>(buf-surf-back) "Bufsurf prev buffer"
+
+KeyMap nnoremap <Leader>gS :lua require('search').open()<CR> "Run search window"

@@ -30,5 +30,5 @@ require('lualine').setup({
       { 'filename', path = 1 }
     }
   },
-  extensions = {'quickfix', 'fzf', 'nerdtree', 'neo-tree'}
+  extensions = {'quickfix', 'fzf', 'nerdtree', 'neo-tree', 'fugitive', 'man', 'trouble'}
 })

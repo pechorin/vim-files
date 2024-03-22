@@ -117,7 +117,50 @@ if s:nvim
   Plug 'nvim-lua/plenary.nvim'               " utilities
   Plug 'MunifTanjim/nui.nvim'                " lua ui
 
-  " Plugins development
+  " Tabs
+
+  " Make buffers scoped to tab page
+  Plug 'tiagovla/scope.nvim'
+
+  " History explorers
+  Plug 'mbbill/undotree'
+  Plug 'gbprod/yanky.nvim'
+
+  " Auto close quotes and other pairs
+  Plug 'windwp/nvim-autopairs'
+
+  " Change surrodings on fly
+  Plug 'kylechui/nvim-surround'
+
+  " Move faster with unique f/F indicators for each word on the line.
+  Plug 'jinh0/eyeliner.nvim'
+
+  " Display key definitions in cool menu
+  Plug 'folke/which-key.nvim'
+
+  " Statusline
+  Plug 'nvim-lualine/lualine.nvim'
+
+  " Modern nerdtree
+  Plug 'nvim-neo-tree/neo-tree.nvim'
+
+  " Code minimap
+  Plug 'wfxr/minimap.vim'
+
+  " Notifications
+  Plug 'j-hui/fidget.nvim'
+
+  " Telescope
+  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+  Plug 'andrew-george/telescope-themes'
+  Plug 'otavioschwanck/telescope-alternate'
+  Plug 'FabianWirth/search.nvim'
+  Plug 'isak102/telescope-git-file-history.nvim'
+
+  " Get list of all troubles
+  Plug 'folke/trouble.nvim'
+
+  " Vim development
   Plug 'folke/neodev.nvim'
 
   " Lsp & Tree-sitter support
@@ -129,19 +172,15 @@ if s:nvim
   " Plug 'ray-x/lsp_signature.nvim'
   Plug 'folke/lsp-colors.nvim'
   Plug 'onsails/lspkind.nvim'
+  Plug 'zeioth/garbage-day.nvim'
+  Plug 'lewis6991/hover.nvim'
 
   " Golang support
   Plug 'ray-x/go.nvim'
 
-  " Display key definitions in cool menu
-  Plug 'folke/which-key.nvim'
-
   " display colors inline
   " archived
   " Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-
-  " modern nerdtree
-  Plug 'nvim-neo-tree/neo-tree.nvim'
 
   " Code completion
   Plug 'hrsh7th/cmp-nvim-lsp'
@@ -155,24 +194,10 @@ if s:nvim
   Plug 'ray-x/cmp-treesitter'
   Plug 'hrsh7th/cmp-omni'
 
-  " Auto close quotes and other pairs
-  Plug 'windwp/nvim-autopairs'
-
-  " Change surrodings on fly
-  Plug 'kylechui/nvim-surround'
-
-  " Cool sidebar
-  Plug 'sidebar-nvim/sidebar.nvim'
-
   " Testing utils
+  Plug 'nvim-neotest/nvim-nio'
   Plug 'nvim-neotest/neotest'
   Plug 'olimorris/neotest-rspec'
-
-  " Move faster with unique f/F indicators for each word on the line.
-  Plug 'jinh0/eyeliner.nvim'
-
-  " Ui
-  Plug 'nvim-lualine/lualine.nvim'
 
   " Command runner with ui
   Plug 'stevearc/overseer.nvim'
@@ -185,23 +210,6 @@ if s:nvim
   Plug 'navarasu/onedark.nvim'
   Plug 'RRethy/nvim-base16'
   Plug 'projekt0n/github-nvim-theme'
-
-  " Code minimap
-  Plug 'wfxr/minimap.vim'
-
-  " make buffers scoped to tab page
-  Plug 'tiagovla/scope.nvim'
-
-  " Registers and Yank ring plugins
-  Plug 'tversteeg/registers.nvim'
-  Plug 'gbprod/yanky.nvim'
-
-  " Get list of all troubles
-  Plug 'folke/trouble.nvim'
-
-  " Telescope
-  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
-  Plug 'andrew-george/telescope-themes'
 end
 
 call plug#end()
