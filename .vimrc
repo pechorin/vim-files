@@ -4,8 +4,6 @@
 let s:current_script = resolve(expand('<sfile>:p'))
 let s:scripts_path = substitute(s:current_script, '\.vimrc', '', '')
 
-exec 'source ' . s:scripts_path . 'init.lua'
-
 let s:nvim = has('nvim')
 
 if !exists('s:profile_loads')
@@ -109,6 +107,7 @@ Plug 'pechorin/vim-leuven-theme'
 " Cycle thought text objects
 Plug 'gcmt/wildfire.vim'
 
+" не пошло?
 Plug 'ton/vim-bufsurf'
 
 if s:nvim
@@ -116,6 +115,9 @@ if s:nvim
   Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
   Plug 'nvim-lua/plenary.nvim'               " utilities
   Plug 'MunifTanjim/nui.nvim'                " lua ui
+
+  " Movement
+  Plug 'ggandor/leap.nvim'
 
   " Tabs
 
@@ -144,6 +146,9 @@ if s:nvim
   " Modern nerdtree
   Plug 'nvim-neo-tree/neo-tree.nvim'
 
+  " Git signs
+  Plug 'lewis6991/gitsigns.nvim'
+
   " Code minimap
   Plug 'wfxr/minimap.vim'
 
@@ -158,7 +163,7 @@ if s:nvim
   Plug 'isak102/telescope-git-file-history.nvim'
 
   " Get list of all troubles
-  Plug 'folke/trouble.nvim'
+  Plug 'folke/trouble.nvim', { 'branch': 'dev' }
 
   " Vim development
   Plug 'folke/neodev.nvim'
@@ -181,6 +186,9 @@ if s:nvim
   " display colors inline
   " archived
   " Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+
+  " Starup dashboard
+  Plug 'goolord/alpha-nvim'
 
   " Code completion
   Plug 'hrsh7th/cmp-nvim-lsp'
@@ -214,37 +222,6 @@ end
 
 call plug#end()
 
-let base_configs = [
-  \ '01_general.vim',
-  \ '02_autocommands.vim',
-  \ '03_mappings.vim',
-  \ '04_plugins.vim',
-  \ '05_neovide_gui.vim'
-  \ ]
-
-let lua_configs = [
-  \ '04_plugins.lua',
-  \ '04_fzf.vim',
-  \ '05_completion.lua',
-  \ '06_lsp.lua',
-  \ '07_statusline.lua',
-  \ ]
-
-
-" load base vim settings
-for config in base_configs
-  let config_path = s:scripts_path . config
-  exe 'source' . config_path
-endfor
-
-" load nvim only settings
-if s:nvim
-  for config in lua_configs
-    let config_path = s:scripts_path . config
-    exe 'source' . config_path
-  endfor
-endif
-
 " theme options applied only on first script load
 if s:profile_loads == 0
   if s:nvim
@@ -257,6 +234,7 @@ endif
 " ~ end profile loading
 let s:profile_loads += 1
 
+" wtf is this? :
 function! SynStack()
   if !exists("*synstack")
     return
@@ -268,3 +246,6 @@ function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
+
+exec 'source ' . s:scripts_path . 'init.lua'
+

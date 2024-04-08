@@ -39,7 +39,8 @@ augroup END
 augroup terminal_settings
   autocmd!
 
-  autocmd BufWinEnter,WinEnter term://* startinsert
+  autocmd BufWinEnter term://* startinsert
+  " autocmd WinEnter term://* startinsert
   autocmd BufLeave term://* stopinsert
 
   " go back to insert mode when entering the terminal window
@@ -48,4 +49,3 @@ augroup END
 
 " config prefered searcher for AnyJump
 au BufNewFile,BufRead * let b:preferred_searcher = 'rg'
-

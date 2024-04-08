@@ -19,9 +19,13 @@ require('nvim-treesitter.configs').setup {
 require("neo-tree").setup({
   enable_git_status = true,
   default_component_configs = {
+    container = {
+      enable_character_fade = false
+    },
     indent = {
-      indent_size = 2,
+      indent_size = 1,
       padding = 0,
+      with_markers = false,
     },
     icon = {
       folder_closed = ">",
@@ -51,8 +55,16 @@ require("neo-tree").setup({
     follow_current_file = { enable = false },
     use_libuv_file_watcher = true,
   },
-  source_selector = { winbar = true },
-  sources = { "filesystem", "buffers", "git_status" }
+  source_selector = {
+    winbar = true ,
+    sources = {
+      { source = "filesystem" },
+      { source = "buffers" },
+      { source = "git_status" },
+      { source = "document_symbols" },
+    },
+  },
+  sources = { "filesystem", "buffers", "git_status", "document_symbols" }
 })
 
 -- ~ ray-x/go.nvim
@@ -74,7 +86,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- Autopairs
--- require("nvim-autopairs").setup({})
+require("nvim-autopairs").setup({})
 
 -- Surroundings
 require("nvim-surround").setup({})
@@ -120,6 +132,7 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
 --   text_align = 'left'
 -- })
 
+-- TODO: move to lsp
 vim.diagnostic.config({ virtual_text = true, underline = false, signs = true })
 
 require("scope").setup({})
@@ -211,3 +224,54 @@ vim.keymap.set("n", "<C-n>", function() require("hover").hover_switch("next") en
 -- Mouse support
 vim.keymap.set('n', '<MouseMove>', require('hover').hover_mouse, { desc = "hover.nvim (mouse)" })
 vim.o.mousemoveevent = true
+
+-- trouble vim
+require("trouble").setup({})
+
+-- Git signs
+require('gitsigns').setup()
+
+-- Leap
+require('leap')
+
+vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
+vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')
+vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
+
+-- Dashboard
+local alpha = require("alpha")
+local startify = require("alpha.themes.startify")
+
+startify.section.header.val = {
+    -- [[     ]],
+    [[> Welcome!   ]],
+    -- [[     ]],
+}
+
+startify.opts.layout[1].val = 2
+startify.opts.opts.margin = 3
+
+-- disable MRU
+startify.section.mru.val = { { type = "padding", val = 0 } }
+
+local alpha_time = tostring(os.date("%A %I:%M %p"))
+
+-- Set menu
+startify.section.top_buttons.val = {
+    startify.button("e", " > New File", "<cmd>ene<CR>"),
+    startify.button("n", " > Toggle file explorer", "<cmd>Neotree<CR>"),
+    startify.button("f", " > Find File", "<cmd>Telescope find_files<CR>"),
+    startify.button("F", " > Find Word", "<cmd>Telescope live_grep<CR>"),
+    startify.button("m", " > Keymappings", "<cmd>Telescope keymaps<CR>"),
+    startify.button("g", " > Git status", "<cmd>Git<CR>"),
+    startify.button("u", " > Update plugins", "<cmd>PlugUpdate<CR>"),
+    startify.button("H", " > Edit .vimrc", "<cmd>e ~/.vimrc<CR>"),
+    startify.button("c", " > Change colorscheme", "<cmd>Telescope themes<CR>"),
+    -- startify.button("SPC wr", " > Restore Session For Current Directory", "<cmd>SessionRestore<CR>"),
+}
+
+-- Send config to alpha
+alpha.setup(startify.config)
+
+-- Disable folding on alpha buffer
+vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])

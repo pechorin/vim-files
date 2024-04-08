@@ -28,6 +28,11 @@ KeyMapGroup "Text manipulation"
 KeyMapGroupEnd
 
 KeyMapGroup "Navigation"
+  KeyMap nmap bt :bnext<cr> "Next buffer"
+  KeyMap nmap gb :bnext<cr> "Next buffer"
+  KeyMap nmap bT :bprevious<cr> "Prev buffer"
+  KeyMap nmap bd :bdelete<cr> "Delete buffer"
+
   KeyMap nmap <leader>et :Tagbar<CR> "Tagbar"
   KeyMap nmap <leader>n :NERDTree<CR> "NERDTree for project"
   KeyMap nmap <leader>N :NERDTree %<CR> "NERDTree for current file"
@@ -70,7 +75,8 @@ KeyMapGroup <leader>e "Vim manipulations"
 KeyMapGroupEnd
 
 KeyMapGroup <leader>g "Git Mappings"
-  KeyMap nmap <leader>gg :Git<CR> "Open Git"
+KeyMap nmap <leader>gg :tab Git<CR> "Open Git in new tab"
+KeyMap nmap <leader>gG :Git<CR> "Open Git in split"
   KeyMap nmap <leader>gb :Git blame<CR> "Git blame for file"
 KeyMapGroupEnd
 
@@ -90,7 +96,7 @@ KeyMapGroup <leader>r "Tests runners"
 KeyMapGroupEnd
 
 KeyMapGroup "Terminal mode"
-  " KeyMap tnoremap <Esc> <C-\><C-n> "Exit to normal mode from terminal with esc"
+  KeyMap tnoremap <Esc> <C-\><C-n> "Exit to normal mode from terminal with esc"
 
   " make C-w C-w works in term
   KeyMap tnoremap <C-w> <C-\><C-o><C-w> "Make C-w C-w works in term"
@@ -125,7 +131,7 @@ KeyMapGroup <leader>g "Telescope"
   KeyMap nnoremap <leader>gd <cmd>Telescope diagnostics<cr> "Keys"
 KeyMapGroupEnd
 
-KeyMap nmap ]b <Plug>(buf-surf-forward) "Bufsurf next buffer"
-KeyMap nmap [b <Plug>(buf-surf-back) "Bufsurf prev buffer"
+KeyMap nmap ]n <Plug>(buf-surf-forward) "Bufsurf next buffer"
+KeyMap nmap [n <Plug>(buf-surf-back) "Bufsurf prev buffer"
 
 KeyMap nnoremap <Leader>gS :lua require('search').open()<CR> "Run search window"

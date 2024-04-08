@@ -2,6 +2,7 @@ local lsp_config = require('lspconfig')
 
 vim.lsp.set_log_level("debug")
 
+
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -10,7 +11,7 @@ local on_attach = function(client, bufnr)
 
   -- buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
@@ -29,7 +30,37 @@ local on_attach = function(client, bufnr)
   --     border = "shadow"
   --   }
   -- })
+
+  -- vim.lsp.inlay_hint.enable(bufnr)
 end
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- delay update diagnostics
+    update_in_insert = false,
+  }
+)
+
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = false,
+  update_in_insert = false,
+  severity_sort = false,
+  float = true
+  -- signs = {
+  --     text = {
+  --         [vim.diagnostic.severity.ERROR] = '',
+  --         [vim.diagnostic.severity.WARN] = '',
+  --     },
+  --     linehl = {
+  --         [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+  --     },
+  --     numhl = {
+  --         [vim.diagnostic.severity.WARN] = 'WarningMsg',
+  --     },
+  -- },
+})
 
 -- lsp_config.rust_analyzer.setup {
 --     cmd = { "rust-analyzer" },
@@ -87,21 +118,6 @@ lsp_config.solargraph.setup {
 --   dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
 --   dap_debug_vt = true, -- set to true to enable dap virtual text
 -- })
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- delay update diagnostics
-    update_in_insert = false,
-  }
-)
-
-vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  underline = false,
-  update_in_insert = false,
-  severity_sort = false,
-})
 
 -- vim dev
 lsp_config.vimls.setup({})

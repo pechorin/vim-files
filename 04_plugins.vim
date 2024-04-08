@@ -37,28 +37,22 @@ let g:ruby_no_expensive     = 1
 
 " ~ esearch
 let g:esearch = {}
-
-" Set the initial pattern content using the highlighted '/' pattern (if
-" v:hlsearch is true), the last searched pattern or the clipboard content.
-let g:esearch.prefill = ['hlsearch', 'last', 'clipboard']
-let g:esearch.live_update = v:true
-
-" Each definition contains nvim_set_keymap() args: [{modes}, {lhs}, {rhs}].
 let g:esearch.win_map = [
- \ ['n', 'yf',  ':call setreg(esearch#util#clipboard_reg(), b:esearch.filename())<cr>'],
- \ ['n', 't',   ':call b:esearch.open("NewTabdrop")<cr>'                              ],
- \ ['n', '+',   ':call esearch#init(extend(b:esearch, AddAfter(+v:count1)))<cr>'      ],
- \ ['n', '-',   ':call esearch#init(extend(b:esearch, AddAfter(-v:count1)))<cr>'      ],
  \ ['n', 'gq',  ':call esearch#init(extend(copy(b:esearch), {"out": "qflist"}))<cr>'  ],
  \ ['n', 'gsp', ':call esearch#init(extend(b:esearch, sort_by_path))<cr>'             ],
  \ ['n', 'gsd', ':call esearch#init(extend(b:esearch, sort_by_date))<cr>'             ],
- \]
+\ ]
+
+" Set the initial pattern content using the highlighted '/' pattern (if
+" v:hlsearch is true), the last searched pattern or the clipboard content.
+let g:esearch.prefill = ['last', 'clipboard']
+let g:esearch.live_update = v:true
+let g:esearch.win_new = {esearch -> esearch#buf#goto_or_open(esearch.name, 'new')}
 
 " Helpers to use in keymaps.
 let g:sort_by_path = {'adapters': {'rg': {'options': '--sort path'}}}
 let g:sort_by_date = {'adapters': {'rg': {'options': '--sort modified'}}}
-" {'backend': 'system'} means synchronous reload using system() call to stay within the
-" same context
+" NOTE: {'backend': 'system'} means synchronous reload using system() call to stay within the same context
 let g:AddAfter = {n -> {'after': b:esearch.after + n, 'backend': 'system'}}
 
 " ~ org-mode

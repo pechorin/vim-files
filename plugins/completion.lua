@@ -27,6 +27,11 @@ cmp.setup({
       -- end
     })
   },
+  performance = {
+    trigger_debounce_time = 500,
+    throttle = 550,
+    fetching_timeout = 80,
+  },
   sources = cmp.config.sources({
     -- { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp' },

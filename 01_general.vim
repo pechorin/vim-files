@@ -12,6 +12,10 @@ if executable('/bin/zsh')
   set shell=/bin/zsh\ -l
 end
 
+if !has('nvim')
+  set nocompatiblee
+end
+
 " filetype plugin indent on
 
 " === General vim options
