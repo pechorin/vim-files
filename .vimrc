@@ -14,7 +14,6 @@ if s:profile_loads > 1
   echo "reloading profile " . string(s:profile_loads)
 endif
 
-" let text = substitute(text, '\n', '', 'g')
 if !s:nvim
   set nocompatible " be iMproved
 endif
@@ -30,7 +29,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/CursorLineCurrentWindow'
 Plug 'tpope/vim-surround'
-" Plug 'itchyny/lightline.vim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'junegunn/vim-easy-align'
 Plug 'AndrewRadev/splitjoin.vim'

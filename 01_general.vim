@@ -12,7 +12,13 @@ if executable('/bin/zsh')
   set shell=/bin/zsh\ -l
 end
 
-if !has('nvim')
+if has('nvim')
+  " completion options
+  set wildoptions=pum
+  set pumblend=0
+  set inccommand=nosplit
+  " set floatblend=8
+else
   set nocompatiblee
 end
 
@@ -21,6 +27,8 @@ end
 " === General vim options
 
 set showmode       " always show what mode we're currently editing in
+
+set termguicolors
 
 " set completion options
 set complete=.,w,b,u,t,i
@@ -94,16 +102,5 @@ set mouse=a
 " set guioptions+=a  " automatically add selected text in the VISUAL mode to system copy-paste buffer
 " set guioptions-=e  " remove gui tabs
 
-" term options
-set termguicolors
-
 " do not hl cursor in term
 hi CursorLine cterm=NONE
-
-if has('nvim')
-  " completion options
-  set wildoptions=pum
-  set pumblend=0
-  set inccommand=nosplit
-  " set floatblend=8
-endif

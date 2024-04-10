@@ -20,6 +20,7 @@ cd ~ && git clone https://github.com/pechorin/vim-files
 - go runtime
 - `npm install -g vim-language-server`
 - `brew install lua-language-server`
+- `brew install code-minimap`
 -
 ### Features
 
