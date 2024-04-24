@@ -5,10 +5,9 @@ set rtp+=/usr/local/opt/fzf
 let g:fzf_preview_window = ''
 
 " Reverse the layout to make the FZF list top-down
-let $FZF_DEFAULT_OPTS='--layout=reverse'
+let $FZF_DEFAULT_OPTS='--layout=reverse --multi'
 
-
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'sharp' } }
 
 let g:fzf_colors = {
   \ 'fg':      ['fg', 'Normal'],

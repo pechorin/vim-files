@@ -34,10 +34,27 @@ require("search").setup({
 
 require("trouble").setup({})
 
-require('gitsigns').setup()
+-- git markers
+require('gitsigns').setup({
+  current_line_blame = true,
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'right_align', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+    virt_text_priority = 100,
+  },
+})
 
-require('leap')
-
-vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
-vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')
-vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
+-- tabs
+require('tabline').setup({
+    no_name = '[No Name]',    -- Name for buffers with no name
+    modified_icon = '',      -- Icon for showing modified buffer
+    close_icon = '',         -- Icon for closing tab with mouse
+    separator = "▌",          -- Separator icon on the left side
+    padding = 3,              -- Prefix and suffix space
+    color_all_icons = false,  -- Color devicons in active and inactive tabs
+    right_separator = false,  -- Show right separator on the last tab
+    show_index = false,       -- Shows the index of tab before filename
+    show_icon = true,         -- Shows the devicon
+})

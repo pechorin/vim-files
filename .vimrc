@@ -105,19 +105,14 @@ Plug 'pechorin/vim-leuven-theme'
 " Cycle thought text objects
 Plug 'gcmt/wildfire.vim'
 
-" не пошло?
-Plug 'ton/vim-bufsurf'
-
 if s:nvim
   " General toolkits
   Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
   Plug 'nvim-lua/plenary.nvim'               " utilities
   Plug 'MunifTanjim/nui.nvim'                " lua ui
 
-  " Movement
-  Plug 'ggandor/leap.nvim'
-
   " Tabs
+  Plug 'seblj/nvim-tabline'
 
   " Make buffers scoped to tab page
   Plug 'tiagovla/scope.nvim'
@@ -170,10 +165,10 @@ if s:nvim
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'nvim-treesitter/playground'
-  Plug 'neovim/nvim-lsp'
-  Plug 'neovim/nvim-lspconfig'
+  " Plug 'neovim/nvim-lsp'
   " Plug 'ray-x/lsp_signature.nvim'
-  Plug 'folke/lsp-colors.nvim'
+  Plug 'neovim/nvim-lspconfig'
+  " Plug 'folke/lsp-colors.nvim'
   Plug 'onsails/lspkind.nvim'
   Plug 'zeioth/garbage-day.nvim'
   Plug 'lewis6991/hover.nvim'
@@ -212,10 +207,18 @@ if s:nvim
   Plug 'mfussenegger/nvim-lint'
 
   " Nvim colorschemes
+  Plug 'rktjmp/lush.nvim'
   Plug 'Mofiqul/vscode.nvim'
   Plug 'navarasu/onedark.nvim'
-  Plug 'RRethy/nvim-base16'
+  " Plug 'RRethy/nvim-base16'
   Plug 'projekt0n/github-nvim-theme'
+  Plug 'nyoom-engineering/oxocarbon.nvim'
+  Plug 'savq/melange-nvim'
+  Plug 'uloco/bluloco.nvim'
+  Plug 'rockyzhang24/arctic.nvim', { 'branch': 'v2' }
+  Plug 'Mofiqul/adwaita.nvim'
+  Plug 'Shatur/neovim-ayu'
+  Plug 'yorik1984/newpaper.nvim'
 end
 
 call plug#end()
@@ -223,7 +226,9 @@ call plug#end()
 " theme options applied only on first script load
 if s:profile_loads == 0
   if s:nvim
-    colorscheme base16-tomorrow
+    set bg=light
+    colorscheme adwaita
+    " colorscheme base16-tomorrow
   else
     colorscheme Tomorrow
   endif

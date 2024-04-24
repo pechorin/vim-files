@@ -7,9 +7,9 @@ require('lualine').setup({
       tabline = 3000,
       winbar = 3000,
     },
-    section_separators = '', component_separators = '',
-    -- component_separators = { left = '', right = ''},
-    -- section_separators = { left = '', right = ''},
+    -- section_separators = '', component_separators = '',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
     disabled_filetypes = {
       winbar = { 'nerdtree', 'neo-tree' },
     },
@@ -33,9 +33,9 @@ require('lualine').setup({
   --       use_mode_colors = true
   --     }
   --   },
-  --   lualine_b = {
-  --     { 'buffers' }
-  --   },
+  --   -- lualine_b = {
+  --   --   { 'buffers' }
+  --   -- },
   -- },
   winbar = {
     lualine_z = {

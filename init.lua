@@ -1,3 +1,5 @@
+-- TODO: add autoresizer command
+
 -- Config structure:
 --
 -- .vimrc
@@ -15,11 +17,19 @@
 
 -- TODO: test in macvim
 
+function _G.dump(...)
+  local objects = vim.tbl_map(vim.inspect, {...})
+  print(unpack(objects))
+end
+
 -- Base config variables
-local nvim           = vim.fn.has('nvim')
+local nvim           = vim.fn.has('nvim') == 1
 local vim_files_path = vim.fn.resolve(vim.fn.expand('<sfile>:p'))
 vim_files_path       = vim.fn.substitute(vim_files_path, ".vimrc", '', '') -- TODO: use lua
 vim_files_path       = vim.fn.substitute(vim_files_path, "init.lua", '', '') -- TODO: use lua
+
+-- vim.cmd("source ./helpers.lua")
+-- local vim_files_path = MyCfg.vim_files_path()
 
 -- Load main settings
 local main_settings = {

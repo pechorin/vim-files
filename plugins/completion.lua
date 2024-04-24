@@ -1,6 +1,10 @@
 -- Set up nvim-cmp.
 local cmp = require('cmp')
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local lspkind = require('lspkind')
+
+-- Add parentheses after selecting function or method item
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
 -- require("lsp_signature").setup({})
 
@@ -27,19 +31,21 @@ cmp.setup({
       -- end
     })
   },
+  view = {
+    entries = { name = 'custom', selection_order = 'near_cursor' }
+  },
   performance = {
     trigger_debounce_time = 500,
     throttle = 550,
     fetching_timeout = 80,
   },
   sources = cmp.config.sources({
-    -- { name = 'nvim_lsp_signature_help' },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp' },
     { name = 'buffer' },
     { name = 'tags' },
-    -- { name = 'omni', option = { disable_omnifuncs = { 'v:lua.vim.lsp.omnifunc' } } },
+    -- { name = 'treesitter' },
     { name = 'path' },
-    { name = 'treesitter' },
     -- { name = "rg" },
     -- { name = 'vsnip' }, -- For vsnip users.
     -- { name = 'luasnip' }, -- For luasnip users.
@@ -62,11 +68,7 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    },
-
+    ['<CR>']  = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Insert, select = true },
     ['<Tab>'] = function(fallback)
       if not cmp.select_next_item() then
         if vim.bo.buftype ~= 'prompt' and has_words_before() then
@@ -76,7 +78,6 @@ cmp.setup({
         end
       end
     end,
-
     ['<S-Tab>'] = function(fallback)
       if not cmp.select_prev_item() then
         if vim.bo.buftype ~= 'prompt' and has_words_before() then
@@ -89,15 +90,6 @@ cmp.setup({
   }),
 })
 
--- Set configuration for specific filetype.
--- cmp.setup.filetype('gitcommit', {
---   sources = cmp.config.sources({
---     { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
---   }, {
---     { name = 'buffer' },
---   })
--- })
-
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ '/', '?' }, {
   mapping = cmp.mapping.preset.cmdline(),
@@ -107,18 +99,22 @@ cmp.setup.cmdline({ '/', '?' }, {
   }
 })
 
+-- NOTE: disabled, causes duplicates entries after plug update
+
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = 'path' },
     { name = 'cmdline' },
+    { name = 'path' },
   })
 })
 
--- Set up lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- TODO:
 
-require('lspconfig').solargraph.setup {
-  capabilities = capabilities
-}
+-- Set up lspconfig.
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- require('lspconfig').solargraph.setup {
+--   capabilities = capabilities
+-- }

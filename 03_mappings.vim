@@ -28,9 +28,8 @@ KeyMapGroup "Text manipulation"
 KeyMapGroupEnd
 
 KeyMapGroup "Navigation"
-  KeyMap nmap bt :bnext<cr> "Next buffer"
-  KeyMap nmap gb :bnext<cr> "Next buffer"
-  KeyMap nmap bT :bprevious<cr> "Prev buffer"
+  KeyMap nmap [b :bnext<cr> "Next buffer"
+  KeyMap nmap ]b :bprevious<cr> "Prev buffer"
   KeyMap nmap bd :bdelete<cr> "Delete buffer"
 
   KeyMap nmap <leader>et :Tagbar<CR> "Tagbar"
@@ -96,7 +95,7 @@ KeyMapGroup <leader>r "Tests runners"
 KeyMapGroupEnd
 
 KeyMapGroup "Terminal mode"
-  KeyMap tnoremap <Esc> <C-\><C-n> "Exit to normal mode from terminal with esc"
+  " KeyMap tnoremap <Esc> <C-\><C-n> "Exit to normal mode from terminal with esc"
 
   " make C-w C-w works in term
   KeyMap tnoremap <C-w> <C-\><C-o><C-w> "Make C-w C-w works in term"
@@ -130,8 +129,5 @@ KeyMapGroup <leader>g "Telescope"
   KeyMap nnoremap <leader>gr <cmd>Telescope registers<cr> "Keys"
   KeyMap nnoremap <leader>gd <cmd>Telescope diagnostics<cr> "Keys"
 KeyMapGroupEnd
-
-KeyMap nmap ]n <Plug>(buf-surf-forward) "Bufsurf next buffer"
-KeyMap nmap [n <Plug>(buf-surf-back) "Bufsurf prev buffer"
 
 KeyMap nnoremap <Leader>gS :lua require('search').open()<CR> "Run search window"
