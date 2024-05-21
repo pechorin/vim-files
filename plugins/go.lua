@@ -1,4 +1,6 @@
--- require('go').setup({
+-- ~ ray-x/go.nvim
+--
+-- Example:
 --   goimport='goimports', -- goimport command
 --   gofmt = 'gofmt', --gofmt cmd,
 --   max_line_len = 120, -- max line length in goline format
@@ -18,23 +20,9 @@
 --   dap_debug_keymap = true, -- set keymaps for debugger
 --   dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
 --   dap_debug_vt = true, -- set to true to enable dap virtual text
--- })
-
--- ~ ray-x/go.nvim
--- require('go').setup({
-  -- goimport = 'gopls', -- if set to 'gopls' will use golsp format
-  -- gofmt = 'gopls', -- if set to gopls will use golsp format
-  -- lsp_cfg = false,
-  -- lsp_on_attach = true,
--- })
-
--- format on save
--- local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
--- vim.api.nvim_create_autocmd("BufWritePre", {
---   pattern = "*.go",
---   callback = function()
---    require('go.format').gofmt()
---   end,
---   group = format_sync_grp,
--- })
-
+require('go').setup({
+  goimport = 'gopls', -- if set to 'gopls' will use golsp format
+  gofmt = 'gopls', -- if set to gopls will use golsp format
+  lsp_cfg = false,
+  lsp_on_attach = true,
+})

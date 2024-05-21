@@ -161,6 +161,10 @@ if has('nvim')
   " Starup dashboard
   Plug 'goolord/alpha-nvim'
 
+  " Snippets
+  Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
+  Plug 'rafamadriz/friendly-snippets'
+
   " Code completion
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-buffer'
@@ -172,6 +176,10 @@ if has('nvim')
   Plug 'hrsh7th/nvim-cmp'
   Plug 'ray-x/cmp-treesitter'
   Plug 'hrsh7th/cmp-omni'
+  Plug 'saadparwaiz1/cmp_luasnip'
+
+  " Tab button
+  Plug 'abecodes/tabout.nvim'
 
   " Testing utils
   Plug 'nvim-neotest/nvim-nio'
@@ -181,7 +189,10 @@ if has('nvim')
   " Command runner with ui
   Plug 'stevearc/overseer.nvim'
 
+  " LSP diagnostics in virtual text at the top right of your screen
   Plug 'dgagn/diagflow.nvim'
+
+  " Run linters
   Plug 'mfussenegger/nvim-lint'
 
   " Nvim colorschemes

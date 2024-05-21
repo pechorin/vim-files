@@ -46,15 +46,38 @@ require('gitsigns').setup({
   },
 })
 
--- tabs
+-- tabline
 require('tabline').setup({
-    no_name = '[No Name]',    -- Name for buffers with no name
+    no_name = '[new]',    -- Name for buffers with no name
     modified_icon = '',      -- Icon for showing modified buffer
     close_icon = '',         -- Icon for closing tab with mouse
-    separator = "▌",          -- Separator icon on the left side
-    padding = 3,              -- Prefix and suffix space
-    color_all_icons = false,  -- Color devicons in active and inactive tabs
-    right_separator = false,  -- Show right separator on the last tab
+    -- separator = "▌",          -- Separator icon on the left side
+    separator = "|",          -- Separator icon on the left side
+    padding = 1,              -- Prefix and suffix space
+    color_all_icons = true,  -- Color devicons in active and inactive tabs
+    right_separator = true,  -- Show right separator on the last tab
     show_index = false,       -- Shows the index of tab before filename
     show_icon = true,         -- Shows the devicon
+})
+
+-- tabout
+require('tabout').setup({
+  tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
+  backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
+  act_as_tab = true, -- shift content if tab out is not possible
+  act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+  default_tab = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+  default_shift_tab = '<C-d>', -- reverse shift default action,
+  enable_backwards = true, -- well ...
+  completion = true, -- if the tabkey is used in a completion pum
+  tabouts = {
+    {open = "'", close = "'"},
+    {open = '"', close = '"'},
+    {open = '`', close = '`'},
+    {open = '(', close = ')'},
+    {open = '[', close = ']'},
+    {open = '{', close = '}'}
+  },
+  ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+  exclude = {} -- tabout will ignore these filetypes
 })

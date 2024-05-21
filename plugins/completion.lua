@@ -2,6 +2,9 @@
 local cmp = require('cmp')
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local lspkind = require('lspkind')
+local luasnip = require("luasnip")
+
+require("luasnip.loaders.from_vscode").lazy_load()
 
 -- Add parentheses after selecting function or method item
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
@@ -43,24 +46,24 @@ cmp.setup({
     { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp' },
     { name = 'buffer' },
+    { name = 'luasnip' }, -- For luasnip users.
     { name = 'tags' },
-    -- { name = 'treesitter' },
-    { name = 'path' },
     -- { name = "rg" },
     -- { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
     -- { name = 'ultisnips' }, -- For ultisnips users.
     -- { name = 'snippy' }, -- For snippy users.
+  }, {
+    { name = 'path' },
   }),
-  -- snippet = {
-  --   REQUIRED - you must specify a snippet engine
-  --   expand = function(args)
-  --     -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-  --     -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-  --     -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-  --     -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-  --   end,
-  -- },
+  snippet = {
+    -- you must specify a snippet engine
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+    end,
+  },
   -- window = {
   --   completion = cmp.config.window.bordered(),
   --   documentation = cmp.config.window.bordered(),
@@ -68,7 +71,9 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    -- select completion item
     ['<CR>']  = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Insert, select = true },
+    -- next completion item with
     ['<Tab>'] = function(fallback)
       if not cmp.select_next_item() then
         if vim.bo.buftype ~= 'prompt' and has_words_before() then
@@ -78,6 +83,7 @@ cmp.setup({
         end
       end
     end,
+    -- prev completion item with
     ['<S-Tab>'] = function(fallback)
       if not cmp.select_prev_item() then
         if vim.bo.buftype ~= 'prompt' and has_words_before() then
