@@ -150,7 +150,6 @@ if has('nvim')
   Plug 'onsails/lspkind.nvim'
   Plug 'zeioth/garbage-day.nvim'
   Plug 'lewis6991/hover.nvim'
-  Plug 'hedyhli/outline.nvim'
   Plug 'Bekaboo/dropbar.nvim'
 
   " Golang support
