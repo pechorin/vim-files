@@ -81,3 +81,17 @@ require('tabout').setup({
   ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
   exclude = {} -- tabout will ignore these filetypes
 })
+
+-- outline.nvim
+-- require("outline").setup({})
+
+vim.keymap.set("n", "<leader>o", "<cmd>Outline<CR>",
+  { desc = "Toggle Outline" })
+
+require("outline").setup {
+  outline_window = { width = 25 },
+  -- Your setup opts here (leave empty to use defaults)
+}
+
+-- Dropbar
+vim.ui.select = require('dropbar.utils.menu').select

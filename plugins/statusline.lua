@@ -1,3 +1,7 @@
+local dropbar = require('dropbar')
+
+dropbar.setup({})
+
 require('lualine').setup({
   options = {
     theme = 'auto',
@@ -7,11 +11,11 @@ require('lualine').setup({
       tabline = 3000,
       winbar = 3000,
     },
-    -- section_separators = '', component_separators = '',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
+    section_separators = '', component_separators = '',
+    -- component_separators = { left = '', right = ''},
+    -- section_separators = { left = '', right = ''},
     disabled_filetypes = {
-      winbar = { 'nerdtree', 'neo-tree' },
+      winbar = { 'nerdtree', 'neo-tree' , 'alpha', 'fugitive', '', 'esearch'},
     },
   },
   sections = {
@@ -20,7 +24,13 @@ require('lualine').setup({
     },
     lualine_b = {'branch', 'diff'},
     lualine_c = {},
-    lualine_x = {'fileformat', 'encoding', 'filetype', 'diagnostics'},
+    lualine_x = {
+      { 'filename', path = 1, newfile_status = true },
+      'fileformat',
+      'encoding',
+      'filetype',
+      'diagnostics'
+    },
     lualine_y = {'progress'},
     lualine_z = {'location', 'searchcount', 'selectioncount' }
   },
@@ -38,15 +48,16 @@ require('lualine').setup({
   --   -- },
   -- },
   winbar = {
+    lualine_a = { '%{%v:lua.dropbar.get_dropbar_str()%}' },
     lualine_z = {
-      { 'filename', path = 1, newfile_status = true }
+    --   { 'filename', path = 1, newfile_status = true }
     }
   },
   inactive_winbar = {
+    lualine_a = { '%{%v:lua.dropbar.get_dropbar_str()%}' },
     lualine_z = {
       { 'filename', path = 1, newfile_status = true }
     }
   },
   extensions = {'quickfix', 'fzf', 'nerdtree', 'neo-tree', 'fugitive', 'man', 'trouble'}
 })
-  print(123)

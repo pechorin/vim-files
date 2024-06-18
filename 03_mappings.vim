@@ -32,7 +32,7 @@ KeyMapGroup "Navigation"
   KeyMap nmap ]b :bprevious<cr> "Prev buffer"
   KeyMap nmap bd :bdelete<cr> "Delete buffer"
 
-  KeyMap nmap <leader>et :Tagbar<CR> "Tagbar"
+  KeyMap nmap <leader>et :Outline<CR> "Lsp symbols panel with outline.nvim"
   KeyMap nmap <leader>n :NERDTree<CR> "NERDTree for project"
   KeyMap nmap <leader>N :NERDTree %<CR> "NERDTree for current file"
 
@@ -70,7 +70,8 @@ KeyMapGroupEnd
 KeyMapGroup <leader>e "Vim manipulations"
   KeyMap nmap <leader>ec :Color <CR> "fzf colorschemes select"
   KeyMap nmap <leader>ee :so %<CR> "(vimrc) Eval current file as vimscript"
-  KeyMap nmap <leader>eb :e ~/.vimrc <CR> "(vimrc) Open $MYVIMRC in current buffer"
+  KeyMap nmap <leader>eb :e ~/vim-files/init.lua <CR> "(init.lua) Open init.lua in current buffer"
+  KeyMap nmap <leader>ei :e ~/.vimrc <CR> "(vimrc) Open $MYVIMRC in current buffer"
 KeyMapGroupEnd
 
 KeyMapGroup <leader>g "Git Mappings"
@@ -86,12 +87,29 @@ KeyMapGroup "OSX clipboard"
   KeyMap noremap <Leader>P "+p 'Paste from editor clipboard'
 KeyMapGroupEnd
 
-KeyMapGroup <leader>r "Tests runners"
+KeyMapGroup <leader>r "Classic tests runners"
   KeyMap nmap <silent> <leader>rf :TestFile<CR> "Test file"
-  KeyMap nmap <silent> <leader>rd :TestFile -f d<CR> "Test file -f d"
+  KeyMap nmap <silent> <leader>rd :TestFile -f d<CR> "Test file -f d (in documentation format)"
   KeyMap nmap <silent> <leader>rn :TestNearest<CR> "Test nearest"
   KeyMap nmap <silent> <leader>rs :TestSuite<CR> "Test suite"
   KeyMap nmap <silent> <leader>rl :TestLast<CR> "Test last"
+KeyMapGroupEnd
+
+KeyMapGroup <leader>rt "Neotest runners"
+  KeyMap nmap <silent> <leader>rf :lua require("neotest").run.run(vim.fn.expand("%"))<CR> "Neotest file"
+  KeyMap nmap <silent> <leader>rn :lua require("neotest").run.run()<CR> "Neotest nearest test suite"
+  KeyMap nmap <silent> <leader>rs :lua require("neotest").run.stop()<CR> "Neotest stop nearest test suite"
+  KeyMap nmap <silent> <leader>ra :lua require("neotest").run.attach()<CR> "Neotest attach to nearest test suite"
+  KeyMap nmap <silent> <leader>rw :lua require("neotest").watch.toggle(vim.fn.expand("%"))<CR> "Neotest watch current file"
+  KeyMap nmap <silent> <leader>ro :lua require("neotest").output.toggle({ enter = true })<CR> "Neotest toggle output panel"
+KeyMapGroupEnd
+
+KeyMapGroup <leader>r "Tests runners"
+  KeyMap nmap <silent> <leader>rtf :TestFile<CR> "Test file"
+  KeyMap nmap <silent> <leader>rtd :TestFile -f d<CR> "Test file -f d"
+  KeyMap nmap <silent> <leader>rtn :TestNearest<CR> "Test nearest"
+  KeyMap nmap <silent> <leader>rts :TestSuite<CR> "Test suite"
+  KeyMap nmap <silent> <leader>rtl :TestLast<CR> "Test last"
 KeyMapGroupEnd
 
 KeyMapGroup "Terminal mode"

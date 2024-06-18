@@ -43,10 +43,10 @@ cmp.setup({
     fetching_timeout = 80,
   },
   sources = cmp.config.sources({
+    { name = 'luasnip' },
     { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp' },
     { name = 'buffer' },
-    { name = 'luasnip' }, -- For luasnip users.
     { name = 'tags' },
     -- { name = "rg" },
     -- { name = 'vsnip' }, -- For vsnip users.

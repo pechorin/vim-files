@@ -134,12 +134,12 @@ if has('nvim')
   Plug 'isak102/telescope-git-file-history.nvim'
 
   " Get list of all troubles
-  Plug 'folke/trouble.nvim', { 'branch': 'dev' }
+  Plug 'folke/trouble.nvim', { 'branch': 'main' }
 
   " Vim development
   Plug 'folke/neodev.nvim'
 
-  " Lsp & Tree-sitter support
+  " Lsp & tree-sitter support
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'nvim-treesitter/playground'
@@ -150,6 +150,8 @@ if has('nvim')
   Plug 'onsails/lspkind.nvim'
   Plug 'zeioth/garbage-day.nvim'
   Plug 'lewis6991/hover.nvim'
+  Plug 'hedyhli/outline.nvim'
+  Plug 'Bekaboo/dropbar.nvim'
 
   " Golang support
   Plug 'ray-x/go.nvim'
@@ -197,17 +199,15 @@ if has('nvim')
 
   " Nvim colorschemes
   Plug 'rktjmp/lush.nvim'
-  Plug 'Mofiqul/vscode.nvim'
   Plug 'navarasu/onedark.nvim'
   " Plug 'RRethy/nvim-base16'
   Plug 'projekt0n/github-nvim-theme'
-  Plug 'nyoom-engineering/oxocarbon.nvim'
   Plug 'savq/melange-nvim'
-  Plug 'uloco/bluloco.nvim'
   Plug 'rockyzhang24/arctic.nvim', { 'branch': 'v2' }
   Plug 'Mofiqul/adwaita.nvim'
-  Plug 'Shatur/neovim-ayu'
   Plug 'yorik1984/newpaper.nvim'
+  Plug 'oneslash/helix-nvim'
+  Plug 'Verf/deepwhite.nvim'
 end
 
 call plug#end()
