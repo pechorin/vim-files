@@ -1,7 +1,6 @@
-local settings = {
+local config = {
   colorscheme = 'adwaita',
   bg = 'light',
-
   bundle_file = 'bundle.vim',
   plugins_settings_folder = 'plugins/',
   main_settings_files = {
@@ -49,7 +48,7 @@ if type(Editor) == 'nil' then
       -- Set colorscheme once at first profile load
       if self.profile_loads == 0 then
         vim.opt.bg = 'light'
-        vim.cmd.colorscheme(Editor.colorscheme)
+        vim.cmd.colorscheme(self.colorscheme)
       end
     end,
 
@@ -61,27 +60,25 @@ if type(Editor) == 'nil' then
       self.profile_loads = self.profile_loads + 1
     end,
 
-    merge_objects = function(o1, o2)
-      for k, v in pairs(o2) do
-        o1[k] = v
+    setup = function(self, config)
+      for k, v in pairs(config) do
+        self[k] = v
       end
+
+      self:load_bundle()
+      self:load_settings()
+      self:load_plugins_settings()
+      self:setup_colorscheme()
+      self:log_reloading()
     end
   }
-
-  for k, v in pairs(settings) do
-    Editor[k] = v
-  end
 end
 
 vim.cmd([[
   filetype off
 ]])
 
-Editor:load_bundle()
-Editor:load_settings()
-Editor:load_plugins_settings()
-Editor:setup_colorscheme()
-Editor:log_reloading()
+Editor:setup(config)
 
 -- function _G.dump(...)
 --   local objects = vim.tbl_map(vim.inspect, {...})
