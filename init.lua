@@ -5,19 +5,78 @@ Config = {
   bundle_file             = 'bundle.vim',
   plugins_settings_folder = 'plugins/',
 
+  -- TODO: add load order groups support ?
+  -- settings_files = { before = { ... }, after = { ...} }
   main_settings_files = {
     'autocommands.vim',
     'mappings.vim',
     'plugins.vim',
-    'plugins.lua'
+    'plugins.lua',
+    'lsp.lua',
+    'completion.lua',
   },
 
   use_rg = true,
   zsh    = true,
 
   -- TODO:
+  start_dashboard = {
+    title = nil,
+    buttons = {
+      {"e", " > New File", "<cmd>ene<CR>"},
+      {"n", " > Toggle file explorer", "<cmd>Neotree<CR>"},
+      {"f", " > Find File", "<cmd>Telescope find_files<CR>"},
+      {"F", " > Find Word", "<cmd>Telescope live_grep<CR>"},
+      {"m", " > Keymappings", "<cmd>Telescope keymaps<CR>"},
+      {"g", " > Git status", "<cmd>Git<CR>"},
+      {"u", " > Update plugins", "<cmd>PlugUpdate<CR>"},
+      {"H", " > Edit .vimrc", "<cmd>e ~/.vimrc<CR>"},
+      {"c", " > Change colorscheme", "<cmd>Telescope themes<CR>"},
+    }
+  },
+
+  -- TODO:
+  use_lint = true,
+
+  -- TODO: or
+  -- use_lint = {
+  --   linters_by_ft = {
+  --     -- markdown = {'vale',}
+  --     ruby = {'rubocop'}
+  --   }
+  -- },
+
+  -- TODO:
+  use_fzf = true,
+
+  -- TODO: ?
+  use_lsp = true,
+
+  -- TODO:
   lsp_languages = {
     'ruby', 'go', 'lua', 'viml'
+  },
+
+  -- TODO:
+  vim_plug_bundle = {
+    -- Common plugins
+    'scrooloose/nerdtree',
+    'tpope/vim-commentary',
+    'vim-scripts/CursorLineCurrentWindow',
+    'tpope/vim-surround',
+    'jremmen/vim-ripgrep',
+    'junegunn/vim-easy-align',
+    'AndrewRadev/splitjoin.vim',
+    'vim-utils/vim-man',
+    'adelarsq/vim-matchit',
+
+    -- ?
+    {
+      ['if'] = function() return true end,
+      {
+        'pechorin/any-jump.vim'
+      }
+    }
   },
 
   -- TODO:
@@ -58,7 +117,7 @@ Config = {
     tabstop        = 2,
     softtabstop    = 2,
     cursorline     = true,
-    splitbelow     = true,
+          splitbelow     = true,
     splitright     = true,
     mousehide      = true, -- Hide the mouse when typing text
     laststatus     = 2,
@@ -167,6 +226,79 @@ Config = {
     require('neotest').setup({ adapters = { require('neotest-rspec'), } })
     require('diagflow').setup({ padding_top = 5, text_align = 'left' })
 
+    -- tree sitter
+    require('nvim-treesitter.configs').setup {
+      ensure_installed = {
+        "ruby",
+        "bash",
+        "lua",
+        "c", "cpp",
+        "go", "gomod",
+        "rust",
+        "css", "html", "javascript", "json", "typescript", "vue",
+        "python",
+        "embedded_template",
+        "sql",
+        "regex",
+      },
+
+      sync_install = true,
+      auto_install = true,
+      highlight = { enable = true, }
+    }
+
+    -- lint.lua
+    require('lint').linters_by_ft = {
+      -- markdown = {'vale',}
+      ruby = {'rubocop'}
+    }
+
+    vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+      pattern = {"*.rb", "*.erb", "*.haml", "*.slim"},
+      callback = function()
+        require("lint").try_lint()
+      end,
+    })
+
+    vim.api.nvim_create_autocmd({ "BufRead" }, {
+      pattern = {"*.rb", "*.erb", "*.haml", "*.slim"},
+      callback = function()
+        require("lint").try_lint()
+      end,
+    })
+
+    -- neo-tree
+    require("neo-tree").setup({
+      enable_git_status = true,
+      window            = { width = 30 },
+      default_component_configs = {
+        container = { enable_character_fade = false },
+        indent    = { indent_size = 1, padding = 0, with_markers = false, },
+        icon      = { folder_closed = ">", folder_open = "-", folder_empty = "ﰊ", },
+        modified  = { symbol = "[+]" }
+      },
+      filesystem = {
+        filtered_items = {
+          visible         = false,
+          hide_dotfiles   = false,
+          hide_gitignored = false,
+          hide_by_name    = { "node_modules", "tags", },
+          never_show      = { ".DS_Store" }
+        },
+        follow_current_file  = { enable = true }, use_libuv_file_watcher = true,
+      },
+      source_selector = {
+        winbar = true,
+        sources = {
+          { source = "filesystem" },
+          { source = "buffers" },
+          { source = "git_status" },
+          { source = "document_symbols" },
+        },
+      },
+      sources = { "filesystem", "buffers", "git_status", "document_symbols" }
+    })
+
     require('eyeliner').setup({
       highlight_on_key = true, -- show highlights only after keypress
       dim = false              -- dim all other characters if set to true (recommended!)
@@ -218,7 +350,98 @@ Config = {
     })
 
     -- Dropbar
+    local dropbar = require('dropbar')
+    dropbar.setup({})
     vim.ui.select = require('dropbar.utils.menu').select
+
+    -- Lualine
+    require('lualine').setup({
+      options = {
+        theme        = 'auto',
+        globalstatus = true,
+        refresh = {
+          statusline = 3000, tabline = 3000, winba = 3000,
+        },
+        section_separators = '', component_separators = '',
+        -- component_separators = { left = '', right = ''},
+        -- section_separators = { left = '', right = ''},
+        disabled_filetypes = {
+          winbar = { 'nerdtree', 'neo-tree' , 'alpha', 'fugitive', '', 'esearch'},
+        },
+      },
+      sections = {
+        lualine_a = {
+          { 'mode', fmt = function(str) return str:sub(1,1) end, padding = 1 },
+        },
+        lualine_b = {'branch', 'diff'},
+        lualine_c = {},
+        lualine_x = {
+          { 'filename', path = 1, newfile_status = true },
+          'fileformat', 'encoding', 'filetype', 'diagnostics'
+        },
+        lualine_y = {'progress'},
+        lualine_z = {'location', 'searchcount', 'selectioncount' }
+      },
+      -- tabline = {
+      --   lualine_a = {
+      --     {
+      --       'tabs',
+      --       mode = 2,
+      --       path = 1,
+      --       use_mode_colors = true
+      --     }
+      --   },
+      --   -- lualine_b = {
+      --   --   { 'buffers' }
+      --   -- },
+      -- },
+      winbar = {
+        lualine_a = { '%{%v:lua.dropbar.get_dropbar_str()%}' },
+        lualine_z = {
+        --   { 'filename', path = 1, newfile_status = true }
+        }
+      },
+      inactive_winbar = {
+        lualine_a = { '%{%v:lua.dropbar.get_dropbar_str()%}' },
+        lualine_z = {
+          { 'filename', path = 1, newfile_status = true }
+        }
+      },
+      extensions = {'quickfix', 'fzf', 'nerdtree', 'neo-tree', 'fugitive', 'man', 'trouble'}
+    })
+
+    -- Telescope
+    local telescope = require('telescope')
+
+    telescope.load_extension('themes')
+    telescope.load_extension('telescope-alternate')
+    telescope.load_extension("git_file_history")
+
+    telescope.setup({
+      defaults = {
+        layout_config = { vertical = { width = 0.6 }, horizontal = { width = 0.5 } }
+      },
+      pickers = {
+        buffers    = { theme = "dropdown" },
+        find_files = { theme = "dropdown" }
+      },
+      extensions = {
+        themes = {
+          enable_previewer = false, enable_live_preview = true, persist = { enable = false },
+          layout_config = {
+              horizontal = { width = 0.3, height = 0.5, },
+          },
+        },
+        ["telescope-alternate"] = {
+          -- TODO: setup: https://github.com/otavioschwanck/telescope-alternate.nvim
+          -- mappings = { ...your mappings },
+          presets = { 'rails', 'rspec' }
+        },
+      }
+    })
+
+    --
+
   end
 }
 
