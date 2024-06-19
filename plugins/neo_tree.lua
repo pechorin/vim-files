@@ -34,7 +34,7 @@ require("neo-tree").setup({
         ".DS_Store"
       }
     },
-    follow_current_file = { enable = false },
+    follow_current_file = { enable = true },
     use_libuv_file_watcher = true,
   },
   source_selector = {
