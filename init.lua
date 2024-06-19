@@ -1,4 +1,4 @@
-local config = {
+Config = {
   colorscheme = 'adwaita',
   bg          = 'light',
 
@@ -6,27 +6,28 @@ local config = {
   plugins_settings_folder = 'plugins/',
 
   main_settings_files = {
-    '01_general.vim',
-    '02_autocommands.vim',
-    '03_mappings.vim',
-    '04_plugins.vim',
-    '04_plugins.lua'
+    'autocommands.vim',
+    'mappings.vim',
+    'plugins.vim',
+    'plugins.lua'
   },
-
-  -- TODO:
 
   use_rg = true,
   zsh    = true,
 
+  -- TODO:
   lsp_languages = {
     'ruby', 'go', 'lua', 'viml'
   },
 
+  -- TODO:
   tree_sitter_languages = {},
 
   vim_options = {
     wildoptions    = 'pum',
     pumblend       = 0,
+    completeopt    = 'menu,menuone,noselect',
+    mouse          = 'a',
     -- floatblend     = 8,
 
     inccommand     = 'nosplit',
@@ -39,7 +40,7 @@ local config = {
     fileencodings  = 'utf-8,cp1251',
     -- t_Co           = '256', -- Explicitly tell Vim that the terminal supports 256 colors
 
-    wildmenu       = true,      -- display command-line autocomplete variants
+    wildmenu       = true, -- display command-line autocomplete variants
     wildmode       = 'full',
     wildignore     = function() return vim.opt.wildignore + '.hg,.git,.svn,*.DS_Store,*.pyc' end,
     title          = true, -- change the terminal's title
@@ -49,6 +50,8 @@ local config = {
     showtabline    = 1, -- display tabline only if where is more then one tab
 
     linebreak      = true,
+    -- showbreak      = vim.fn.nr2char(8618) .. ' ',
+    showbreak      = '>> ',
     autoindent     = true, -- always set autoindenting on
     expandtab      = true,
     shiftwidth     = 2,
@@ -70,32 +73,14 @@ local config = {
 
     history        = 1000, -- store lots of :cmdline history
     undolevels     = 1000, --  use many muchos levels of undo
-    -- noswapfile     = true, -- no swap files
     timeoutlen     = 250,
-
-    completeopt    = 'menu,menuone,noselect',
-    mouse          = 'a',
-
--- if has("linebreak")
---   let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
--- endif
-
--- = Don't skip wrap lines
--- noremap j gj
--- noremap k gk
-
--- do not hl cursor in term
--- hi CursorLine cterm=NONE
   },
 
+  -- TODO:
   vim_globals = {
-    NERDTreeShowHidden  = 1,
-
-    ['g:test#strategy'] = 'neovim',
-
-
+    NERDTreeShowHidden = 1,
     NERDTreeMinimalUI  = 1, -- Disables display of the 'Bookmarks' label and 'Press ? for help' text.
-    NERDTreeDirArrows  = 0,  -- Tells the NERD tree to use arrows instead of + ~ chars when displaying directories.
+    NERDTreeDirArrows  = 0, -- Tells the NERD tree to use arrows instead of + ~ chars when displaying directories.
     NERDTreeIgnore     = { '.git$' },
     NERDTreeStatusline = 0,
     NERDTreeWinSize    = 25,
@@ -111,21 +96,17 @@ local config = {
     ['test#neovim#term_position'] = 'rightbelow 25',
     ['test#preserve_screen']      = 1,
     ['test#neovim#start_normal']  = 1,
-    ['test#ruby#rspec#options'] = { file = '--format documentation' },
+    ['test#ruby#rspec#options']   = { file = '--format documentation' },
 
     -- ~ ruby
-    ruby_path = function()
-      return vim.fn.system('rbenv prefix')
-    end,
-    ruby_host_prog        = function()
-      return vim.fn.substitute(vim.fn.system('rbenv prefix') .. '/bin/ruby', "\n", '', 'g')
-    end,
+    ruby_path             = function() return vim.fn.system('rbenv prefix') end,
+    ruby_host_prog        = function() return vim.fn.substitute(vim.fn.system('rbenv prefix') .. '/bin/ruby', "\n", '', 'g') end,
     ruby_operators        = 1,
     ruby_pseudo_operators = 1,
     ruby_no_expensive     = 1,
 
     -- esearch
-    esearch = {},
+    esearch             = {},
     ['esearch.win_map'] = {
       {'n', 'gq',  ':call esearch#init(extend(copy(b:esearch), {"out": "qflist"}))<cr>'  },
       {'n', 'gsp', ':call esearch#init(extend(b:esearch, sort_by_path))<cr>'             },
@@ -148,6 +129,7 @@ local config = {
     any_jump_search_prefered_engine = 'rg',
     any_jump_ignored_files          = {'*.tmp', '*.temp', 'tags'},
 
+    -- ctags
     gutentags_define_advanced_commands = 1,
     gutentags_ctags_exclude            = {'*.js', '*.jsx', '*.coffee', '*.js.erb', 'node_modules'},
     gutentags_file_list_command = 'rg --files',
@@ -201,28 +183,28 @@ local config = {
 
     -- tabline
     require('tabline').setup({
-        no_name = '[new]',    -- Name for buffers with no name
-        modified_icon = '',      -- Icon for showing modified buffer
-        close_icon = '',         -- Icon for closing tab with mouse
-        -- separator = "▌",          -- Separator icon on the left side
-        separator = "|",          -- Separator icon on the left side
-        padding = 1,              -- Prefix and suffix space
-        color_all_icons = true,  -- Color devicons in active and inactive tabs
-        right_separator = true,  -- Show right separator on the last tab
-        show_index = false,       -- Shows the index of tab before filename
-        show_icon = true,         -- Shows the devicon
+        no_name         = '[new]',
+        modified_icon   = '',
+        close_icon      = '',
+        -- separator    = "▌",
+        separator       = "|",
+        padding         = 1,
+        color_all_icons = true,
+        right_separator = true,
+        show_index      = false,
+        show_icon       = true,
     })
 
     -- tabout
     require('tabout').setup({
-      tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
-      backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
-      act_as_tab = true, -- shift content if tab out is not possible
-      act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-      default_tab = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+      tabkey            = '<Tab>', -- key to trigger tabout, set to an empty string to disable
+      backwards_tabkey  = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
+      act_as_tab        = true, -- shift content if tab out is not possible
+      act_as_shift_tab  = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+      default_tab       = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
       default_shift_tab = '<C-d>', -- reverse shift default action,
-      enable_backwards = true, -- well ...
-      completion = true, -- if the tabkey is used in a completion pum
+      enable_backwards  = true, -- well ...
+      completion        = true, -- if the tabkey is used in a completion pum
       tabouts = {
         {open = "'", close = "'"},
         {open = '"', close = '"'},
@@ -232,7 +214,7 @@ local config = {
         {open = '{', close = '}'}
       },
       ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
-      exclude = {} -- tabout will ignore these filetypes
+      exclude          = {} -- tabout will ignore these filetypes
     })
 
     -- Dropbar
@@ -240,6 +222,13 @@ local config = {
   end
 }
 
+-- Global helpers
+function _G.dump(...)
+  local objects = vim.tbl_map(vim.inspect, {...})
+  print(unpack(objects))
+end
+
+-- Editor instance
 -- if type(Editor) == 'nil' then
   Editor = {
     colorscheme             = 'default',
@@ -261,6 +250,12 @@ local config = {
 
     plugins_path = function(self)
       return self.vim_files_path() .. self.plugins_settings_folder
+    end,
+
+    before_setup = function(self)
+      vim.cmd [[
+        filetype off
+      ]]
     end,
 
     load_bundle = function(self)
@@ -288,6 +283,11 @@ local config = {
         vim.opt.bg = self.bg
         vim.cmd.colorscheme(self.colorscheme)
       end
+
+      -- do not hl cursor in term
+      vim.cmd [[
+        hi CursorLine cterm=NONE
+      ]]
     end,
 
     log_reloading = function(self)
@@ -343,6 +343,7 @@ local config = {
         self[k] = v
       end
 
+      self:before_setup()
       self:load_bundle()
       self:load_settings()
       self:load_vim_options()
@@ -356,13 +357,5 @@ local config = {
   }
 -- end
 
-vim.cmd([[
-  filetype off
-]])
-
-Editor:setup(config)
-
--- function _G.dump(...)
---   local objects = vim.tbl_map(vim.inspect, {...})
---   print(unpack(objects))
--- end
+-- Setup Editor with config
+Editor:setup(Config)

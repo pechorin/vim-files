@@ -16,6 +16,10 @@ nmap Q <Nop>
 " Disable K looking man stuff up
 nmap K <Nop>
 
+" === Don't skip wrap lines
+noremap j gj
+noremap k gk
+
 KeyMapGroup "Bash-like keys for cmd"
   KeyMap cnoremap <C-A> <Home> "Bash-like CTRL+A for command line"
   KeyMap cnoremap <C-E> <End>  "Bash-like CTRL+E for command line"
