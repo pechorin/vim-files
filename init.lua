@@ -1,12 +1,8 @@
 Config = {
   colorscheme = 'adwaita',
   bg          = 'light',
+  bundle_file = 'bundle.vim',
 
-  bundle_file             = 'bundle.vim',
-  plugins_settings_folder = 'plugins/',
-
-  -- TODO: add load order groups support ?
-  -- settings_files = { before = { ... }, after = { ...} }
   main_settings_files = {
     'autocommands.vim',
     'mappings.vim',
@@ -19,9 +15,10 @@ Config = {
   use_rg = true,
   zsh    = true,
 
-  -- TODO:
+  use_fzf = true,
+
   start_dashboard = {
-    title = nil,
+    title = 'Hello world!',
     buttons = {
       {"e", " > New File", "<cmd>ene<CR>"},
       {"n", " > Toggle file explorer", "<cmd>Neotree<CR>"},
@@ -36,6 +33,90 @@ Config = {
   },
 
   -- TODO:
+  -- nnoremap <Leader>w :write<CR>
+  -- vim.keymap.set('n', '<Leader>w', ':write<CR>')
+  -- vim.keymap.set('n', '*', '*zz', {desc = 'Search and center screen'})
+  -- remap:
+  -- vim.keymap.set('n', '<leader>e', '%', {remap = true, desc = 'Go to matching pair'})
+  keymaps = {
+    general = {},
+    bask_like_keys_for_cmd = {
+      { 'cn', '<C-A>', '<Home>', { desc = 'Bash-like CTRL+A for shell', remap = true } },
+      { 'cn', '<C-E>', '<End>',  { desc = 'Bash-like CTRL+E for shell', remap = true } },
+      { 'cn', '<C-K>', '<C-U>',  { desc = 'Bash-like CTRL+K for shell', remap = true } },
+    },
+    text_manipulation = {},
+    navigation = {},
+    commenting = {},
+    fzf = {},
+    vimscript = {},
+    git = {},
+    osx_clipboard = {},
+    neotest_runners = {},
+    class_test_runners = {},
+    terminal = {},
+    telescope = {},
+    search_plugin = {},
+},
+
+  -- TODO:
+  -- local augroup = vim.api.nvim_create_augroup('highlight_cmds', {clear = true})
+
+  -- vim.api.nvim_create_autocmd('ColorScheme', {
+  --   pattern = 'rubber',
+--   group = augroup,
+  --   command = 'highlight String guifg=#FFEB95'
+  --
+  --   -- for lua cmd use callback
+  --     callback = function()
+          -- vim.api.nvim_set_hl(0, 'String', {fg = '#FFEB95'})
+          -- end
+  -- })
+  --
+  autocommands = {
+    language_detection = {
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.rs', command = 'set filetype=rust' },
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.yml.j2', command = 'set filetype=yaml' },
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.pcss ', command = 'set filetype=postcss' },
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.arb', command = 'set filetype=ruby' },
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.lmx', command = 'set filetype=haml' },
+
+      -- for alternative Gemfiles
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = 'Gemfile*', command = 'set filetype=ruby' },
+    },
+    languages_settings = {
+      -- pretty colymn hi for yaml modes
+      { event = { 'FileType' }, pattern = 'yaml', command = 'setlocal cursorcolumn' },
+      { event = { 'FileType' }, pattern = 'eruby.yaml', command = 'setlocal cursorcolumn' },
+
+      -- js with 2 tabs
+      { event = { 'FileType' }, pattern = 'javascript', command = 'setlocal sw=2 sw=2 sts=2' },
+    },
+    reload_buffer_if_file_changed = {
+      {
+        pattern = '*',
+        command = 'checktime',
+        event = {
+          'BufEnter', 'WinLeave',
+          'CursorHold', 'CursorHoldI', 'CursorMoved', 'CursorMovedI',
+          'FocusGained', 'FocusLost'
+        }
+      },
+    },
+    auto_remove_trailing_whitespaces = {
+      { event = { 'BufWritePre' }, pattern = '*', command = ':%s/s+$//e' },
+    },
+    terminal_settings = {
+      { event = { 'BufWinEnter' }, pattern = 'term://*', command = 'startinsert' },
+      -- { event = { 'WinEnter' }, pattern = 'term://*'', command = 'startinsert' },
+      { event = { 'BufLeave' }, pattern = 'term://*', command = 'stopinsert' },
+    },
+    any_jump_search_prefered_engine = {
+      { event = { 'BufNewFile', 'BufRead' }, pattern = '*', command = "let b:preferred_searcher = 'rg'" },
+    },
+  },
+
+  -- TODO:
   use_lint = true,
 
   -- TODO: or
@@ -46,37 +127,22 @@ Config = {
   --   }
   -- },
 
-  -- TODO:
-  use_fzf = true,
-
   -- TODO: ?
   use_lsp = true,
 
   -- TODO:
-  lsp_languages = {
-    'ruby', 'go', 'lua', 'viml'
-  },
+  lsp_languages = {},
 
   -- TODO:
-  vim_plug_bundle = {
-    -- Common plugins
-    'scrooloose/nerdtree',
-    'tpope/vim-commentary',
-    'vim-scripts/CursorLineCurrentWindow',
-    'tpope/vim-surround',
-    'jremmen/vim-ripgrep',
-    'junegunn/vim-easy-align',
-    'AndrewRadev/splitjoin.vim',
-    'vim-utils/vim-man',
-    'adelarsq/vim-matchit',
+  -- local Plug = vim.fn['plug#']
+--   vim.call('plug#begin')
 
-    -- ?
-    {
-      ['if'] = function() return true end,
-      {
-        'pechorin/any-jump.vim'
-      }
-    }
+--   Plug 'wellle/targets.vim'
+--   Plug 'tpope/vim-surround'
+--   Plug 'tpope/vim-repeat'
+--   vim.call('plug#end')
+
+  vim_plug_bundle = {
   },
 
   -- TODO:
@@ -96,7 +162,7 @@ Config = {
     omnifunc       = 'syntaxcomplete#Complete',
     updatetime     = 200,
     encoding       = 'utf-8',
-    fileencodings  = 'utf-8,cp1251',
+    fileencodings  = {'utf-8', 'cp1251'},
     -- t_Co           = '256', -- Explicitly tell Vim that the terminal supports 256 colors
 
     wildmenu       = true, -- display command-line autocomplete variants
@@ -137,6 +203,26 @@ Config = {
 
   -- TODO:
   vim_globals = {
+    fzf_preview_window    = '', -- Disable FZF preview window
+    ['$FZF_DEFAULT_OPTS'] = '--layout=reverse --multi',
+    fzf_layout            = { window = { width = 0.9, height = 0.6, border = 'sharp' } },
+    fzf_colors            = {
+      fg      = { fg = 'Normal' },
+      bg      = { bg = 'Normal' },
+      hl      = { fg = 'Comment' },
+      ['fg+'] = { fg = { 'CursorLine', 'CursorColumn', 'Normal' } },
+      ['bg+'] = { bg = { 'CursorLine', 'CursorColumn' } },
+      ['hl+'] = { fg = 'Statement' },
+      info    = { fg = 'PreProc' },
+      border  = { fg = 'Ignore' },
+      prompt  = { fg = 'Conditional' },
+      pointer = { fg = 'Exception' },
+      marker  = { fg = 'Keyword' },
+      spinner = { fg = 'Label' },
+      header  = { fg = 'Comment' }
+    },
+
+    -- NERDtree (classic tree explorer)
     NERDTreeShowHidden = 1,
     NERDTreeMinimalUI  = 1, -- Disables display of the 'Bookmarks' label and 'Press ? for help' text.
     NERDTreeDirArrows  = 0, -- Tells the NERD tree to use arrows instead of + ~ chars when displaying directories.
@@ -145,7 +231,7 @@ Config = {
     NERDTreeWinSize    = 25,
 
     -- javascript-libraries-syntax.vim
-    used_javascript_libs = 'underscore, backbone, angularjs',
+    used_javascript_libs = { 'underscore', 'backbone', 'angularjs'},
 
     -- markdown
     vim_markdown_folding_disabled = 1,
@@ -454,25 +540,28 @@ end
 -- Editor instance
 -- if type(Editor) == 'nil' then
   Editor = {
-    colorscheme             = 'default',
-    bg                      = 'light',
-    bundle_file             = 'bundle.vim',
-    plugins_settings_folder = 'plugins/',
-    main_settings_files     = {},
-    profile_loads           = 0,
+    colorscheme         = 'default',
+    bg                  = 'light',
+    bundle_file         = 'bundle.vim',
+    main_settings_files = {},
+    profile_loads       = 0,
 
-    vim_options             = {},
-    vim_globals             = {},
-    use_rg                  = false,
-    use_zsh                 = false,
+    use_rg              = false,
+    use_zsh             = false,
+    use_fzf             = false,
+
+    start_dashboard     = {},
+    keymaps             = {},
+    autocommands        = {},
+    vim_plug_bundle     = {},
+
+    vim_options         = {},
+    vim_globals         = {},
+
 
     vim_files_path = function()
       local path = vim.fn.resolve(vim.fn.expand('<sfile>:p'))
       return vim.fn.substitute(vim.fn.substitute(path, ".vimrc", '', ''), 'init.lua', '', '')
-    end,
-
-    plugins_path = function(self)
-      return self.vim_files_path() .. self.plugins_settings_folder
     end,
 
     before_setup = function(self)
@@ -488,15 +577,6 @@ end
     load_settings = function(self)
       for _, setting_file in ipairs(self.main_settings_files) do
         vim.fn.execute('source ' .. self.vim_files_path() .. setting_file)
-      end
-    end,
-
-    load_plugins_settings = function(self)
-      local plugins_entries = vim.fn.readdir(self:plugins_path(), [[ v:val =~ '\.lua$' || v:val =~ '\.vim' ]])
-
-      for _, file in ipairs(plugins_entries) do
-        local plugin_path = self:plugins_path() .. file
-        vim.fn.execute('source ' .. plugin_path)
       end
     end,
 
@@ -556,9 +636,51 @@ end
     end,
 
     setup_zsh = function(self)
-      if (self.use_zsh and vim.fn.executable('/bin/zsh')) then
+      if (self.use_zsh and vim.fn.executable('/bin/zsh') == 1) then
         vim.opt.shell = 'bin/zsh -l'
       end
+    end,
+
+    setup_fzf = function(self)
+      if self.use_fzf then
+        vim.cmd [[
+          set rtp+=/usr/local/opt/fzf
+        ]]
+      end
+    end,
+
+    setup_start_dashboard = function(self)
+      local alpha = require("alpha")
+      local startify = require("alpha.themes.startify")
+
+      startify.section.header.val = {
+          -- [[     ]],
+          [[> Hello world ]],
+          -- [[     ]],
+      }
+
+      startify.opts.layout[1].val = 2
+      startify.opts.opts.margin = 3
+
+      -- disable MRU
+      startify.section.mru.val = { { type = "padding", val = 0 } }
+
+      -- local alpha_time = tostring(os.date("%A %I:%M %p"))
+
+      local buttons = {}
+
+      for i, data in pairs(self.start_dashboard.buttons or {}) do
+        local btn = startify.button(unpack(data))
+        table.insert(buttons, btn)
+      end
+
+      startify.section.top_buttons.val = buttons
+
+      -- Send config to alpha
+      alpha.setup(startify.config)
+
+      -- Disable folding on alpha buffer
+      vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
     end,
 
     setup = function(self, config)
@@ -573,7 +695,8 @@ end
       self:load_vim_globals()
       self:setup_rg()
       self:setup_zsh()
-      self:load_plugins_settings()
+      self:setup_fzf()
+      self:setup_start_dashboard()
       self:setup_colorscheme()
       self:log_reloading()
     end

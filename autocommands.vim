@@ -1,7 +1,5 @@
 " ~ Custom autocommands
 
-" TODO: add augroup custom?
-
 augroup language_detection
   au!
 

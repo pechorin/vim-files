@@ -91,14 +91,6 @@ KeyMapGroup "OSX clipboard"
   KeyMap noremap <Leader>P "+p 'Paste from editor clipboard'
 KeyMapGroupEnd
 
-KeyMapGroup <leader>r "Classic tests runners"
-  KeyMap nmap <silent> <leader>rf :TestFile<CR> "Test file"
-  KeyMap nmap <silent> <leader>rd :TestFile -f d<CR> "Test file -f d (in documentation format)"
-  KeyMap nmap <silent> <leader>rn :TestNearest<CR> "Test nearest"
-  KeyMap nmap <silent> <leader>rs :TestSuite<CR> "Test suite"
-  KeyMap nmap <silent> <leader>rl :TestLast<CR> "Test last"
-KeyMapGroupEnd
-
 KeyMapGroup <leader>rt "Neotest runners"
   KeyMap nmap <silent> <leader>rf :lua require("neotest").run.run(vim.fn.expand("%"))<CR> "Neotest file"
   KeyMap nmap <silent> <leader>rn :lua require("neotest").run.run()<CR> "Neotest nearest test suite"
@@ -108,7 +100,7 @@ KeyMapGroup <leader>rt "Neotest runners"
   KeyMap nmap <silent> <leader>ro :lua require("neotest").output.toggle({ enter = true })<CR> "Neotest toggle output panel"
 KeyMapGroupEnd
 
-KeyMapGroup <leader>r "Tests runners"
+KeyMapGroup <leader>r "Class Tests runners"
   KeyMap nmap <silent> <leader>rtf :TestFile<CR> "Test file"
   KeyMap nmap <silent> <leader>rtd :TestFile -f d<CR> "Test file -f d"
   KeyMap nmap <silent> <leader>rtn :TestNearest<CR> "Test nearest"
