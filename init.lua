@@ -12,9 +12,8 @@ Config = {
     'completion.lua',
   },
 
-  use_rg = true,
-  zsh    = true,
-
+  use_rg  = true,
+  use_zsh = true,
   use_fzf = true,
 
   start_dashboard = {
@@ -183,7 +182,7 @@ Config = {
     tabstop        = 2,
     softtabstop    = 2,
     cursorline     = true,
-          splitbelow     = true,
+    splitbelow     = true,
     splitright     = true,
     mousehide      = true, -- Hide the mouse when typing text
     laststatus     = 2,
@@ -199,27 +198,28 @@ Config = {
     history        = 1000, -- store lots of :cmdline history
     undolevels     = 1000, --  use many muchos levels of undo
     timeoutlen     = 250,
+
+    swapfile       = false,
   },
 
-  -- TODO:
   vim_globals = {
-    fzf_preview_window    = '', -- Disable FZF preview window
+    fzf_preview_window    = '',
     ['$FZF_DEFAULT_OPTS'] = '--layout=reverse --multi',
     fzf_layout            = { window = { width = 0.9, height = 0.6, border = 'sharp' } },
     fzf_colors            = {
-      fg      = { fg = 'Normal' },
-      bg      = { bg = 'Normal' },
-      hl      = { fg = 'Comment' },
-      ['fg+'] = { fg = { 'CursorLine', 'CursorColumn', 'Normal' } },
-      ['bg+'] = { bg = { 'CursorLine', 'CursorColumn' } },
-      ['hl+'] = { fg = 'Statement' },
-      info    = { fg = 'PreProc' },
-      border  = { fg = 'Ignore' },
-      prompt  = { fg = 'Conditional' },
-      pointer = { fg = 'Exception' },
-      marker  = { fg = 'Keyword' },
-      spinner = { fg = 'Label' },
-      header  = { fg = 'Comment' }
+      fg      = { 'fg', 'Normal' },
+      bg      = { 'bg', 'Normal' },
+      hl      = { 'fg', 'Comment' },
+      ['fg+'] = { 'fg', 'CursorLine', 'CursorColumn', 'Normal' },
+      ['bg+'] = { 'bg', 'CursorLine', 'CursorColumn' },
+      ['hl+'] = { 'fg', 'Statement' },
+      info    = { 'fg', 'PreProc' },
+      border  = { 'fg', 'Ignore' },
+      prompt  = { 'fg', 'Conditional' },
+      pointer = { 'fg', 'Exception' },
+      marker  = { 'fg', 'Keyword' },
+      spinner = { 'fg', 'Label' },
+      header  = { 'fg', 'Comment' }
     },
 
     -- NERDtree (classic tree explorer)
@@ -629,6 +629,21 @@ end
       end
     end,
 
+    load_autocommands = function(self)
+      for group, commands in pairs(self.autocommands) do
+        local augroup = vim.api.nvim_create_augroup(group, { clear = true })
+
+        for _, cmd in ipairs(commands) do
+          vim.api.nvim_create_autocmd(cmd.event, {
+           pattern  = cmd.pattern,
+           group    = augroup,
+           command  = cmd.command,
+           callback = cmd.callback,
+          })
+        end
+      end
+    end,
+
     setup_rg = function(self)
       if (self.use_rg) then
         vim.opt.grepprg = 'rg --color=never'
@@ -653,23 +668,19 @@ end
       local alpha = require("alpha")
       local startify = require("alpha.themes.startify")
 
-      startify.section.header.val = {
-          -- [[     ]],
-          [[> Hello world ]],
-          -- [[     ]],
-      }
+      local title = self.start_dashboard.title or 'Hello world'
+
+      startify.section.header.val = { '[[>' .. title  .. ']]' }
 
       startify.opts.layout[1].val = 2
-      startify.opts.opts.margin = 3
+      startify.opts.opts.margin   = 3
 
       -- disable MRU
       startify.section.mru.val = { { type = "padding", val = 0 } }
 
-      -- local alpha_time = tostring(os.date("%A %I:%M %p"))
-
       local buttons = {}
 
-      for i, data in pairs(self.start_dashboard.buttons or {}) do
+      for _, data in pairs(self.start_dashboard.buttons or {}) do
         local btn = startify.button(unpack(data))
         table.insert(buttons, btn)
       end
@@ -693,6 +704,7 @@ end
       self:load_settings()
       self:load_vim_options()
       self:load_vim_globals()
+      -- self:load_autocommands()
       self:setup_rg()
       self:setup_zsh()
       self:setup_fzf()
