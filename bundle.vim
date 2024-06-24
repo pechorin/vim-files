@@ -36,6 +36,7 @@ Plug 'majutsushi/tagbar'
 
 " Fuzzy engine for fast selection menus
 Plug '/opt/homebrew/opt/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " Table-mode support

@@ -4,7 +4,6 @@ Config = {
   bundle_file = 'bundle.vim',
 
   main_settings_files = {
-    'autocommands.vim',
     'mappings.vim',
     'plugins.vim',
     'plugins.lua',
@@ -38,40 +37,140 @@ Config = {
   -- remap:
   -- vim.keymap.set('n', '<leader>e', '%', {remap = true, desc = 'Go to matching pair'})
   keymaps = {
-    general = {},
+    general = {
+      -- search plugin
+      { 'n', '<Leader>gS', ":lua require('search').open()<CR>", { desc = "Run search window", remap = true }},
+
+      -- " from: https://vim.fandom.com/wiki/Search_for_visually_selected_text
+      { 'v', "// y/V<C-R>=escape(@\",'/\')<CR><CR>", { desc = "Search visual selected text via //", remap = true }},
+
+      -- " Show the quickfix window
+      { 'n', '<Leader>co', ':copen<CR>', { desc = "Show quickfix", remap = true}},
+
+      -- " Hide the quickfix window
+      { 'n', '<Leader>cc', ':cclose<CR>', { desc = "Hide quickfix", remap = true }},
+
+      -- " Cycle through text objects
+      { 'n', '<SPACE>', '<Plug>(wildfire-fuel)', { desc = "This selects the next closest text object" }},
+      { 'v', '<C-SPACE>', '<Plug>(wildfire-water)', { desc = "This selects the previous closest text object"}},
+
+      -- " Minimap
+      { 'n', '<leader>l', ':MinimapToggle<CR>', { desc = "Toggle minimap"}},
+
+      -- " remap ; to :
+      { 'n', ';', ':' },
+
+      -- " https://github.com/r00k/dotfiles/blob/master/vimrc
+      -- " Disable that goddamn 'Entering Ex mode. Type 'visual' to go to Normal mode.'
+      -- " that I trigger 40x a day.
+      { 'n', 'Q', '<Nop>' },
+
+      -- " Disable K looking man stuff up
+      { 'n', 'K', '<Nop>' },
+
+      -- " === Don't skip wrap lines
+      { 'n', 'j', 'gj', { remap = true }},
+      { 'n', 'k', 'gk', { remap = true }},
+    },
     bask_like_keys_for_cmd = {
       { 'cn', '<C-A>', '<Home>', { desc = 'Bash-like CTRL+A for shell', remap = true } },
       { 'cn', '<C-E>', '<End>',  { desc = 'Bash-like CTRL+E for shell', remap = true } },
       { 'cn', '<C-K>', '<C-U>',  { desc = 'Bash-like CTRL+K for shell', remap = true } },
     },
-    text_manipulation = {},
-    navigation = {},
-    commenting = {},
-    fzf = {},
-    vimscript = {},
-    git = {},
-    osx_clipboard = {},
-    neotest_runners = {},
-    class_test_runners = {},
-    terminal = {},
-    telescope = {},
-    search_plugin = {},
+    text_manipulation = {
+      { 'x', 'ga', '<Plug>(EasyAlign)', 'Align in visual mode (e.g. `vipga`)'},
+      { 'n', 'ga', '<Plug>(EasyAlign)', 'Align for a motion/text object (e.g. `gaip`)' },
+
+    },
+    navigation = {
+      { 'n', '[b', ':bnext<cr>', { desc = "Next buffer" }},
+      { 'n', ']b', ':bprevious<cr>', { desc = "Prev buffer" }},
+      { 'n', 'bd', ':bdelete<cr>', { desc = "Delete buffer" }},
+
+      { 'n', '<leader>et', ':Outline<CR>', { desc = "Lsp symbols panel with outline.nvim" }},
+      { 'n', '<leader>n', ':NERDTree<CR>', { desc = "NERDTree for project" }},
+      { 'n', '<leader>N',  ':NERDTree %<CR>', { desc = "NERDTree for current file" }},
+
+      -- Neotree
+      { 'n', '<leader>m',  ':Neotree<CR>', { desc = "Neotree" }},
+      { 'n', '<leader>M',  ':Neotree %<CR>', { desc = "Neotree for current file" }},
+      { 'n', '<leader>,',  ':Neotree buffers<CR>', { desc = "Neotree buffers" }},
+      { 'n', '<leader>.', ':Neotree float git_status<CR>', { desc = "Neotree git" }},
+
+      -- Tabs
+      { 'n', '<leader>t', ':tabnew<CR>', { desc = "Create new tab" }},
+      { 'n', '<cmd>t', ':tabnew<CR>', { desc = "Create new tab" }},
+
+      -- ctrl+mousewheel for tab switching
+      { 'n', '<C-ScrollWheelUp>', ':tabnext<CR>', { desc = "ctrl+mousewheel for tab switching", remap = true }},
+      { 'n', '<C-ScrollWheelDown>', ':tabprevious<CR>', { desc = "ctrl+mousewheel for tab switching", remap = true }},
+
+      { 'n', '<leader>x', '<cmd>bp|bd#<CR>', { desc = "Kill current buffer", remap = true }},
+
+      -- run AnyJump on ctrl+click
+      { 'n', '<C-LeftMouse>', ':AnyJump<CR>', { desc = "Run AnyJump on ctrl+click", remap = true }},
+    },
+    commenting = {
+      { 'n', '<leader>c', '<Plug>CommentaryLine', { desc = "Comment current line" }},
+      { 'v', '<leader>c', '<Plug>Commentary', { desc = "Comment visualy selected text" }},
+    },
+    fzf = {
+      {'n', '<leader>b', ':Buffers<CR>', { desc = "fzf Buffers"}},
+      {'n', '<leader>q', ':Files<CR>', { desc = "fzf Project files"}},
+    },
+    vimscript = {
+      {'n', '<leader>ec', ':Color <CR>', { desc = "fzf colorschemes select"}},
+      {'n', '<leader>ee', ':so %<CR>', { desc = "(vimrc) Eval current file as vimscript"}},
+      {'n', '<leader>eb', ':e ~/vim-files/init.lua <CR>', { desc = "(init.lua) Open init.lua in current buffer"}},
+      {'n', '<leader>ei', ':e ~/.vimrc <CR>', { desc = "(vimrc) Open $MYVIMRC in current buffer"}},
+    },
+    git = {
+      {'n', '<leader>gg', ':tab Git<CR>', { desc = "Open Git in new tab"}},
+      {'n', '<leader>gG', ':Git<CR>', { desc = "Open Git in split"}},
+      {'n', '<leader>gb', ':Git blame<CR>', { desc = "Git blame for file"}},
+    },
+    osx_clipboard = {
+      { 'n', '<Leader>y', '"*y', { desc = 'Copy to system clipboard' }},
+      { 'n', '<Leader>p', '"*p', { desc = 'Paste from system clipboard' }},
+      { 'n', '<Leader>Y', '"+y', { desc = 'Copy to editor clipboard' }},
+      { 'n', '<Leader>P', '"+p', { desc = 'Paste from editor clipboard' }},
+    },
+    neotest_runners = {
+      {'n', '<silent>', '<leader>rf', ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', { remap = true, desc = "Neotest file" }},
+      {'n', '<silent>', '<leader>rn', ':lua require("neotest").run.run()<CR>', { remap = true, { remap = true, desc = "Neotest nearest test suite"}},
+      {'n', '<silent>', '<leader>rs', ':lua require("neotest").run.stop()<CR>', { remap = true, desc = "Neotest stop nearest test suite"}},
+      {'n', '<silent>', '<leader>ra', ':lua require("neotest").run.attach()<CR>', { remap = true, desc = "Neotest attach to nearest test suite"}},
+      {'n', '<silent>', '<leader>rw', ':lua require("neotest").watch.toggle(vim.fn.expand("%"))<CR>', { remap = true, desc = "Neotest watch current file"}},
+      {'n', '<silent>', '<leader>ro', ':lua require("neotest").output.toggle({ enter = true })<CR>', { remap = true, desc = "Neotest toggle output panel"}},
+    },
+    classic_test_runners = {
+      {'n', '<silent>', '<leader>rtf :TestFile<CR>', { desc = "Test file" }},
+      {'n', '<silent>', '<leader>rtd :TestFile -f d<CR>', { desc = "Test file -f d" }},
+      {'n', '<silent>', '<leader>rtn :TestNearest<CR>', { desc = "Test nearest" }},
+      {'n', '<silent>', '<leader>rts :TestSuite<CR>', { desc = "Test suite" }},
+      {'n', '<silent>', '<leader>rtl :TestLast<CR>', { desc = "Test last" }},
+    }
+    ,
+    terminal = {
+      -- " tnoremap <Esc> <C-\><C-n> "Exit to normal mode from terminal with esc"
+
+      -- " make C-w C-w works in term
+      { 't', '<C-w>', '<C-><C-o><C-w>', { remap = true, desc = "Make C-w C-w works in term" }},
+    },
+    telescope = {
+      { 'n', '<leader>gT', '<cmd>Telescope<cr>', { remap = true, desc = "Telescope" }},
+      { 'n', '<leader>gf', '<cmd>Telescope find_files<cr>', { remap = true, desc = "Files" }},
+      { 'n', '<leader>gb', '<cmd>Telescope buffers<cr>', { remap = true, desc = "Buffers" }},
+      { 'n', '<leader>gl', '<cmd>Telescope oldfiles<cr>', { remap = true, desc = "Old files" }},
+      { 'n', '<leader>gc', '<cmd>Telescope themes<cr>', { remap = true, desc = "Themes" }},
+      { 'n', '<leader>gk', '<cmd>Telescope keymaps<cr>', { remap = true, desc = "Keys" }},
+      { 'n', '<leader>gh', '<cmd>Telescope git_commits<cr>', { remap = true, desc = "Git commits" }},
+      { 'n', '<leader>gs', '<cmd>Telescope git_status<cr>', { remap = true, desc = "Git status" }},
+      { 'n', '<leader>gr', '<cmd>Telescope registers<cr>', { remap = true, desc = "Keys" }},
+      { 'n', '<leader>gd', '<cmd>Telescope diagnostics<cr>', { remap = true, desc = "Keys" }},
+    },
 },
 
-  -- TODO:
-  -- local augroup = vim.api.nvim_create_augroup('highlight_cmds', {clear = true})
-
-  -- vim.api.nvim_create_autocmd('ColorScheme', {
-  --   pattern = 'rubber',
---   group = augroup,
-  --   command = 'highlight String guifg=#FFEB95'
-  --
-  --   -- for lua cmd use callback
-  --     callback = function()
-          -- vim.api.nvim_set_hl(0, 'String', {fg = '#FFEB95'})
-          -- end
-  -- })
-  --
   autocommands = {
     language_detection = {
       { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.rs', command = 'set filetype=rust' },
@@ -203,6 +302,7 @@ Config = {
   },
 
   vim_globals = {
+    mapleader = ',',
     fzf_preview_window    = '',
     ['$FZF_DEFAULT_OPTS'] = '--layout=reverse --multi',
     fzf_layout            = { window = { width = 0.9, height = 0.6, border = 'sharp' } },
@@ -250,23 +350,24 @@ Config = {
     ruby_pseudo_operators = 1,
     ruby_no_expensive     = 1,
 
-    -- esearch
-    esearch             = {},
-    ['esearch.win_map'] = {
-      {'n', 'gq',  ':call esearch#init(extend(copy(b:esearch), {"out": "qflist"}))<cr>'  },
-      {'n', 'gsp', ':call esearch#init(extend(b:esearch, sort_by_path))<cr>'             },
-      {'n', 'gsd', ':call esearch#init(extend(b:esearch, sort_by_date))<cr>'             },
-    },
+    -- Esearch
+    -- sort_by_path = {adapters = {rg = {options = '--sort path'}}},
+    -- sort_by_date = {adapters = {rg = {options = '--sort modified'}}},
+    -- esearch = {
+    --   win_new = function(esearch)
+    --     return vim.fn['esearch#buf#goto_or_open'](esearch.name, 'new')
+    --   end
+    -- },
+    -- esearch = {
+      -- prefill = {'last', 'clipboard'},
+      -- live_update = true,
+      -- win_map = {
+      --   {'n', 'gq',  ':call esearch#init(extend(copy(b:esearch), {"out": "qflist"}))<cr>'  },
+      --   {'n', 'gsp', ':call esearch#init(extend(b:esearch, sort_by_path))<cr>'             },
+      --   {'n', 'gsd', ':call esearch#init(extend(b:esearch, sort_by_date))<cr>'             },
+      -- }
+    -- },
 
-    -- Set the initial pattern content using the highlighted '/' pattern (if
-    -- v:hlsearch is true), the last searched pattern or the clipboard content.
-    ['esearch.prefill'] = {'last', 'clipboard'},
-    ['esearch.live_update'] = true,
-    ['esearch.win_new'] = { esearch = "esearch#buf#goto_or_open(esearch.name, 'new')" }, -- TODO: recheck
-
-    -- Helpers to use in keymaps.
-    ['sort_by_path'] = {adapters = {rg = {options = '--sort path'}}},
-    ['sort_by_date'] = {adapters = {rg = {options = '--sort modified'}}},
     -- NOTE: {'backend': 'system'} means synchronous reload using system() call to stay within the same context
     -- ['AddAfter'] = { n = { after = b:esearch.after + n, 'backend': 'system'}}, -- TODO: recheck
 
@@ -652,7 +753,7 @@ end
 
     setup_zsh = function(self)
       if (self.use_zsh and vim.fn.executable('/bin/zsh') == 1) then
-        vim.opt.shell = 'bin/zsh -l'
+        vim.opt.shell = '/bin/zsh -l'
       end
     end,
 
@@ -670,7 +771,7 @@ end
 
       local title = self.start_dashboard.title or 'Hello world'
 
-      startify.section.header.val = { '[[>' .. title  .. ']]' }
+      startify.section.header.val = { '[[> ' .. title  .. ' ]]' }
 
       startify.opts.layout[1].val = 2
       startify.opts.opts.margin   = 3
@@ -704,7 +805,7 @@ end
       self:load_settings()
       self:load_vim_options()
       self:load_vim_globals()
-      -- self:load_autocommands()
+      self:load_autocommands()
       self:setup_rg()
       self:setup_zsh()
       self:setup_fzf()
