@@ -4,7 +4,6 @@ Config = {
   bundle_file = 'bundle.vim',
 
   main_settings_files = {
-    'mappings.vim',
     'plugins.vim',
     'plugins.lua',
     'lsp.lua',
@@ -30,19 +29,13 @@ Config = {
     }
   },
 
-  -- TODO:
-  -- nnoremap <Leader>w :write<CR>
-  -- vim.keymap.set('n', '<Leader>w', ':write<CR>')
-  -- vim.keymap.set('n', '*', '*zz', {desc = 'Search and center screen'})
-  -- remap:
-  -- vim.keymap.set('n', '<leader>e', '%', {remap = true, desc = 'Go to matching pair'})
-  keymaps = {
+  keymappings = {
     general = {
       -- search plugin
       { 'n', '<Leader>gS', ":lua require('search').open()<CR>", { desc = "Run search window", remap = true }},
 
       -- " from: https://vim.fandom.com/wiki/Search_for_visually_selected_text
-      { 'v', "// y/V<C-R>=escape(@\",'/\')<CR><CR>", { desc = "Search visual selected text via //", remap = true }},
+      { 'v', '//', "y/V<C-R>=escape(@\",'/\')<CR><CR>", { desc = "Search visual selected text via //", remap = true }},
 
       -- " Show the quickfix window
       { 'n', '<Leader>co', ':copen<CR>', { desc = "Show quickfix", remap = true}},
@@ -73,14 +66,13 @@ Config = {
       { 'n', 'k', 'gk', { remap = true }},
     },
     bask_like_keys_for_cmd = {
-      { 'cn', '<C-A>', '<Home>', { desc = 'Bash-like CTRL+A for shell', remap = true } },
-      { 'cn', '<C-E>', '<End>',  { desc = 'Bash-like CTRL+E for shell', remap = true } },
-      { 'cn', '<C-K>', '<C-U>',  { desc = 'Bash-like CTRL+K for shell', remap = true } },
+      { 'c', '<C-A>', '<Home>', { desc = 'Bash-like CTRL+A for shell', remap = true }},
+      { 'c', '<C-E>', '<End>',  { desc = 'Bash-like CTRL+E for shell', remap = true }},
+      { 'c', '<C-K>', '<C-U>',  { desc = 'Bash-like CTRL+K for shell', remap = true }},
     },
     text_manipulation = {
-      { 'x', 'ga', '<Plug>(EasyAlign)', 'Align in visual mode (e.g. `vipga`)'},
-      { 'n', 'ga', '<Plug>(EasyAlign)', 'Align for a motion/text object (e.g. `gaip`)' },
-
+      { 'x', 'ga', '<Plug>(EasyAlign)', { desc = 'Align in visual mode (e.g. `vipga`)' }},
+      { 'n', 'ga', '<Plug>(EasyAlign)', { desc = 'Align for a motion/text object (e.g. `gaip`)' }},
     },
     navigation = {
       { 'n', '[b', ':bnext<cr>', { desc = "Next buffer" }},
@@ -115,19 +107,19 @@ Config = {
       { 'v', '<leader>c', '<Plug>Commentary', { desc = "Comment visualy selected text" }},
     },
     fzf = {
-      {'n', '<leader>b', ':Buffers<CR>', { desc = "fzf Buffers"}},
-      {'n', '<leader>q', ':Files<CR>', { desc = "fzf Project files"}},
+      { 'n', '<leader>b', ':Buffers<CR>', { desc = "fzf Buffers"}},
+      { 'n', '<leader>q', ':Files<CR>', { desc = "fzf Project files"}},
     },
     vimscript = {
-      {'n', '<leader>ec', ':Color <CR>', { desc = "fzf colorschemes select"}},
-      {'n', '<leader>ee', ':so %<CR>', { desc = "(vimrc) Eval current file as vimscript"}},
-      {'n', '<leader>eb', ':e ~/vim-files/init.lua <CR>', { desc = "(init.lua) Open init.lua in current buffer"}},
-      {'n', '<leader>ei', ':e ~/.vimrc <CR>', { desc = "(vimrc) Open $MYVIMRC in current buffer"}},
+      { 'n', '<leader>ec', ':Color <CR>', { desc = "fzf colorschemes select"}},
+      { 'n', '<leader>ee', ':so %<CR>', { desc = "(vimrc) Eval current file as vimscript"}},
+      { 'n', '<leader>eb', ':e ~/vim-files/init.lua <CR>', { desc = "(init.lua) Open init.lua in current buffer"}},
+      { 'n', '<leader>ei', ':e ~/.vimrc <CR>', { desc = "(vimrc) Open $MYVIMRC in current buffer"}},
     },
     git = {
-      {'n', '<leader>gg', ':tab Git<CR>', { desc = "Open Git in new tab"}},
-      {'n', '<leader>gG', ':Git<CR>', { desc = "Open Git in split"}},
-      {'n', '<leader>gb', ':Git blame<CR>', { desc = "Git blame for file"}},
+      { 'n', '<leader>gg', ':tab Git<CR>', { desc = "Open Git in new tab"}},
+      { 'n', '<leader>gG', ':Git<CR>', { desc = "Open Git in split"}},
+      { 'n', '<leader>gb', ':Git blame<CR>', { desc = "Git blame for file"}},
     },
     osx_clipboard = {
       { 'n', '<Leader>y', '"*y', { desc = 'Copy to system clipboard' }},
@@ -136,21 +128,20 @@ Config = {
       { 'n', '<Leader>P', '"+p', { desc = 'Paste from editor clipboard' }},
     },
     neotest_runners = {
-      {'n', '<silent>', '<leader>rf', ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', { remap = true, desc = "Neotest file" }},
-      {'n', '<silent>', '<leader>rn', ':lua require("neotest").run.run()<CR>', { remap = true, { remap = true, desc = "Neotest nearest test suite"}},
-      {'n', '<silent>', '<leader>rs', ':lua require("neotest").run.stop()<CR>', { remap = true, desc = "Neotest stop nearest test suite"}},
-      {'n', '<silent>', '<leader>ra', ':lua require("neotest").run.attach()<CR>', { remap = true, desc = "Neotest attach to nearest test suite"}},
-      {'n', '<silent>', '<leader>rw', ':lua require("neotest").watch.toggle(vim.fn.expand("%"))<CR>', { remap = true, desc = "Neotest watch current file"}},
-      {'n', '<silent>', '<leader>ro', ':lua require("neotest").output.toggle({ enter = true })<CR>', { remap = true, desc = "Neotest toggle output panel"}},
+      { 'n', '<leader>rf', ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', { remap = true, desc = "Neotest file", silent = true }},
+      { 'n', '<leader>rn', ':lua require("neotest").run.run()<CR>', { remap = true, desc = "Neotest nearest test suite", silent = true}},
+      { 'n', '<leader>rs', ':lua require("neotest").run.stop()<CR>', { remap = true, desc = "Neotest stop nearest test suite", silent = true}},
+      { 'n', '<leader>ra', ':lua require("neotest").run.attach()<CR>', { remap = true, desc = "Neotest attach to nearest test suite", silent = true}},
+      { 'n', '<leader>rw', ':lua require("neotest").watch.toggle(vim.fn.expand("%"))<CR>', { remap = true, desc = "Neotest watch current file", silent = true}},
+      { 'n', '<leader>ro', ':lua require("neotest").output.toggle({ enter = true })<CR>', { remap = true, desc = "Neotest toggle output panel", silent = true}},
     },
     classic_test_runners = {
-      {'n', '<silent>', '<leader>rtf :TestFile<CR>', { desc = "Test file" }},
-      {'n', '<silent>', '<leader>rtd :TestFile -f d<CR>', { desc = "Test file -f d" }},
-      {'n', '<silent>', '<leader>rtn :TestNearest<CR>', { desc = "Test nearest" }},
-      {'n', '<silent>', '<leader>rts :TestSuite<CR>', { desc = "Test suite" }},
-      {'n', '<silent>', '<leader>rtl :TestLast<CR>', { desc = "Test last" }},
-    }
-    ,
+      { 'n', '<silent>', '<leader>rtf :TestFile<CR>', { desc = "Test file" }},
+      { 'n', '<silent>', '<leader>rtd :TestFile -f d<CR>', { desc = "Test file -f d" }},
+      { 'n', '<silent>', '<leader>rtn :TestNearest<CR>', { desc = "Test nearest" }},
+      { 'n', '<silent>', '<leader>rts :TestSuite<CR>', { desc = "Test suite" }},
+      { 'n', '<silent>', '<leader>rtl :TestLast<CR>', { desc = "Test last" }},
+    },
     terminal = {
       -- " tnoremap <Esc> <C-\><C-n> "Exit to normal mode from terminal with esc"
 
@@ -169,7 +160,7 @@ Config = {
       { 'n', '<leader>gr', '<cmd>Telescope registers<cr>', { remap = true, desc = "Keys" }},
       { 'n', '<leader>gd', '<cmd>Telescope diagnostics<cr>', { remap = true, desc = "Keys" }},
     },
-},
+  },
 
   autocommands = {
     language_detection = {
@@ -232,15 +223,158 @@ Config = {
   lsp_languages = {},
 
   -- TODO:
-  -- local Plug = vim.fn['plug#']
---   vim.call('plug#begin')
-
---   Plug 'wellle/targets.vim'
---   Plug 'tpope/vim-surround'
---   Plug 'tpope/vim-repeat'
---   vim.call('plug#end')
-
   vim_plug_bundle = {
+    general = {
+      -- " General toolkits
+      { 'ray-x/guihua.lua', { ['do'] = 'cd lua/fzy && make' }},
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      'tpope/vim-commentary',
+      'vim-scripts/CursorLineCurrentWindow',
+      'junegunn/vim-easy-align',
+      'AndrewRadev/splitjoin.vim',
+      'vim-utils/vim-man',
+      'adelarsq/vim-matchit',
+      'tiagovla/scope.nvim', -- " Make buffers scoped to tab page
+      'tpope/vim-surround',
+      'windwp/nvim-autopairs', -- " Auto close quotes and other pairs
+      'abecodes/tabout.nvim',
+      'kylechui/nvim-surround', -- " Change surrodings on fly
+      'gcmt/wildfire.vim', -- " Cycle thought text objects
+      'jinh0/eyeliner.nvim', -- " Move faster with unique f/F indicators for each word on the line.
+      'folke/which-key.nvim', -- " Display key definitions in cool menu
+      'mbbill/undotree', -- undo explorer
+      'gbprod/yanky.nvim', -- yank explorer
+      'simeji/winresizer', -- " Resize windows with ctrl+e
+      'AndrewRadev/linediff.vim', -- " Diff between lines
+      { 'L3MON4D3/LuaSnip', { tag = 'v2.*', ['do'] = 'make install_jsregexp'}}, -- " Snippets
+      'rafamadriz/friendly-snippets',
+      'dhruvasagar/vim-table-mode', -- " Table-mode support
+      'folke/neodev.nvim', -- " Vim development
+    },
+    search = {
+      'jremmen/vim-ripgrep',
+      'eugen0329/vim-esearch',
+      'romainl/vim-cool',
+    },
+    ui = {
+      'goolord/alpha-nvim', -- " Starup dashboard
+      'nvim-lualine/lualine.nvim', -- " Statusline
+      'seblj/nvim-tabline', -- " Tabs
+      'lewis6991/hover.nvim', -- LSP doc on hover
+      'Bekaboo/dropbar.nvim', -- vscode like dropbar
+      'scrooloose/nerdtree', -- Sidebar filemanagers
+      'nvim-neo-tree/neo-tree.nvim',
+      'wfxr/minimap.vim', -- " Code minimap
+      'j-hui/fidget.nvim', -- " Notifications
+      { 'folke/trouble.nvim', { branch = 'main' }}, -- " Get list of all troubles
+      'dgagn/diagflow.nvim', -- " LSP diagnostics in virtual text at the top right of your screen
+      'stevearc/overseer.nvim', -- " Command runner with ui
+    },
+    code_completion = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-nvim-lsp-document-symbol',
+      'quangnguyen30192/cmp-nvim-tags',
+      'hrsh7th/nvim-cmp',
+      'ray-x/cmp-treesitter',
+      'hrsh7th/cmp-omni',
+      'saadparwaiz1/cmp_luasnip',
+    },
+    git = {
+      'tpope/vim-fugitive',
+      'lewis6991/gitsigns.nvim',
+    },
+    tests = {
+      'tpope/vim-dispatch',
+      'janko-m/vim-test',
+      'nvim-neotest/nvim-nio',
+      'nvim-neotest/neotest',
+      'olimorris/neotest-rspec',
+    },
+    ctags = {
+      'ludovicchabant/vim-gutentags',
+      'majutsushi/tagbar',
+    },
+    fzf = {
+      '/opt/homebrew/opt/fzf',
+      'junegunn/fzf.vim',
+    },
+    language_support = {
+      'tpope/vim-rbenv',
+      'vim-ruby/vim-ruby',
+      'tpope/vim-rails',
+      'tpope/vim-bundler',
+      'tpope/vim-endwise',
+      'tpope/vim-haml',
+      'plasticboy/vim-markdown',
+      'jelera/vim-javascript-syntax',
+      'pangloss/vim-javascript',
+      'MaxMEllon/vim-jsx-pretty',
+      'othree/javascript-libraries-syntax.vim',
+      'mitsuhiko/jinja2',
+      'leafgarland/typescript-vim',
+      'peitalin/vim-jsx-typescript',
+      'elixir-editors/vim-elixir',
+      'slashmili/alchemist.vim',
+      'racer-rust/vim-racer',
+      'rust-lang/rust.vim',
+      'lepture/vim-jinja',
+      'ap/vim-css-color',
+      'pearofducks/ansible-vim',
+      'ekalinin/Dockerfile.vim',
+      'chr4/nginx.vim',
+      'slim-template/vim-slim',
+
+      -- " Lsp & tree-sitter support
+      'nvim-tree/nvim-web-devicons',
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-treesitter/playground',
+      -- " 'neovim/nvim-lsp'
+      -- " 'ray-x/lsp_signature.nvim'
+      'neovim/nvim-lspconfig',
+      -- " 'folke/lsp-colors.nvim'
+      'onsails/lspkind.nvim',
+
+      'zeioth/garbage-day.nvim', -- stop inactive lsp servers
+
+      'ray-x/go.nvim', -- " Golang support
+
+      'mfussenegger/nvim-lint' -- " TODO: use lsp linter support?
+    },
+    colorschemes = {
+      { 'ChrisKempson/Tomorrow-Theme', { rtp = 'vim' }},
+      'davidosomething/vim-colors-meh',
+      'kkga/vim-envy',
+
+      'rktjmp/lush.nvim',
+      'navarasu/onedark.nvim',
+      -- " 'RRethy/nvim-base16'
+      'projekt0n/github-nvim-theme',
+      'savq/melange-nvim',
+      { 'rockyzhang24/arctic.nvim', { branch = 'v2' }},
+      'Mofiqul/adwaita.nvim',
+      'yorik1984/newpaper.nvim',
+      'oneslash/helix-nvim',
+      'Verf/deepwhite.nvim',
+    },
+
+    telescope = {
+      { 'nvim-telescope/telescope.nvim', { branch = '0.1.x' }},
+      'andrew-george/telescope-themes',
+      'otavioschwanck/telescope-alternate',
+      'FabianWirth/search.nvim',
+      'isak102/telescope-git-file-history.nvim',
+    },
+
+    in_dev = {
+      'pechorin/any-jump.vim',
+      'pechorin/u-keymapper.vim',
+      'pechorin/vim-leuven-theme',
+    },
   },
 
   -- TODO:
@@ -652,30 +786,39 @@ end
     use_fzf             = false,
 
     start_dashboard     = {},
-    keymaps             = {},
+    keymappings         = {},
     autocommands        = {},
     vim_plug_bundle     = {},
 
     vim_options         = {},
     vim_globals         = {},
 
-
     vim_files_path = function()
       local path = vim.fn.resolve(vim.fn.expand('<sfile>:p'))
       return vim.fn.substitute(vim.fn.substitute(path, ".vimrc", '', ''), 'init.lua', '', '')
-    end,
-
-    before_setup = function(self)
-      vim.cmd [[
-        filetype off
-      ]]
     end,
 
     load_bundle = function(self)
       vim.fn.execute('source ' .. self.vim_files_path() .. self.bundle_file)
     end,
 
-    load_settings = function(self)
+    load_vim_plug_bundle = function(self)
+      local vim  = vim
+      local Plug = vim.fn['plug#']
+
+      vim.call('plug#begin')
+
+      for group_name, bundle in pairs(self.vim_plug_bundle or {}) do
+        for _, plugin_data in ipairs(bundle) do
+          if type(plugin_data) == "string" then Plug(plugin_data)
+          elseif type(plugin_data) == 'table' then Plug(unpack(plugin_data)) end
+        end
+      end
+
+      vim.call('plug#end')
+    end,
+
+    load_settings_files = function(self)
       for _, setting_file in ipairs(self.main_settings_files) do
         vim.fn.execute('source ' .. self.vim_files_path() .. setting_file)
       end
@@ -703,6 +846,10 @@ end
     end,
 
     load_vim_options = function(self)
+      vim.cmd [[
+        filetype off
+      ]]
+
       for option, v in pairs(self.vim_options) do
         local value
 
@@ -741,6 +888,14 @@ end
            command  = cmd.command,
            callback = cmd.callback,
           })
+        end
+      end
+    end,
+
+    load_keymappings = function(self)
+      for _, group in pairs(self.keymappings) do
+        for _, mapping in ipairs(group) do
+          vim.keymap.set(unpack(mapping))
         end
       end
     end,
@@ -797,14 +952,16 @@ end
 
     setup = function(self, config)
       for k, v in pairs(config) do
-        self[k] = v
+        if k ~= 'setup' then self[k] = v end
       end
 
-      self:before_setup()
       self:load_bundle()
-      self:load_settings()
+      self:load_vim_plug_bundle()
       self:load_vim_options()
       self:load_vim_globals()
+      self:load_settings_files()
+      if type(config.setup) == 'function' then config.setup(self) end
+      self:load_keymappings()
       self:load_autocommands()
       self:setup_rg()
       self:setup_zsh()
