@@ -1,3 +1,8 @@
+-- TODO:
+-- - move Editor to separate module
+
+-- NOT_WORKING:
+--  
 Config = {
   colorscheme = 'adwaita',
   bg          = 'light',
@@ -8,9 +13,37 @@ Config = {
     'completion.lua',
   },
 
-  use_rg  = true,
-  use_zsh = true,
-  use_fzf = true,
+  use_rg   = true,
+  use_zsh  = true,
+  use_fzf  = true,
+
+  use_lint = {
+    file_pattern  = {"*.rb", "*.erb", "*.haml", "*.slim"},
+    linters_by_ft = {
+      ruby = {'rubocop'}
+    }
+  },
+
+  use_treesitter = {
+    languages = {
+      "ruby",
+      "bash",
+      "lua",
+      "c", "cpp",
+      "go", "gomod",
+      "rust",
+      "css", "html", "javascript", "json", "typescript", "vue",
+      "python",
+      "embedded_template",
+      "sql",
+      "regex",
+      "vim", "vimdoc"
+    }
+  },
+
+  -- TODO:
+  use_lsp = {
+  },
 
   start_dashboard = {
     title = 'Hello world!',
@@ -19,7 +52,7 @@ Config = {
       {"n", " > Toggle file explorer", "<cmd>Neotree<CR>"},
       {"f", " > Find File", "<cmd>Telescope find_files<CR>"},
       {"F", " > Find Word", "<cmd>Telescope live_grep<CR>"},
-      {"m", " > Keymappings", "<cmd>Telescope keymaps<CR>"},
+      {"m", " > Keymaps", "<cmd>Telescope keymaps<CR>"},
       {"g", " > Git status", "<cmd>Git<CR>"},
       {"u", " > Update plugins", "<cmd>PlugUpdate<CR>"},
       {"H", " > Edit .vimrc", "<cmd>e ~/.vimrc<CR>"},
@@ -27,7 +60,7 @@ Config = {
     }
   },
 
-  keymappings = {
+  keymaps = {
     general = {
       -- search plugin
       { 'n', '<Leader>gS', ":lua require('search').open()<CR>", { desc = "Run search window", noremap = true }},
@@ -203,24 +236,6 @@ Config = {
     },
   },
 
-  -- TODO:
-  use_lint = true,
-
-  -- TODO: or
-  -- use_lint = {
-  --   linters_by_ft = {
-  --     -- markdown = {'vale',}
-  --     ruby = {'rubocop'}
-  --   }
-  -- },
-
-  -- TODO: ?
-  use_lsp = true,
-
-  -- TODO:
-  lsp_languages = {},
-
-  -- TODO:
   vim_plug_bundle = {
     {
       group = 'General toolkits',
@@ -409,9 +424,6 @@ Config = {
     },
   },
 
-  -- TODO:
-  tree_sitter_languages = {},
-
   vim_options = {
     wildoptions    = 'pum',
     pumblend       = 0,
@@ -472,21 +484,21 @@ Config = {
     fzf_preview_window    = '',
     ['$FZF_DEFAULT_OPTS'] = '--layout=reverse --multi',
     fzf_layout            = { window = { width = 0.9, height = 0.6, border = 'sharp' } },
-    fzf_colors            = {
-      fg      = { 'fg', 'Normal' },
-      bg      = { 'bg', 'Normal' },
-      hl      = { 'fg', 'Comment' },
-      ['fg+'] = { 'fg', 'CursorLine', 'CursorColumn', 'Normal' },
-      ['bg+'] = { 'bg', 'CursorLine', 'CursorColumn' },
-      ['hl+'] = { 'fg', 'Statement' },
-      info    = { 'fg', 'PreProc' },
-      border  = { 'fg', 'Ignore' },
-      prompt  = { 'fg', 'Conditional' },
-      pointer = { 'fg', 'Exception' },
-      marker  = { 'fg', 'Keyword' },
-      spinner = { 'fg', 'Label' },
-      header  = { 'fg', 'Comment' }
-    },
+    -- fzf_colors            = {
+    --   fg      = { 'fg', 'Normal' },
+    --   bg      = { 'bg', 'Normal' },
+    --   hl      = { 'fg', 'Comment' },
+    --   ['fg+'] = { 'fg', 'CursorLine', 'CursorColumn', 'Normal' },
+    --   ['bg+'] = { 'bg', 'CursorLine', 'CursorColumn' },
+    --   ['hl+'] = { 'fg', 'Statement' },
+    --   info    = { 'fg', 'PreProc' },
+    --   border  = { 'fg', 'Ignore' },
+    --   prompt  = { 'fg', 'Conditional' },
+    --   pointer = { 'fg', 'Exception' },
+    --   marker  = { 'fg', 'Keyword' },
+    --   spinner = { 'fg', 'Label' },
+    --   header  = { 'fg', 'Comment' }
+    -- },
 
     -- NERDtree (classic tree explorer)
     NERDTreeShowHidden = 1,
@@ -579,47 +591,6 @@ Config = {
     require('neotest').setup({ adapters = { require('neotest-rspec'), } })
     require('diagflow').setup({ padding_top = 5, text_align = 'left' })
 
-    -- tree sitter
-    require('nvim-treesitter.configs').setup {
-      ensure_installed = {
-        "ruby",
-        "bash",
-        "lua",
-        "c", "cpp",
-        "go", "gomod",
-        "rust",
-        "css", "html", "javascript", "json", "typescript", "vue",
-        "python",
-        "embedded_template",
-        "sql",
-        "regex",
-      },
-
-      sync_install = true,
-      auto_install = true,
-      highlight = { enable = true, }
-    }
-
-    -- lint.lua
-    require('lint').linters_by_ft = {
-      -- markdown = {'vale',}
-      ruby = {'rubocop'}
-    }
-
-    vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-      pattern = {"*.rb", "*.erb", "*.haml", "*.slim"},
-      callback = function()
-        require("lint").try_lint()
-      end,
-    })
-
-    vim.api.nvim_create_autocmd({ "BufRead" }, {
-      pattern = {"*.rb", "*.erb", "*.haml", "*.slim"},
-      callback = function()
-        require("lint").try_lint()
-      end,
-    })
-
     -- neo-tree
     require("neo-tree").setup({
       enable_git_status = true,
@@ -710,17 +681,13 @@ Config = {
     -- Lualine
     require('lualine').setup({
       options = {
-        theme        = 'auto',
-        globalstatus = true,
-        refresh = {
-          statusline = 3000, tabline = 3000, winba = 3000,
-        },
+        theme              = 'auto',
+        globalstatus       = true,
+        refresh            = { statusline = 3000, tabline = 3000, winba = 3000 },
         section_separators = '', component_separators = '',
         -- component_separators = { left = '', right = ''},
         -- section_separators = { left = '', right = ''},
-        disabled_filetypes = {
-          winbar = { 'nerdtree', 'neo-tree' , 'alpha', 'fugitive', '', 'esearch'},
-        },
+        disabled_filetypes = { winbar = { 'nerdtree', 'neo-tree' , 'alpha', 'fugitive', '', 'esearch'} },
       },
       sections = {
         lualine_a = {
@@ -775,26 +742,21 @@ Config = {
         layout_config = { vertical = { width = 0.6 }, horizontal = { width = 0.5 } }
       },
       pickers = {
-        buffers    = { theme = "dropdown" },
-        find_files = { theme = "dropdown" }
+        buffers = { theme = "dropdown" }, find_files = { theme = "dropdown" }
       },
       extensions = {
         themes = {
           enable_previewer = false, enable_live_preview = true, persist = { enable = false },
-          layout_config = {
-              horizontal = { width = 0.3, height = 0.5, },
-          },
+          layout_config = { horizontal = { width = 0.3, height = 0.5 } },
         },
+        -- TODO: setup: https://github.com/otavioschwanck/telescope-alternate.nvim
         ["telescope-alternate"] = {
-          -- TODO: setup: https://github.com/otavioschwanck/telescope-alternate.nvim
-          -- mappings = { ...your mappings },
           presets = { 'rails', 'rspec' }
         },
       }
     })
 
     --
-
   end
 }
 
@@ -818,9 +780,11 @@ end
     use_rg               = false,
     use_zsh              = false,
     use_fzf              = false,
+    use_lint             = {},
+    use_treesitter       = {},
 
     start_dashboard      = {},
-    keymappings          = {},
+    keymaps              = {},
     autocommands         = {},
     vim_plug_bundle      = {},
 
@@ -929,8 +893,8 @@ end
       end
     end,
 
-    load_keymappings = function(self)
-      for _, group in pairs(self.keymappings) do
+    load_keymaps = function(self)
+      for _, group in pairs(self.keymaps) do
         for _, mapping in ipairs(group) do
           vim.keymap.set(unpack(mapping))
         end
@@ -955,6 +919,41 @@ end
           set rtp+=/usr/local/opt/fzf
         ]]
       end
+    end,
+
+    setup_linter = function(self)
+      if type(self.use_lint) == 'table' then
+        if type(self.use_lint.linters_by_ft) == 'table' then
+          require('lint').linters_by_ft = self.use_lint.linters_by_ft
+
+          local pattern = self.use_lint.file_pattern or { "*.rb", "*.erb", "*.haml", "*.slim" }
+
+          vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+            pattern = pattern,
+            callback = function()
+              require("lint").try_lint()
+            end,
+          })
+
+          vim.api.nvim_create_autocmd({ "BufRead" }, {
+            pattern = pattern,
+            callback = function()
+              require("lint").try_lint()
+            end,
+          })
+        end
+      end
+    end,
+
+    setup_treesitter = function(self)
+      if type(self.use_treesitter) ~= 'table' or type(self.use_treesitter.languages) ~= 'table' then return end
+
+      require('nvim-treesitter.configs').setup {
+        ensure_installed = self.use_treesitter.languages,
+        sync_install     = true,
+        auto_install     = true,
+        highlight        = { enable = true }
+      }
     end,
 
     setup_start_dashboard = function(self)
@@ -999,11 +998,13 @@ end
 
       if type(config.setup) == 'function' then config.setup(self) end
 
-      self:load_keymappings()
+      self:load_keymaps()
       self:load_autocommands()
       self:setup_rg()
       self:setup_zsh()
       self:setup_fzf()
+      self:setup_linter()
+      self:setup_treesitter()
       self:setup_start_dashboard()
       self:setup_colorscheme()
       self:log_reloading()
