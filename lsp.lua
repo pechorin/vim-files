@@ -1,6 +1,6 @@
 local lsp_config = require('lspconfig')
 
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 
 vim.diagnostic.config({
   virtual_text = true,

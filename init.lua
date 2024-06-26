@@ -1,16 +1,44 @@
-Config = {
+require('nvim-config-loader'):setup {
   colorscheme = 'adwaita',
   bg          = 'light',
 
   vim_plug_bundle_path = '~/.vim/bundle',
-  main_settings_files  = {
+  additional_config_files  = {
     'lsp.lua',
     'completion.lua',
   },
 
-  use_rg  = true,
-  use_zsh = true,
-  use_fzf = true,
+  use_rg   = true,
+  use_zsh  = true,
+  use_fzf  = true,
+
+  use_lint = {
+    file_pattern  = {"*.rb", "*.erb", "*.haml", "*.slim"},
+    linters_by_ft = {
+      ruby = {'rubocop'}
+    }
+  },
+
+  use_treesitter = {
+    languages = {
+      "ruby",
+      "bash",
+      "lua",
+      "c", "cpp",
+      "go", "gomod",
+      "rust",
+      "css", "html", "javascript", "json", "typescript", "vue",
+      "python",
+      "embedded_template",
+      "sql",
+      "regex",
+      "vim", "vimdoc"
+    }
+  },
+
+  -- TODO:
+  use_lsp = {
+  },
 
   start_dashboard = {
     title = 'Hello world!',
@@ -19,7 +47,7 @@ Config = {
       {"n", " > Toggle file explorer", "<cmd>Neotree<CR>"},
       {"f", " > Find File", "<cmd>Telescope find_files<CR>"},
       {"F", " > Find Word", "<cmd>Telescope live_grep<CR>"},
-      {"m", " > Keymappings", "<cmd>Telescope keymaps<CR>"},
+      {"m", " > Keymaps", "<cmd>Telescope keymaps<CR>"},
       {"g", " > Git status", "<cmd>Git<CR>"},
       {"u", " > Update plugins", "<cmd>PlugUpdate<CR>"},
       {"H", " > Edit .vimrc", "<cmd>e ~/.vimrc<CR>"},
@@ -27,7 +55,7 @@ Config = {
     }
   },
 
-  keymappings = {
+  keymaps = {
     general = {
       -- search plugin
       { 'n', '<Leader>gS', ":lua require('search').open()<CR>", { desc = "Run search window", noremap = true }},
@@ -60,8 +88,12 @@ Config = {
       { 'n', 'K', '<Nop>' },
 
       -- " === Don't skip wrap lines
-      { 'n', 'j', 'gj', { noremap = true }},
-      { 'n', 'k', 'gk', { noremap = true }},
+      { '', 'j', 'gj', { noremap = true }},
+      { '', 'k', 'gk', { noremap = true }},
+    },
+    lsp = {
+      { 'n', 'gA', ':lua require("actions-preview").code_actions()<CR>', { desc = 'lsp code actions preview' }},
+      { 'v', 'gA', ':lua require("actions-preview").code_actions()<CR>', { desc = 'lsp code actions preview' }},
     },
     bask_like_keys_for_cmd = {
       { 'c', '<C-A>', '<Home>', { desc = 'Bash-like CTRL+A for shell', noremap = true }},
@@ -73,23 +105,23 @@ Config = {
       { 'n', 'ga', '<Plug>(EasyAlign)', { desc = 'Align for a motion/text object (e.g. `gaip`)' }},
     },
     navigation = {
-      { 'n', '[b', ':bnext<cr>', { desc = "Next buffer" }},
-      { 'n', ']b', ':bprevious<cr>', { desc = "Prev buffer" }},
-      { 'n', 'bd', ':bdelete<cr>', { desc = "Delete buffer" }},
+      -- { 'n', '[b', ':bnext<cr>', { desc = "Next buffer" }},
+      -- { 'n', ']b', ':bprevious<cr>', { desc = "Prev buffer" }},
+      -- { 'n', 'bd', ':bdelete<cr>', { desc = "Delete buffer" }},
 
-      { 'n', '<leader>et', ':Outline<CR>', { desc = "Lsp symbols panel with outline.nvim" }},
-      { 'n', '<leader>n', ':NERDTree<CR>', { desc = "NERDTree for project" }},
+      -- { 'n', '<leader>et', ':Outline<CR>', { desc = "Lsp symbols panel with outline.nvim" }},
+      { 'n', '<leader>n',  ':NERDTree<CR>', { desc = "NERDTree for project" }},
       { 'n', '<leader>N',  ':NERDTree %<CR>', { desc = "NERDTree for current file" }},
 
       -- Neotree
       { 'n', '<leader>m',  ':Neotree<CR>', { desc = "Neotree" }},
       { 'n', '<leader>M',  ':Neotree %<CR>', { desc = "Neotree for current file" }},
       { 'n', '<leader>,',  ':Neotree buffers<CR>', { desc = "Neotree buffers" }},
-      { 'n', '<leader>.', ':Neotree float git_status<CR>', { desc = "Neotree git" }},
+      { 'n', '<leader>.',  ':Neotree float git_status<CR>', { desc = "Neotree git" }},
 
       -- Tabs
       { 'n', '<leader>t', ':tabnew<CR>', { desc = "Create new tab" }},
-      { 'n', '<cmd>t', ':tabnew<CR>', { desc = "Create new tab" }},
+      { 'n', '<cmd>t',    ':tabnew<CR>', { desc = "Create new tab" }}, -- FIXME
 
       -- ctrl+mousewheel for tab switching
       { 'n', '<C-ScrollWheelUp>', ':tabnext<CR>', { desc = "ctrl+mousewheel for tab switching", noremap = true }},
@@ -120,10 +152,10 @@ Config = {
       { 'n', '<leader>gb', ':Git blame<CR>', { desc = "Git blame for file"}},
     },
     osx_clipboard = {
-      { 'n', '<Leader>y', '"*y', { desc = 'Copy to system clipboard' }},
-      { 'n', '<Leader>p', '"*p', { desc = 'Paste from system clipboard' }},
-      { 'n', '<Leader>Y', '"+y', { desc = 'Copy to editor clipboard' }},
-      { 'n', '<Leader>P', '"+p', { desc = 'Paste from editor clipboard' }},
+      { '', '<leader>y', '"*y', { desc = 'Copy to system clipboard' }},
+      { '', '<leader>p', '"*p', { desc = 'Paste from system clipboard' }},
+      { '', '<leader>Y', '"+y', { desc = 'Copy to editor clipboard' }},
+      { '', '<leader>P', '"+p', { desc = 'Paste from editor clipboard' }},
     },
     neotest_runners = {
       { 'n', '<leader>rf', ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', { noremap = true, desc = "Neotest file", silent = true }},
@@ -147,33 +179,34 @@ Config = {
       { 't', '<C-w>', '<C-><C-o><C-w>', { remap = true, desc = "Make C-w C-w works in term" }},
     },
     telescope = {
-      { 'n', '<leader>gT', '<cmd>Telescope<cr>', { noremap = true, desc = "Telescope" }},
-      { 'n', '<leader>gf', '<cmd>Telescope find_files<cr>', { noremap = true, desc = "Files" }},
-      { 'n', '<leader>gb', '<cmd>Telescope buffers<cr>', { noremap = true, desc = "Buffers" }},
-      { 'n', '<leader>gl', '<cmd>Telescope oldfiles<cr>', { noremap = true, desc = "Old files" }},
-      { 'n', '<leader>gc', '<cmd>Telescope themes<cr>', { noremap = true, desc = "Themes" }},
-      { 'n', '<leader>gk', '<cmd>Telescope keymaps<cr>', { noremap = true, desc = "Keys" }},
+{ 'n', '<leader>gT', '<cmd>Telescope<cr>',             { noremap = true, desc = "Telescope" }},
+      { 'n', '<leader>gf', '<cmd>Telescope find_files<cr>',  { noremap = true, desc = "Files" }},
+      { 'n', '<leader>gb', '<cmd>Telescope buffers<cr>',     { noremap = true, desc = "Buffers" }},
+      { 'n', '<leader>gl', '<cmd>Telescope oldfiles<cr>',    { noremap = true, desc = "Old files" }},
+      { 'n', '<leader>gc', '<cmd>Telescope themes<cr>',      { noremap = true, desc = "Themes" }},
+      { 'n', '<leader>gk', '<cmd>Telescope keymaps<cr>',     { noremap = true, desc = "Keys" }},
       { 'n', '<leader>gh', '<cmd>Telescope git_commits<cr>', { noremap = true, desc = "Git commits" }},
-      { 'n', '<leader>gs', '<cmd>Telescope git_status<cr>', { noremap = true, desc = "Git status" }},
-      { 'n', '<leader>gr', '<cmd>Telescope registers<cr>', { noremap = true, desc = "Keys" }},
+      { 'n', '<leader>gs', '<cmd>Telescope git_status<cr>',  { noremap = true, desc = "Git status" }},
+      { 'n', '<leader>gr', '<cmd>Telescope registers<cr>',   { noremap = true, desc = "Keys" }},
       { 'n', '<leader>gd', '<cmd>Telescope diagnostics<cr>', { noremap = true, desc = "Keys" }},
+      { 'n', '<leader>ga', '<cmd>Telescope telescope-alternate alternate_file<cr>', { noremap = true, desc = "Keys" }},
     },
   },
 
   autocommands = {
     language_detection = {
-      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.rs', command = 'set filetype=rust' },
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.rs',     command = 'set filetype=rust' },
       { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.yml.j2', command = 'set filetype=yaml' },
-      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.pcss ', command = 'set filetype=postcss' },
-      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.arb', command = 'set filetype=ruby' },
-      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.lmx', command = 'set filetype=haml' },
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.pcss ',  command = 'set filetype=postcss' },
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.arb',    command = 'set filetype=ruby' },
+      { event = { 'BufNewFile' , 'BufRead' }, pattern = '*.lmx',    command = 'set filetype=haml' },
 
       -- for alternative Gemfiles
       { event = { 'BufNewFile' , 'BufRead' }, pattern = 'Gemfile*', command = 'set filetype=ruby' },
     },
     languages_settings = {
       -- pretty colymn hi for yaml modes
-      { event = { 'FileType' }, pattern = 'yaml', command = 'setlocal cursorcolumn' },
+      { event = { 'FileType' }, pattern = 'yaml',       command = 'setlocal cursorcolumn' },
       { event = { 'FileType' }, pattern = 'eruby.yaml', command = 'setlocal cursorcolumn' },
 
       -- js with 2 tabs
@@ -191,7 +224,7 @@ Config = {
       },
     },
     auto_remove_trailing_whitespaces = {
-      { event = { 'BufWritePre' }, pattern = '*', command = ':%s/s+$//e' },
+      { event = { 'BufWritePre' }, pattern = '*', command = ":%s/\\s\\+$//e" },
     },
     terminal_settings = {
       { event = { 'BufWinEnter' }, pattern = 'term://*', command = 'startinsert' },
@@ -203,24 +236,6 @@ Config = {
     },
   },
 
-  -- TODO:
-  use_lint = true,
-
-  -- TODO: or
-  -- use_lint = {
-  --   linters_by_ft = {
-  --     -- markdown = {'vale',}
-  --     ruby = {'rubocop'}
-  --   }
-  -- },
-
-  -- TODO: ?
-  use_lsp = true,
-
-  -- TODO:
-  lsp_languages = {},
-
-  -- TODO:
   vim_plug_bundle = {
     {
       group = 'General toolkits',
@@ -256,18 +271,18 @@ Config = {
       group = 'Search tools',
       plugins = {
         'jremmen/vim-ripgrep',
-        'eugen0329/vim-esearch',
+        -- 'eugen0329/vim-esearch',
         'romainl/vim-cool',
       }
     },
     {
       group = 'User inteface',
       plugins = {
+        'kevinhwang91/nvim-bqf',
         'goolord/alpha-nvim', -- " Starup dashboard
         'nvim-lualine/lualine.nvim', -- " Statusline
         'seblj/nvim-tabline', -- " Tabs
         'lewis6991/hover.nvim', -- LSP doc on hover
-        'Bekaboo/dropbar.nvim', -- vscode like dropbar
         'scrooloose/nerdtree', -- Sidebar filemanagers
         'nvim-neo-tree/neo-tree.nvim',
         'wfxr/minimap.vim', -- " Code minimap
@@ -355,12 +370,14 @@ Config = {
         -- " Lsp & tree-sitter support
         'nvim-tree/nvim-web-devicons',
         'nvim-treesitter/nvim-treesitter',
+        'SmiteshP/nvim-gps',
         'nvim-treesitter/playground',
         -- " 'neovim/nvim-lsp'
         -- " 'ray-x/lsp_signature.nvim'
         'neovim/nvim-lspconfig',
         -- " 'folke/lsp-colors.nvim'
         'onsails/lspkind.nvim',
+        'aznhe21/actions-preview.nvim',
 
         'zeioth/garbage-day.nvim', -- stop inactive lsp servers
 
@@ -394,8 +411,8 @@ Config = {
         { 'nvim-telescope/telescope.nvim', { branch = '0.1.x' }},
         'andrew-george/telescope-themes',
         'otavioschwanck/telescope-alternate',
-        'FabianWirth/search.nvim',
         'isak102/telescope-git-file-history.nvim',
+        'FabianWirth/search.nvim',
       },
     },
 
@@ -408,9 +425,6 @@ Config = {
       }
     },
   },
-
-  -- TODO:
-  tree_sitter_languages = {},
 
   vim_options = {
     wildoptions    = 'pum',
@@ -472,21 +486,21 @@ Config = {
     fzf_preview_window    = '',
     ['$FZF_DEFAULT_OPTS'] = '--layout=reverse --multi',
     fzf_layout            = { window = { width = 0.9, height = 0.6, border = 'sharp' } },
-    fzf_colors            = {
-      fg      = { 'fg', 'Normal' },
-      bg      = { 'bg', 'Normal' },
-      hl      = { 'fg', 'Comment' },
-      ['fg+'] = { 'fg', 'CursorLine', 'CursorColumn', 'Normal' },
-      ['bg+'] = { 'bg', 'CursorLine', 'CursorColumn' },
-      ['hl+'] = { 'fg', 'Statement' },
-      info    = { 'fg', 'PreProc' },
-      border  = { 'fg', 'Ignore' },
-      prompt  = { 'fg', 'Conditional' },
-      pointer = { 'fg', 'Exception' },
-      marker  = { 'fg', 'Keyword' },
-      spinner = { 'fg', 'Label' },
-      header  = { 'fg', 'Comment' }
-    },
+    -- fzf_colors            = {
+    --   fg      = { 'fg', 'Normal' },
+    --   bg      = { 'bg', 'Normal' },
+    --   hl      = { 'fg', 'Comment' },
+    --   ['fg+'] = { 'fg', 'CursorLine', 'CursorColumn', 'Normal' },
+    --   ['bg+'] = { 'bg', 'CursorLine', 'CursorColumn' },
+    --   ['hl+'] = { 'fg', 'Statement' },
+    --   info    = { 'fg', 'PreProc' },
+    --   border  = { 'fg', 'Ignore' },
+    --   prompt  = { 'fg', 'Conditional' },
+    --   pointer = { 'fg', 'Exception' },
+    --   marker  = { 'fg', 'Keyword' },
+    --   spinner = { 'fg', 'Label' },
+    --   header  = { 'fg', 'Comment' }
+    -- },
 
     -- NERDtree (classic tree explorer)
     NERDTreeShowHidden = 1,
@@ -579,47 +593,6 @@ Config = {
     require('neotest').setup({ adapters = { require('neotest-rspec'), } })
     require('diagflow').setup({ padding_top = 5, text_align = 'left' })
 
-    -- tree sitter
-    require('nvim-treesitter.configs').setup {
-      ensure_installed = {
-        "ruby",
-        "bash",
-        "lua",
-        "c", "cpp",
-        "go", "gomod",
-        "rust",
-        "css", "html", "javascript", "json", "typescript", "vue",
-        "python",
-        "embedded_template",
-        "sql",
-        "regex",
-      },
-
-      sync_install = true,
-      auto_install = true,
-      highlight = { enable = true, }
-    }
-
-    -- lint.lua
-    require('lint').linters_by_ft = {
-      -- markdown = {'vale',}
-      ruby = {'rubocop'}
-    }
-
-    vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-      pattern = {"*.rb", "*.erb", "*.haml", "*.slim"},
-      callback = function()
-        require("lint").try_lint()
-      end,
-    })
-
-    vim.api.nvim_create_autocmd({ "BufRead" }, {
-      pattern = {"*.rb", "*.erb", "*.haml", "*.slim"},
-      callback = function()
-        require("lint").try_lint()
-      end,
-    })
-
     -- neo-tree
     require("neo-tree").setup({
       enable_git_status = true,
@@ -667,18 +640,18 @@ Config = {
     })
 
     -- tabline
-    require('tabline').setup({
-        no_name         = '[new]',
-        modified_icon   = '',
-        close_icon      = '',
-        -- separator    = "▌",
-        separator       = "|",
-        padding         = 1,
-        color_all_icons = true,
-        right_separator = true,
-        show_index      = false,
-        show_icon       = true,
-    })
+    -- require('tabline').setup({
+    --     no_name         = '[new]',
+    --     modified_icon   = '',
+    --     close_icon      = '',
+    --     -- separator    = "▌",
+    --     separator       = "|",
+    --     padding         = 1,
+    --     color_all_icons = true,
+    --     right_separator = true,
+    --     show_index      = false,
+    --     show_icon       = true,
+    -- })
 
     -- tabout
     require('tabout').setup({
@@ -702,60 +675,54 @@ Config = {
       exclude          = {} -- tabout will ignore these filetypes
     })
 
-    -- Dropbar
-    local dropbar = require('dropbar')
-    dropbar.setup({})
-    vim.ui.select = require('dropbar.utils.menu').select
+    -- lualine
+    local gps = require("nvim-gps")
+    gps.setup()
 
-    -- Lualine
     require('lualine').setup({
       options = {
-        theme        = 'auto',
-        globalstatus = true,
-        refresh = {
-          statusline = 3000, tabline = 3000, winba = 3000,
-        },
+        theme              = 'auto',
+        globalstatus       = true,
+        refresh            = { statusline = 3000, tabline = 3000, winba = 3000 },
         section_separators = '', component_separators = '',
         -- component_separators = { left = '', right = ''},
         -- section_separators = { left = '', right = ''},
-        disabled_filetypes = {
-          winbar = { 'nerdtree', 'neo-tree' , 'alpha', 'fugitive', '', 'esearch'},
-        },
+        disabled_filetypes = { winbar = { 'nerdtree', 'neo-tree' , 'alpha', 'fugitive', '', 'esearch'} },
       },
       sections = {
         lualine_a = {
           { 'mode', fmt = function(str) return str:sub(1,1) end, padding = 1 },
         },
         lualine_b = {'branch', 'diff'},
-        lualine_c = {},
+        lualine_c = {
+          { gps.get_location, cond = gps.is_available }
+        },
         lualine_x = {
           { 'filename', path = 1, newfile_status = true },
-          'fileformat', 'encoding', 'filetype', 'diagnostics'
+          'fileformat', 'encoding', 'filetype', 'diagnostics',
         },
         lualine_y = {'progress'},
-        lualine_z = {'location', 'searchcount', 'selectioncount' }
+        lualine_z = {'location', 'searchcount', 'selectioncount'},
       },
-      -- tabline = {
-      --   lualine_a = {
-      --     {
-      --       'tabs',
-      --       mode = 2,
-      --       path = 1,
-      --       use_mode_colors = true
-      --     }
-      --   },
-      --   -- lualine_b = {
-      --   --   { 'buffers' }
-      --   -- },
-      -- },
+      tabline = {
+        lualine_a = {
+          {
+            'tabs',
+            mode = 1,
+            path = 1,
+            use_mode_colors = true
+          }
+        },
+        -- lualine_b = {
+        --   { 'buffers' }
+        -- },
+      },
       winbar = {
-        lualine_a = { '%{%v:lua.dropbar.get_dropbar_str()%}' },
         lualine_z = {
-        --   { 'filename', path = 1, newfile_status = true }
+          { 'filename', path = 1, newfile_status = true },
         }
       },
       inactive_winbar = {
-        lualine_a = { '%{%v:lua.dropbar.get_dropbar_str()%}' },
         lualine_z = {
           { 'filename', path = 1, newfile_status = true }
         }
@@ -764,252 +731,158 @@ Config = {
     })
 
     -- Telescope
-    local telescope = require('telescope')
-
-    telescope.load_extension('themes')
-    telescope.load_extension('telescope-alternate')
-    telescope.load_extension("git_file_history")
+    local telescope     = require('telescope')
+    local actions       = require("telescope.actions")
+    local action_layout = require("telescope.actions.layout")
 
     telescope.setup({
       defaults = {
-        layout_config = { vertical = { width = 0.6 }, horizontal = { width = 0.5 } }
+        layout_config = { vertical = { width = 0.6 }, horizontal = { width = 0.5 } },
+        mappings = {
+          i = {
+            ["<esc>"] = actions.close,
+          },
+        },
       },
       pickers = {
-        buffers    = { theme = "dropdown" },
-        find_files = { theme = "dropdown" }
+        buffers = { theme = "dropdown" }, find_files = { theme = "dropdown" }
       },
       extensions = {
         themes = {
-          enable_previewer = false, enable_live_preview = true, persist = { enable = false },
-          layout_config = {
-              horizontal = { width = 0.3, height = 0.5, },
-          },
+          enable_previewer = false, enable_live_preview = true, persist = { enabled = false }, ignore = {},
+          layout_config = { horizontal = { width = 0.3, height = 0.5 } },
         },
+        -- TODO: setup: https://github.com/otavioschwanck/telescope-alternate.nvim
         ["telescope-alternate"] = {
-          -- TODO: setup: https://github.com/otavioschwanck/telescope-alternate.nvim
-          -- mappings = { ...your mappings },
-          presets = { 'rails', 'rspec' }
+         presets = { 'rails', 'rspec' },
+         mappings = {
+           { 'app/models/(.*).rb', {
+             { 'app/admin/**/*[1].rb', 'Admin' },
+             { 'app/interactions/[1:pluralize]*/*.rb', 'Interactions' },
+             { 'app/interactors/[1:pluralize]*/*.rb', 'Interactors' },
+             -- { 'app/**/[1:pluralize]/*.rb', 'Modules' },
+             -- { 'app/**/**/[1]*.rb', '~*' },
+           }
+           },
+           -- { 'app/services/(.*)/(.*).rb', { -- alternate from services to contracts / models
+        -- --      -- { 'app/contracts/[1]_contracts/[2].rb', 'Contract' }, -- Adding label to switch
+           --   { 'app/models/**/*[1].rb', 'Model' },
+           --   { 'app/interactions/**/*[1].rb', 'Interactions' },
+           --   { 'app/interactors/**/*[1].rb', 'Interactors' },
+           -- } },
+        --    { 'app/contracts/(.*)_contracts/(.*).rb', { { 'app/services/[1]_services/[2].rb', 'Service' } } }, -- from contracts to services
+        --    -- Search anything on helper folder that contains pluralize version of model.
+        --    --Example: app/models/user.rb -> app/helpers/foo/bar/my_users_helper.rb
+        --    { 'app/models/(.*).rb', { { 'db/helpers/**/*[1:pluralize]*.rb', 'Helper' } } },
+           -- { 'app/**/*.rb', { { 'spec/[1].rb', 'Test' } } }, -- Alternate between file and test
+         },
         },
       }
     })
 
-    --
+    telescope.load_extension('themes')
+    telescope.load_extension('telescope-alternate')
+    telescope.load_extension('git_file_history')
 
-  end
+    -- quickfix
+    vim.cmd [[
+      packadd cfilter
+    ]]
+
+    -- do not hl cursor in term
+    vim.cmd [[
+      hi CursorLine cterm=NONE
+    ]]
+
+    -- zsh
+    vim.opt.shell = '/bin/zsh -l'
+
+    -- fzf
+    vim.cmd [[
+      set rtp+=/usr/local/opt/fzf
+    ]]
+
+    -- ripgrep
+    vim.opt.grepprg = 'rg --color=never'
+  end,
+
+  -- TODO:
+  packs = {
+    telescope = {
+      plugins = {
+        { 'nvim-telescope/telescope.nvim', { branch = '0.1.x' }},
+        'andrew-george/telescope-themes',
+        'otavioschwanck/telescope-alternate',
+        'isak102/telescope-git-file-history.nvim',
+        'FabianWirth/search.nvim',
+      },
+      keymaps = {
+        -- { 'n', '<leader>gT', '<cmd>Telescope<cr>',             { noremap = true, desc = "Telescope" }},
+        -- { 'n', '<leader>gf', '<cmd>Telescope find_files<cr>',  { noremap = true, desc = "Files" }},
+        -- { 'n', '<leader>gb', '<cmd>Telescope buffers<cr>',     { noremap = true, desc = "Buffers" }},
+        -- { 'n', '<leader>gl', '<cmd>Telescope oldfiles<cr>',    { noremap = true, desc = "Old files" }},
+        -- { 'n', '<leader>gc', '<cmd>Telescope themes<cr>',      { noremap = true, desc = "Themes" }},
+        -- { 'n', '<leader>gk', '<cmd>Telescope keymaps<cr>',     { noremap = true, desc = "Keys" }},
+        -- { 'n', '<leader>gh', '<cmd>Telescope git_commits<cr>', { noremap = true, desc = "Git commits" }},
+        -- { 'n', '<leader>gs', '<cmd>Telescope git_status<cr>',  { noremap = true, desc = "Git status" }},
+        -- { 'n', '<leader>gr', '<cmd>Telescope registers<cr>',   { noremap = true, desc = "Keys" }},
+        -- { 'n', '<leader>gd', '<cmd>Telescope diagnostics<cr>', { noremap = true, desc = "Keys" }},
+        -- { 'n', '<leader>ga', '<cmd>Telescope telescope-alternate alternate_file<cr>', { noremap = true, desc = "Keys" }},
+      },
+      setup = function(self)
+        local telescope     = require('telescope')
+        local actions       = require("telescope.actions")
+        local action_layout = require("telescope.actions.layout")
+
+        telescope.setup({
+          defaults = {
+            layout_config = { vertical = { width = 0.6 }, horizontal = { width = 0.5 } },
+            mappings = {
+              i = {
+                ["<esc>"] = actions.close,
+              },
+            },
+          },
+          pickers = {
+            buffers = { theme = "dropdown" }, find_files = { theme = "dropdown" }
+          },
+          extensions = {
+            themes = {
+              enable_previewer = false, enable_live_preview = true, persist = { enabled = false }, ignore = {},
+              layout_config = { horizontal = { width = 0.3, height = 0.5 } },
+            },
+            -- TODO: setup: https://github.com/otavioschwanck/telescope-alternate.nvim
+            ["telescope-alternate"] = {
+             presets = { 'rails', 'rspec' },
+             mappings = {
+               { 'app/models/(.*).rb', {
+                 { 'app/admin/**/*[1].rb', 'Admin' },
+                 { 'app/interactions/[1:pluralize]*/*.rb', 'Interactions' },
+                 { 'app/interactors/[1:pluralize]*/*.rb', 'Interactors' },
+                 -- { 'app/**/[1:pluralize]/*.rb', 'Modules' },
+                 -- { 'app/**/**/[1]*.rb', '~*' },
+               }
+               },
+               -- { 'app/services/(.*)/(.*).rb', { -- alternate from services to contracts / models
+            -- --      -- { 'app/contracts/[1]_contracts/[2].rb', 'Contract' }, -- Adding label to switch
+               --   { 'app/models/**/*[1].rb', 'Model' },
+               --   { 'app/interactions/**/*[1].rb', 'Interactions' },
+               --   { 'app/interactors/**/*[1].rb', 'Interactors' },
+               -- } },
+            --    { 'app/contracts/(.*)_contracts/(.*).rb', { { 'app/services/[1]_services/[2].rb', 'Service' } } }, -- from contracts to services
+            --    -- Search anything on helper folder that contains pluralize version of model.
+            --    --Example: app/models/user.rb -> app/helpers/foo/bar/my_users_helper.rb
+            --    { 'app/models/(.*).rb', { { 'db/helpers/**/*[1:pluralize]*.rb', 'Helper' } } },
+               -- { 'app/**/*.rb', { { 'spec/[1].rb', 'Test' } } }, -- Alternate between file and test
+             },
+            },
+          }
+        })
+
+        telescope.load_extension('themes')
+        telescope.load_extension('telescope-alternate')
+        telescope.load_extension('git_file_history')
+      end
+    }
+  },
 }
-
--- Global helpers
-function _G.dump(...)
-  local objects = vim.tbl_map(vim.inspect, {...})
-  print(unpack(objects))
-end
-
--- Editor instance
--- if type(Editor) == 'nil' then
-  Editor = {
-    profile_loads        = 0,
-
-    colorscheme          = 'default',
-    bg                   = 'light',
-
-    vim_plug_bundle_path = nil,
-    main_settings_files  = {},
-
-    use_rg               = false,
-    use_zsh              = false,
-    use_fzf              = false,
-
-    start_dashboard      = {},
-    keymappings          = {},
-    autocommands         = {},
-    vim_plug_bundle      = {},
-
-    vim_options          = {},
-    vim_globals          = {},
-
-    vim_files_path = function()
-      local path = vim.fn.resolve(vim.fn.expand('<sfile>:p'))
-      return vim.fn.substitute(vim.fn.substitute(path, ".vimrc", '', ''), 'init.lua', '', '')
-    end,
-
-    load_vim_plug_bundle = function(self)
-      vim.o.rtp = vim.o.rtp .. self.vim_plug_bundle_path ..  '/Vundle.vim'
-
-      local vim  = vim
-      local Plug = vim.fn['plug#']
-
-      vim.call('plug#begin', self.vim_plug_bundle_path)
-
-      for _, group_bundle in ipairs(self.vim_plug_bundle or {}) do
-        local plugins = group_bundle.plugins or {}
-
-        for _, plugin_data in ipairs(plugins) do
-          if type(plugin_data) == "string" then
-            Plug(plugin_data)
-          elseif type(plugin_data) == 'table' then
-            Plug(unpack(plugin_data))
-          end
-        end
-      end
-
-      vim.call('plug#end')
-    end,
-
-    load_settings_files = function(self)
-      for _, setting_file in ipairs(self.main_settings_files) do
-        vim.fn.execute('source ' .. self.vim_files_path() .. setting_file)
-      end
-    end,
-
-    setup_colorscheme = function(self)
-      -- Set colorscheme once at first profile load
-      if self.profile_loads == 0 then
-        vim.opt.bg = self.bg
-        vim.cmd.colorscheme(self.colorscheme)
-      end
-
-      -- do not hl cursor in term
-      vim.cmd [[
-        hi CursorLine cterm=NONE
-      ]]
-    end,
-
-    log_reloading = function(self)
-      if self.profile_loads > 1 then
-        print("Editor: reloading profile #" .. tostring(self.profile_loads))
-      end
-
-      self.profile_loads = self.profile_loads + 1
-    end,
-
-    load_vim_options = function(self)
-      -- vim.cmd [[
-      --  filetype off
-      -- ]]
-
-      for option, v in pairs(self.vim_options) do
-        local value
-
-        if type(v) == 'function' then
-          value = v()
-        else
-          value = v
-        end
-
-        vim.opt[option] = value
-      end
-    end,
-
-    load_vim_globals = function(self)
-      for global, v in pairs(self.vim_globals) do
-        local value
-
-        if type(v) == 'function' then
-          value = v()
-        else
-          value = v
-        end
-
-        vim.g[global] = value
-      end
-    end,
-
-    load_autocommands = function(self)
-      for group, commands in pairs(self.autocommands) do
-        local augroup = vim.api.nvim_create_augroup(group, { clear = true })
-
-        for _, cmd in ipairs(commands) do
-          vim.api.nvim_create_autocmd(cmd.event, {
-           pattern  = cmd.pattern,
-           group    = augroup,
-           command  = cmd.command,
-           callback = cmd.callback,
-          })
-        end
-      end
-    end,
-
-    load_keymappings = function(self)
-      for _, group in pairs(self.keymappings) do
-        for _, mapping in ipairs(group) do
-          vim.keymap.set(unpack(mapping))
-        end
-      end
-    end,
-
-    setup_rg = function(self)
-      if (self.use_rg) then
-        vim.opt.grepprg = 'rg --color=never'
-      end
-    end,
-
-    setup_zsh = function(self)
-      if (self.use_zsh and vim.fn.executable('/bin/zsh') == 1) then
-        vim.opt.shell = '/bin/zsh -l'
-      end
-    end,
-
-    setup_fzf = function(self)
-      if self.use_fzf then
-        vim.cmd [[
-          set rtp+=/usr/local/opt/fzf
-        ]]
-      end
-    end,
-
-    setup_start_dashboard = function(self)
-      local alpha = require("alpha")
-      local startify = require("alpha.themes.startify")
-
-      local title = self.start_dashboard.title or 'Hello world'
-
-      startify.section.header.val = { '[[> ' .. title  .. ' ]]' }
-
-      startify.opts.layout[1].val = 2
-      startify.opts.opts.margin   = 3
-
-      -- disable MRU
-      startify.section.mru.val = { { type = "padding", val = 0 } }
-
-      local buttons = {}
-
-      for _, data in pairs(self.start_dashboard.buttons or {}) do
-        local btn = startify.button(unpack(data))
-        table.insert(buttons, btn)
-      end
-
-      startify.section.top_buttons.val = buttons
-
-      -- Send config to alpha
-      alpha.setup(startify.config)
-
-      -- Disable folding on alpha buffer
-      vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
-    end,
-
-    setup = function(self, config)
-      for k, v in pairs(config) do
-        if k ~= 'setup' then self[k] = v end
-      end
-
-      self:load_vim_plug_bundle()
-      self:load_vim_options()
-      self:load_vim_globals()
-      self:load_settings_files()
-
-      if type(config.setup) == 'function' then config.setup(self) end
-
-      self:load_keymappings()
-      self:load_autocommands()
-      self:setup_rg()
-      self:setup_zsh()
-      self:setup_fzf()
-      self:setup_start_dashboard()
-      self:setup_colorscheme()
-      self:log_reloading()
-    end
-  }
--- end
-
--- Setup Editor with config
-Editor:setup(Config)
