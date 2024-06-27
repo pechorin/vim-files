@@ -2,5 +2,9 @@
 .vim/autoload/*
 .vim/sessions/*
 
+.vim/lua/.git
+.vim/lua/readme*
+.vim/lua/examples*
+
 .DS_Store
 tags
