@@ -1,6 +1,4 @@
-local MyNvim = require('my-nvim')
-
-MyNvim:setup {
+require('tiny-nvim-loader'):setup {
   colorscheme = 'adwaita',
   bg          = 'light',
 

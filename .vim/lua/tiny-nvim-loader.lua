@@ -3,8 +3,8 @@ function _G.dump(...)
   print(unpack(objects))
 end
 
--- if type(MyNvim) == 'nil' then
-  MyNvim = {
+-- if type(TinyNvimLoader) == 'nil' then
+  TinyNvimLoader = {
     profile_loads        = 0,
 
     colorscheme          = 'default',
@@ -76,7 +76,7 @@ end
 
     log_reloading = function(self)
       if self.profile_loads > 1 then
-        print("MyNvim: reloading profile #" .. tostring(self.profile_loads))
+        print("TinyNvimLoader: reloading profile #" .. tostring(self.profile_loads))
       end
 
       self.profile_loads = self.profile_loads + 1
@@ -248,4 +248,4 @@ end
   }
 -- end
 
-return MyNvim
+return TinyNvimLoader
