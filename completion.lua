@@ -1,15 +1,15 @@
 require('nvim-config-loader').add_pack {
   completion = {
     vim_plug_bundle = {
+      -- 'hrsh7th/nvim-cmp',
+      { 'iguanacucumber/magazine.nvim', as = 'nvim-cmp' },
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
-      'hrsh7th/cmp-nvim-lsp-signature-help',
       'hrsh7th/cmp-nvim-lsp-document-symbol',
+      'ray-x/lsp_signature.nvim',
       'quangnguyen30192/cmp-nvim-tags',
-      'hrsh7th/nvim-cmp',
-      'ray-x/cmp-treesitter',
       'hrsh7th/cmp-omni',
       'saadparwaiz1/cmp_luasnip',
     },
@@ -20,12 +20,12 @@ require('nvim-config-loader').add_pack {
       local lspkind = require('lspkind')
       local luasnip = require("luasnip")
 
+      require("lsp_signature").setup({})
+
       require("luasnip.loaders.from_vscode").lazy_load()
 
       -- Add parentheses after selecting function or method item
       cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-
-      -- require("lsp_signature").setup({})
 
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -53,14 +53,13 @@ require('nvim-config-loader').add_pack {
         view = {
           entries = { name = 'custom', selection_order = 'near_cursor' }
         },
-        performance = {
-          trigger_debounce_time = 500,
-          throttle = 550,
-          fetching_timeout = 80,
-        },
+        -- performance = {
+        --   trigger_debounce_time = 500,
+        --   throttle = 550,
+        --   fetching_timeout = 80,
+        -- },
         sources = cmp.config.sources({
           { name = 'luasnip' },
-          { name = 'nvim_lsp_signature_help' },
           { name = 'nvim_lsp' },
           {
             name = 'buffer',

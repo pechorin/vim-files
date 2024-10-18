@@ -3,14 +3,13 @@
 -- [ ] remove unnecessary comments
 
 require('nvim-config-loader').setup {
-  colorscheme             = 'adwaita',
-  bg                      = 'light',
-
-  vim_plug_bundle_path    = '~/.vim/bundle',
+  colorscheme = 'adwaita',
+  bg          = 'light',
 
   additional_config_files = {
     'lsp.lua',
     'completion.lua',
+    -- 'new_completion.lua'
   },
 
   nvim_lint = {
@@ -22,17 +21,10 @@ require('nvim-config-loader').setup {
 
   nvim_treesitter = {
     languages = {
-      "ruby",
-      "bash",
-      "lua",
-      "c", "cpp",
-      "go", "gomod",
-      "rust",
+      "ruby", "lua", "rust", "go", "gomod",
+      "bash", "sql", "regex",
       "css", "html", "javascript", "json", "typescript", "vue",
-      "python",
       "embedded_template",
-      "sql",
-      "regex",
       "vim", "vimdoc"
     }
   },
@@ -110,32 +102,58 @@ require('nvim-config-loader').setup {
   },
 
 
+  vim_plug_bundle_path = '~/.vim/bundle',
   vim_plug_bundle = {
-    { 'ray-x/guihua.lua', { ['do'] = 'cd lua/fzy && make' }},
-    'nvim-lua/plenary.nvim',
-    'MunifTanjim/nui.nvim',
-    'tpope/vim-commentary',
-    'vim-scripts/CursorLineCurrentWindow',
-    'junegunn/vim-easy-align',
-    'AndrewRadev/splitjoin.vim',
-    'vim-utils/vim-man',
-    'adelarsq/vim-matchit',
-    'tiagovla/scope.nvim', -- " Make buffers scoped to tab page
-    'tpope/vim-surround',
-    'windwp/nvim-autopairs', -- " Auto close quotes and other pairs
-    'abecodes/tabout.nvim',
-    'kylechui/nvim-surround', -- " Change surrodings on fly
-    'gcmt/wildfire.vim', -- " Cycle thought text objects
-    'jinh0/eyeliner.nvim', -- " Move faster with unique f/F indicators for each word on the line.
-    'folke/which-key.nvim', -- " Display key definitions in cool menu
-    'mbbill/undotree', -- undo explorer
-    'gbprod/yanky.nvim', -- yank explorer
-    'simeji/winresizer', -- " Resize windows with ctrl+e
-    'AndrewRadev/linediff.vim', -- " Diff between lines
-    { 'L3MON4D3/LuaSnip', { tag = 'v2.*', ['do'] = 'make install_jsregexp'}}, -- " Snippets
-    'rafamadriz/friendly-snippets',
-    'dhruvasagar/vim-table-mode', -- " Table-mode support
-    'folke/neodev.nvim', -- " Vim development
+    {
+      libs = {
+        { 'ray-x/guihua.lua', { ['do'] = 'cd lua/fzy && make' }},
+        'nvim-lua/plenary.nvim',
+        'MunifTanjim/nui.nvim',
+        'folke/neodev.nvim', -- " Vim development
+      }
+    },
+    {
+      editor = {
+        'tiagovla/scope.nvim',  -- " Make buffers scoped to tab page
+        'folke/which-key.nvim', -- " Display key definitions in cool menu
+        'simeji/winresizer',    -- " Resize windows with ctrl+e
+        'AndrewRadev/linediff.vim', -- " Diff between lines
+      }
+    },
+
+    {
+      editing = {
+        'tpope/vim-commentary',
+        'vim-scripts/CursorLineCurrentWindow',
+        'junegunn/vim-easy-align',
+        'AndrewRadev/splitjoin.vim',
+        'gcmt/wildfire.vim', -- " Cycle thought text objects
+        'jinh0/eyeliner.nvim', -- " Move faster with unique f/F indicators for each word on the line.
+        'dhruvasagar/vim-table-mode', -- " Table-mode support
+        'abecodes/tabout.nvim',
+      }
+    },
+
+    {
+      snippets = {
+        { 'L3MON4D3/LuaSnip', { tag = 'v2.*', ['do'] = 'make install_jsregexp'}}, -- " Snippets
+        'rafamadriz/friendly-snippets',
+      }
+    },
+
+    {
+      pairs = {
+        'adelarsq/vim-matchit',
+        'windwp/nvim-autopairs', -- " Auto close quotes and other pairs
+        'kylechui/nvim-surround', -- " Change surrodings on fly
+      }
+    },
+    {
+      life_quality = {
+        'mbbill/undotree', -- undo explorer
+        'gbprod/yanky.nvim', -- yank explorer
+      }
+    },
     {
       search_tools = {
         'jremmen/vim-ripgrep',
@@ -157,7 +175,8 @@ require('nvim-config-loader').setup {
         { 'folke/trouble.nvim', { branch = 'main' }}, -- " Get list of all troubles
         'dgagn/diagflow.nvim', -- " LSP diagnostics in virtual text at the top right of your screen
         'stevearc/overseer.nvim', -- " Command runner with ui
-        'SmiteshP/nvim-navic'
+        'SmiteshP/nvim-navic',
+        'petertriho/nvim-scrollbar'
       }
     },
     {
@@ -213,6 +232,7 @@ require('nvim-config-loader').setup {
         'ekalinin/Dockerfile.vim',
         'chr4/nginx.vim',
         'slim-template/vim-slim',
+        'vim-utils/vim-man',
 
         -- " Lsp & tree-sitter support
         'nvim-tree/nvim-web-devicons',
@@ -253,7 +273,8 @@ require('nvim-config-loader').setup {
         'MetriC-DT/balance-theme.nvim',
         'slugbyte/lackluster.nvim',
         'deparr/tairiki.nvim',
-        'lunacookies/vim-colors-xcode'
+        'lunacookies/vim-colors-xcode',
+        'metalelf0/jellybeans-nvim'
       }
     },
     {
@@ -418,21 +439,6 @@ require('nvim-config-loader').setup {
     fzf_preview_window    = '',
     ['$FZF_DEFAULT_OPTS'] = '--layout=reverse --multi',
     fzf_layout            = { window = { width = 0.9, height = 0.6, border = 'sharp' } },
-    -- fzf_colors            = {
-    --   fg      = { 'fg', 'Normal' },
-    --   bg      = { 'bg', 'Normal' },
-    --   hl      = { 'fg', 'Comment' },
-    --   ['fg+'] = { 'fg', 'CursorLine', 'CursorColumn', 'Normal' },
-    --   ['bg+'] = { 'bg', 'CursorLine', 'CursorColumn' },
-    --   ['hl+'] = { 'fg', 'Statement' },
-    --   info    = { 'fg', 'PreProc' },
-    --   border  = { 'fg', 'Ignore' },
-    --   prompt  = { 'fg', 'Conditional' },
-    --   pointer = { 'fg', 'Exception' },
-    --   marker  = { 'fg', 'Keyword' },
-    --   spinner = { 'fg', 'Label' },
-    --   header  = { 'fg', 'Comment' }
-    -- },
 
     -- NERDtree (classic tree explorer)
     NERDTreeShowHidden = 1,
@@ -523,6 +529,7 @@ require('nvim-config-loader').setup {
     require("trouble").setup({})
     require('neotest').setup({ adapters = { require('neotest-rspec'), } })
     require('diagflow').setup({ padding_top = 5, text_align = 'left' })
+    require("scrollbar").setup()
 
     -- neo-tree
     require("neo-tree").setup({
