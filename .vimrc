@@ -1,8 +1,9 @@
+" Vim support dropped
 if !has('nvim')
-  set nocompatible " be iMproved
   echo "only nvim supported"
   finish
 endif
 
-let s:lua_config_path = substitute(resolve(expand('<sfile>:p')), ".vimrc", '', '') .. 'init.lua'
+" Starting point of config -> 00_init.lua
+let s:lua_config_path = substitute(resolve(expand('<sfile>:p')), ".vimrc", '', '') .. '00_init.lua'
 execute('source ' .. s:lua_config_path)

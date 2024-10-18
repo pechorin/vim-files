@@ -1,0 +1,78 @@
+-- vim_plug_bundle = {
+--   { 'nvim-telescope/telescope.nvim', { branch = '0.1.x' }},
+--   'andrew-george/telescope-themes',
+--   'otavioschwanck/telescope-alternate',
+--   'isak102/telescope-git-file-history.nvim',
+--   'FabianWirth/search.nvim',
+-- },
+-- keymaps = {
+--   { 'n', '<Leader>gS', ":lua require('search').open()<CR>", { desc = "Run search window", noremap = true }},
+--   { 'n', '<leader>gT', '<cmd>Telescope<cr>',             { noremap = true, desc = "Telescope" }},
+--   { 'n', '<leader>gf', '<cmd>Telescope find_files<cr>',  { noremap = true, desc = "Files" }},
+--   { 'n', '<leader>gb', '<cmd>Telescope buffers<cr>',     { noremap = true, desc = "Buffers" }},
+--   { 'n', '<leader>gl', '<cmd>Telescope oldfiles<cr>',    { noremap = true, desc = "Old files" }},
+--   { 'n', '<leader>gc', '<cmd>Telescope themes<cr>',      { noremap = true, desc = "Themes" }},
+--   { 'n', '<leader>gk', '<cmd>Telescope keymaps<cr>',     { noremap = true, desc = "Keys" }},
+--   { 'n', '<leader>gh', '<cmd>Telescope git_commits<cr>', { noremap = true, desc = "Git commits" }},
+--   { 'n', '<leader>gs', '<cmd>Telescope git_status<cr>',  { noremap = true, desc = "Git status" }},
+--   { 'n', '<leader>gr', '<cmd>Telescope registers<cr>',   { noremap = true, desc = "Keys" }},
+--   { 'n', '<leader>gd', '<cmd>Telescope diagnostics<cr>', { noremap = true, desc = "Keys" }},
+--   { 'n', '<leader>ga', '<cmd>Telescope telescope-alternate alternate_file<cr>', { noremap = true, desc = "Keys" }},
+-- },
+-- setup = function(self)
+--   local telescope     = require('telescope')
+--   local actions       = require("telescope.actions")
+--   local action_layout = require("telescope.actions.layout")
+
+--   require('search').setup({})
+
+--   telescope.setup({
+--     defaults = {
+--       layout_config = { vertical = { width = 0.6 }, horizontal = { width = 0.5 } },
+--       mappings = {
+--         i = {
+--           ["<esc>"] = actions.close,
+--         },
+--       },
+--     },
+--     pickers = {
+--       buffers = { theme = "dropdown" }, find_files = { theme = "dropdown" }
+--     },
+--     extensions = {
+--       themes = {
+--         enable_previewer = false, enable_live_preview = true, persist = { enabled = false }, ignore = {},
+--         layout_config = { horizontal = { width = 0.3, height = 0.5 } },
+--       },
+--       -- TODO: setup: https://github.com/otavioschwanck/telescope-alternate.nvim
+--       ["telescope-alternate"] = {
+--        presets = { 'rails', 'rspec' },
+--        mappings = {
+--          { 'app/models/(.*).rb', {
+--            { 'app/admin/**/*[1].rb', 'Admin' },
+--            { 'app/interactions/[1:pluralize]*/*.rb', 'Interactions' },
+--            { 'app/interactors/[1:pluralize]*/*.rb', 'Interactors' },
+--            -- { 'app/**/[1:pluralize]/*.rb', 'Modules' },
+--            -- { 'app/**/**/[1]*.rb', '~*' },
+--          }
+--          },
+--          -- { 'app/services/(.*)/(.*).rb', { -- alternate from services to contracts / models
+--       -- --      -- { 'app/contracts/[1]_contracts/[2].rb', 'Contract' }, -- Adding label to switch
+--          --   { 'app/models/**/*[1].rb', 'Model' },
+--          --   { 'app/interactions/**/*[1].rb', 'Interactions' },
+--          --   { 'app/interactors/**/*[1].rb', 'Interactors' },
+--          -- } },
+--       --    { 'app/contracts/(.*)_contracts/(.*).rb', { { 'app/services/[1]_services/[2].rb', 'Service' } } }, -- from contracts to services
+--       --    -- Search anything on helper folder that contains pluralize version of model.
+--       --    --Example: app/models/user.rb -> app/helpers/foo/bar/my_users_helper.rb
+--       --    { 'app/models/(.*).rb', { { 'db/helpers/**/*[1:pluralize]*.rb', 'Helper' } } },
+--          -- { 'app/**/*.rb', { { 'spec/[1].rb', 'Test' } } }, -- Alternate between file and test
+--        },
+--       },
+--     }
+--   })
+
+--   telescope.load_extension('themes')
+--   telescope.load_extension('telescope-alternate')
+--   telescope.load_extension('git_file_history')
+-- end
+-- },
