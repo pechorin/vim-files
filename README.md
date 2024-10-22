@@ -1,7 +1,5 @@
 ### 💻 neovim bundle
 
-Configuration done with [NvimConfigLoader](https://github.com/pechorin/nvim-config-loader)
-
 ### Requirements
 
 - git

@@ -38,19 +38,22 @@ Plug 'zeioth/garbage-day.nvim' " stop inactive lsp servers
 
 " code completion
 Plug 'iguanacucumber/magazine.nvim', { 'as': 'nvim-cmp' }
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
+Plug 'iguanacucumber/mag-nvim-lsp', { 'as': 'cmp-nvim-lsp' }
+Plug 'iguanacucumber/mag-buffer', { 'as': 'cmp-buffer' }
+Plug 'iguanacucumber/mag-cmdline', { 'as': 'cmp-cmdline' }
+
+Plug 'https://codeberg.org/FelipeLema/cmp-async-path'
 Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
+
 Plug 'hrsh7th/cmp-nvim-lsp-document-symbol'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'quangnguyen30192/cmp-nvim-tags'
 Plug 'hrsh7th/cmp-omni'
-Plug 'saadparwaiz1/cmp_luasnip'
+" Plug 'saadparwaiz1/cmp_luasnip'
 
 " snippets =
-Plug 'L3MON4D3/LuaSnip', { 'tag': 'v2.*', 'do': 'make install_jsregexp' }
-Plug 'rafamadriz/friendly-snippets'
+" Plug 'L3MON4D3/LuaSnip', { 'tag': 'v2.*', 'do': 'make install_jsregexp' }
+" Plug 'rafamadriz/friendly-snippets'
 
 " pairs =
 Plug 'adelarsq/vim-matchit'

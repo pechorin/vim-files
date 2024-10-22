@@ -22,20 +22,21 @@ KeyMapGroup "Bash-like keys for cmd"
   KeyMap cnoremap <C-K> <C-U>  "Bash-like CTRL+K for command line"
 KeyMapGroupEnd
 
-KeyMapGroup "Text manipulation"
+KeyMapGroup "Tabs, windows, buffer navigation"
+  KeyMap nmap <S-Right> :tabnext<CR> "Next tab"
+  KeyMap nmap <S-Left> :tabprevious<CR> "Previous tab"
+  KeyMap nmap <S-Up> :bnext<CR> "Next buffer"
+  KeyMap nmap <S-Down> :bprevious<CR> "Prev buffer"
+  KeyMap nmap Q :tabclose<CR> "Close tab"
+  KeyMap nmap Z :bdelete<CR> "Delete buffer"
+KeyMapGroupEnd
+
+KeyMapGroup "Visual align text"
   KeyMap xmap ga <Plug>(EasyAlign) "Align in visual mode (e.g. `vipga`)"
   KeyMap nmap ga <Plug>(EasyAlign) "Align for a motion/text object (e.g. `gaip`)"
 KeyMapGroupEnd
 
 KeyMapGroup "Navigation"
-  KeyMap nmap <S-Right> :tabnext<CR>
-  KeyMap nmap <S-Left> :tabprevious<CR>
-  KeyMap nmap Q :tabclose<CR>'
-
-  " KeyMap nmap [b :bnext<cr> "Next buffer"
-  " KeyMap nmap ]b :bprevious<cr> "Prev buffer"
-  " KeyMap nmap bd :bdelete<cr> "Delete buffer"
-
   " KeyMap nmap <leader>et :Tagbar<CR> "Tagbar"
   KeyMap nmap <leader>n :NERDTree<CR> "NERDTree for project"
   KeyMap nmap <leader>N :NERDTree %<CR> "NERDTree for current file"

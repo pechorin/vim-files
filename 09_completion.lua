@@ -2,11 +2,8 @@
 local cmp = require('cmp')
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local lspkind = require('lspkind')
-local luasnip = require("luasnip")
 
 require("lsp_signature").setup({})
-
-require("luasnip.loaders.from_vscode").lazy_load()
 
 -- Add parentheses after selecting function or method item
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
@@ -37,13 +34,10 @@ cmp.setup({
   view = {
     entries = { name = 'custom', selection_order = 'near_cursor' }
   },
-  -- performance = {
-  --   trigger_debounce_time = 500,
-  --   throttle = 550,
-  --   fetching_timeout = 80,
-  -- },
+  experimental = {
+    ghost_text = false,
+  },
   sources = cmp.config.sources({
-    { name = 'luasnip' },
     { name = 'nvim_lsp' },
     {
       name = 'buffer',
@@ -59,16 +53,10 @@ cmp.setup({
     -- { name = 'ultisnips' }, -- For ultisnips users.
     -- { name = 'snippy' }, -- For snippy users.
   }, {
-    { name = 'path' },
+    { name = 'async_path' },
   }),
   snippet = {
-    -- you must specify a snippet engine
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-    end,
+    expand = function(args) vim.snippet.expand(args.body) end,
   },
   -- window = {
   --   completion = cmp.config.window.bordered(),
@@ -100,6 +88,7 @@ cmp.setup({
       end
     end,
   }),
+
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -111,14 +100,12 @@ cmp.setup.cmdline({ '/', '?' }, {
   }
 })
 
--- NOTE: disabled, causes duplicates entries after plug update
-
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
     { name = 'cmdline' },
-    { name = 'path' },
+    { name = 'async_path' },
   })
 })
 
