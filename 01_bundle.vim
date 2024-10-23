@@ -68,20 +68,21 @@ Plug 'gbprod/yanky.nvim'       " yank explorer
 Plug 'jremmen/vim-ripgrep'
 Plug 'eugen0329/vim-esearch'
 Plug 'romainl/vim-cool'
+Plug 'MagicDuck/grug-far.nvim'
 
 " ui =
-Plug 'kevinhwang91/nvim-bqf'
+Plug 'kevinhwang91/nvim-bqf'       " Better quickfix
 Plug 'goolord/alpha-nvim'          " Starup dashboard
 Plug 'nvim-lualine/lualine.nvim'   " Statusline
-Plug 'seblj/nvim-tabline'          " Custom tabs
+Plug 'nanozuki/tabby.nvim'         " Custom tabline
 Plug 'lewis6991/hover.nvim'        " LSP doc on hover
 Plug 'scrooloose/nerdtree'         " Sidebar filemanagers
 Plug 'nvim-neo-tree/neo-tree.nvim' " Modern file tree
 Plug 'j-hui/fidget.nvim'           " Notifications
 Plug 'dgagn/diagflow.nvim'         " LSP diagnostics in virtual text at the top right of your screen
 Plug 'stevearc/overseer.nvim'      " Command runner with ui
-Plug 'SmiteshP/nvim-navic'
-Plug 'petertriho/nvim-scrollbar'
+Plug 'SmiteshP/nvim-navic'         " Show lsp path in window header
+Plug 'petertriho/nvim-scrollbar'   " Custom scrollbar
 
 " start dashboard
 Plug 'goolord/alpha-nvim'

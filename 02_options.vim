@@ -21,6 +21,11 @@ set pumblend=0
 
 set mouse=a
 set mousehide    " Hide the mouse when typing text
+set mousefocus
+set mousescroll=ver:3,hor:1
+
+set clipboard=unnamed,unnamedplus
+
 set termguicolors
 set title        " set terminal title
 

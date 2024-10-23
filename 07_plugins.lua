@@ -56,17 +56,8 @@ require('gitsigns').setup({
 })
 
 -- tabline
-require('tabline').setup({
-    no_name         = '[new]',
-    modified_icon   = '',
-    close_icon      = '',
-    -- separator    = "▌",
-    separator       = "|",
-    padding         = 1,
-    color_all_icons = true,
-    right_separator = true,
-    show_index      = false,
-    show_icon       = true,
+require('tabby').setup({
+  preset = 'tab_only',
 })
 
 -- tabout
@@ -196,3 +187,9 @@ vim.cmd [[
 
 -- ripgrep
 vim.opt.grepprg = 'rg --color=never'
+
+-- Grug-far search
+require('grug-far').setup({
+  -- there are no required options atm
+  -- engine = 'ripgrep' is default, but 'astgrep' can be specified
+})
