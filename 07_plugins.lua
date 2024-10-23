@@ -9,6 +9,12 @@ require('neotest').setup({ adapters = { require('neotest-rspec'), } })
 require('diagflow').setup({ padding_top = 5, text_align = 'left' })
 require("scrollbar").setup()
 
+-- snippets
+require("snippets").setup({
+  create_cmp_source = true,
+  friendly_snippets = true
+})
+
 -- neo-tree
 require("neo-tree").setup({
   enable_git_status = true,

@@ -38,6 +38,7 @@ cmp.setup({
     ghost_text = false,
   },
   sources = cmp.config.sources({
+    { name = 'snippets' },
     { name = 'nvim_lsp' },
     {
       name = 'buffer',
@@ -47,13 +48,8 @@ cmp.setup({
         end
       }
     },
-    { name = 'tags' },
+    -- { name = 'tags' },
     -- { name = "rg" },
-    -- { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-  }, {
-    { name = 'async_path' },
   }),
   snippet = {
     expand = function(args) vim.snippet.expand(args.body) end,

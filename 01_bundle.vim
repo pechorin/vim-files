@@ -52,8 +52,8 @@ Plug 'hrsh7th/cmp-omni'
 " Plug 'saadparwaiz1/cmp_luasnip'
 
 " snippets =
-" Plug 'L3MON4D3/LuaSnip', { 'tag': 'v2.*', 'do': 'make install_jsregexp' }
-" Plug 'rafamadriz/friendly-snippets'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'garymjr/nvim-snippets'
 
 " pairs =
 Plug 'adelarsq/vim-matchit'
