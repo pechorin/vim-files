@@ -1,6 +1,5 @@
 require("which-key").setup({})
 require("nvim-autopairs").setup({})
-require("nvim-surround").setup({})
 require('overseer').setup({})
 require("scope").setup({})
 require("yanky").setup({})
@@ -8,6 +7,9 @@ require("fidget").setup({})
 require('neotest').setup({ adapters = { require('neotest-rspec'), } })
 require('diagflow').setup({ padding_top = 5, text_align = 'left' })
 require("scrollbar").setup()
+
+require('mini.surround').setup({})
+require('mini.ai').setup({})
 
 -- snippets
 require("snippets").setup({
