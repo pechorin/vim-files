@@ -5,9 +5,10 @@ local navic = require("nvim-navic")
 
 vim.diagnostic.config({
   virtual_text = true,
+  virtual_lines = false,
   signs = true,
   underline = false,
-  update_in_insert = false,
+  update_in_insert = true,
   severity_sort = false,
   float = false
 })

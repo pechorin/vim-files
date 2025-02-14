@@ -4,7 +4,8 @@ local nvim_treesitter = {
     "bash", "sql", "regex",
     "css", "html", "javascript", "json", "typescript", "vue",
     "embedded_template",
-    "vim", "vimdoc"
+    "vim", "vimdoc",
+    "markdown", "markdown_inline"
   }
 }
 
@@ -12,5 +13,5 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = nvim_treesitter.languages,
   sync_install     = true,
   auto_install     = true,
-  highlight        = { enable = true }
+  highlight        = { enable = true },
 }

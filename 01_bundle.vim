@@ -9,10 +9,13 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'folke/neodev.nvim'  " Vim development
 
 " -- editor --
-Plug 'tiagovla/scope.nvim'       " Make buffers scoped to tab page
-Plug 'folke/which-key.nvim'      " Display key definitions in cool menu
-Plug 'simeji/winresizer'         " Resize windows with ctrl+e
-Plug 'AndrewRadev/linediff.vim'  " Diff between lines
+Plug 'tiagovla/scope.nvim'           " Make buffers scoped to tab page
+Plug 'folke/which-key.nvim'          " Display key definitions in cool menu
+Plug 'simeji/winresizer'             " Resize windows with ctrl+e
+Plug 'AndrewRadev/linediff.vim'      " Diff between lines
+Plug 'folke/noice.nvim'              " UI features like custom pop cmdline
+Plug 'rachartier/tiny-glimmer.nvim'  " Visual effects
+Plug 'luiscassih/AniMotion.nvim'     " Motions like in helix
 
 " -- editing --
 Plug 'tpope/vim-commentary'
@@ -23,6 +26,8 @@ Plug 'gcmt/wildfire.vim'           " Cycle thought text objects
 Plug 'jinh0/eyeliner.nvim'         " Move faster with unique f/F indicators for each word on the line.
 Plug 'dhruvasagar/vim-table-mode'  " Table-mode support
 Plug 'abecodes/tabout.nvim'
+" Plug 'svermeulen/vim-subversive'   " Easy substitute with visual + s mapping
+Plug 'gbprod/substitute.nvim'
 
 " -- tree-sitter --
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -35,6 +40,7 @@ Plug 'onsails/lspkind.nvim'
 Plug 'RishabhRD/popfix'
 Plug 'RishabhRD/nvim-lsputils'
 Plug 'zeioth/garbage-day.nvim' " stop inactive lsp servers
+Plug 'Wansmer/symbol-usage.nvim'
 
 " -- code completion --
 Plug 'iguanacucumber/magazine.nvim', { 'as': 'nvim-cmp' }
@@ -56,15 +62,10 @@ Plug 'rafamadriz/friendly-snippets'
 Plug 'garymjr/nvim-snippets'
 
 " -- pairs --
-Plug 'adelarsq/vim-matchit'
 Plug 'windwp/nvim-autopairs'     " Auto close quotes and other pairs
-
-Plug 'echasnovski/mini.ai'       " additional text objects
-Plug 'echasnovski/mini.surround' " change surroundings on fly
 
 " -- life_quality --
 Plug 'mbbill/undotree'           " undo explorer
-Plug 'gbprod/yanky.nvim'         " yank explorer
 
 " -- search_tools --
 Plug 'jremmen/vim-ripgrep'
@@ -107,6 +108,7 @@ Plug 'majutsushi/tagbar'
 " -- fzf --
 Plug '/opt/homebrew/opt/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
 
 " -- languages --
 Plug 'tpope/vim-rbenv'
@@ -156,22 +158,26 @@ Plug 'savq/melange-nvim'
 Plug 'projekt0n/github-nvim-theme'
 Plug 'lunacookies/vim-colors-xcode'
 Plug 'metalelf0/jellybeans-nvim'
+Plug 'ilof2/posterpole.nvim'
 " 'RRethy/nvim-base16'
+Plug 'vague2k/vague.nvim'
 
 " cool light themes
 Plug 'Verf/deepwhite.nvim'
 Plug 'MetriC-DT/balance-theme.nvim'
-Plug 'deparr/tairiki.nvim'
 
 
 " minimal style themes
-Plug 'davidosomething/vim-colors-meh'
 Plug 'kkga/vim-envy'
-Plug 'slugbyte/lackluster.nvim'
 
 " -- in_development --
 Plug 'pechorin/any-jump.vim'
 Plug 'pechorin/u-keymapper.vim'
 Plug 'pechorin/vim-leuven-theme'
+
+" -- mini.* plugins
+Plug 'echasnovski/mini.ai'       " additional text objects
+Plug 'echasnovski/mini.surround' " change surroundings on fly
+Plug 'echasnovski/mini.cursorword'
 
 call plug#end()

@@ -46,13 +46,13 @@ let g:esearch.win_map = [
 " v:hlsearch is true), the last searched pattern or the clipboard content.
 let g:esearch.prefill = ['last', 'clipboard']
 let g:esearch.live_update = v:true
-let g:esearch.win_new = {esearch -> esearch#buf#goto_or_open(esearch.name, 'new')}
+let g:esearch.win_new = {esearch -> esearch#buf#goto_or_open(esearch.name, 'tabnew')}
 
 " Helpers to use in keymaps.
 let g:sort_by_path = {'adapters': {'rg': {'options': '--sort path'}}}
 let g:sort_by_date = {'adapters': {'rg': {'options': '--sort modified'}}}
 " NOTE: {'backend': 'system'} means synchronous reload using system() call to stay within the same context
-let g:AddAfter = {n -> {'after': b:esearch.after + n, 'backend': 'system'}}
+" let g:AddAfter = {n -> {'after': b:esearch.after + n, 'backend': 'system'}}
 
 " ~ any-jump.vim config
 let g:any_jump_search_prefered_engine = 'rg'

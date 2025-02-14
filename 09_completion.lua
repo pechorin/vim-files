@@ -35,11 +35,11 @@ cmp.setup({
     entries = { name = 'custom', selection_order = 'near_cursor' }
   },
   experimental = {
-    ghost_text = false,
+    ghost_text = true,
   },
   sources = cmp.config.sources({
-    { name = 'snippets' },
     { name = 'nvim_lsp' },
+    { name = 'snippets' },
     {
       name = 'buffer',
       option = {

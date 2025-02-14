@@ -25,8 +25,13 @@ KeyMapGroupEnd
 KeyMapGroup "Tabs, windows, buffer navigation"
   KeyMap nmap <S-Right> :tabnext<CR> "Next tab"
   KeyMap nmap <S-Left> :tabprevious<CR> "Previous tab"
+
+  KeyMap nmap <S-p> :tabnext<CR> "Next tab"
+  KeyMap nmap <S-o> :tabprevious<CR> "Previous tab"
+
   KeyMap nmap <S-Up> :bnext<CR> "Next buffer"
   KeyMap nmap <S-Down> :bprevious<CR> "Prev buffer"
+
   KeyMap nmap Q :tabclose<CR> "Close tab"
   KeyMap nmap Z :bdelete<CR> "Delete buffer"
 KeyMapGroupEnd
@@ -68,11 +73,18 @@ KeyMapGroupEnd
 KeyMapGroup "FZF navigation"
   KeyMap nmap <leader>b :Buffers<CR> "fzf Buffers"
   KeyMap nmap <leader>q :Files<CR> "fzf Project files"
+  KeyMap nmap <leader>rr :FZFMru<cr> "fzf most recent used files"
+  KeyMap nmap <leader>rh :History<cr> "fzf history"
+  KeyMap nmap <leader>sr :Rg  "fzf rg"
+  KeyMap nmap <leader>sc :Commits<cr> "fzf commits list"
+KeyMapGroupEnd
+
+KeyMapGroup <leader>e "Colors"
+  KeyMap nmap <leader>ec :Color <CR> "fzf colorschemes select"
 KeyMapGroupEnd
 
 " eval current vimscrupt buffer
-KeyMapGroup <leader>e "Vim manipulations"
-  KeyMap nmap <leader>ec :Color <CR> "fzf colorschemes select"
+KeyMapGroup <leader>e "Vim config manipulations"
   KeyMap nmap <leader>ee :so %<CR> "(vimrc) Eval current file as vimscript"
   KeyMap nmap <leader>eb :e ~/.vimrc <CR> "(vimrc) Open $MYVIMRC in current buffer"
 KeyMapGroupEnd
@@ -81,13 +93,7 @@ KeyMapGroup <leader>g "Git Mappings"
   KeyMap nmap <leader>gg :tab Git<CR> "Open Git in new tab"
   KeyMap nmap <leader>gG :Git<CR> "Open Git in split"
   KeyMap nmap <leader>gb :Git blame<CR> "Git blame for file"
-KeyMapGroupEnd
-
-KeyMapGroup "OSX clipboard"
-  KeyMap noremap <Leader>y "*y 'Copy to system clipboard'
-  KeyMap noremap <Leader>p "*p 'Paste from system clipboard'
-  KeyMap noremap <Leader>Y "+y 'Copy to editor clipboard'
-  KeyMap noremap <Leader>P "+p 'Paste from editor clipboard'
+  KeyMap nmap <leader>gl :Gllog<CR> "Git logs"
 KeyMapGroupEnd
 
 " KeyMapGroup <leader>r "Tests runners"
