@@ -26,8 +26,6 @@ Plug 'gcmt/wildfire.vim'           " Cycle thought text objects
 Plug 'jinh0/eyeliner.nvim'         " Move faster with unique f/F indicators for each word on the line.
 Plug 'dhruvasagar/vim-table-mode'  " Table-mode support
 Plug 'abecodes/tabout.nvim'
-" Plug 'svermeulen/vim-subversive'   " Easy substitute with visual + s mapping
-Plug 'gbprod/substitute.nvim'
 
 " -- tree-sitter --
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -110,6 +108,8 @@ Plug '/opt/homebrew/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
 
+Plug 'ibhagwan/fzf-lua'
+
 " -- languages --
 Plug 'tpope/vim-rbenv'
 Plug 'vim-ruby/vim-ruby'
@@ -159,8 +159,7 @@ Plug 'projekt0n/github-nvim-theme'
 Plug 'lunacookies/vim-colors-xcode'
 Plug 'metalelf0/jellybeans-nvim'
 Plug 'ilof2/posterpole.nvim'
-" 'RRethy/nvim-base16'
-Plug 'vague2k/vague.nvim'
+Plug 'RRethy/nvim-base16'
 
 " cool light themes
 Plug 'Verf/deepwhite.nvim'

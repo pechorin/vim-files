@@ -71,16 +71,21 @@ KeyMapGroup "Commenting"
 KeyMapGroupEnd
 
 KeyMapGroup "FZF navigation"
-  KeyMap nmap <leader>b :Buffers<CR> "fzf Buffers"
-  KeyMap nmap <leader>q :Files<CR> "fzf Project files"
+  KeyMap nmap <leader>b :FzfLua buffers<CR> "fzf Buffers"
+  " KeyMap nmap <leader>q :Files<CR> "fzf Project files"
+  KeyMap nmap <leader>q :FzfLua files<CR> "fzf Project files"
   KeyMap nmap <leader>rr :FZFMru<cr> "fzf most recent used files"
   KeyMap nmap <leader>rh :History<cr> "fzf history"
-  KeyMap nmap <leader>sr :Rg  "fzf rg"
+  KeyMap nmap <leader>sr :Rg "fzf rg"
   KeyMap nmap <leader>sc :Commits<cr> "fzf commits list"
+
+  KeyMap nmap <leader>ff :FzfLua files<CR> "fzf-lua files"
+  KeyMap nmap <leader>fa :FzfLua<CR> "fzf-lua all pickers"
 KeyMapGroupEnd
 
 KeyMapGroup <leader>e "Colors"
-  KeyMap nmap <leader>ec :Color <CR> "fzf colorschemes select"
+  " KeyMap nmap <leader>ec :Color <CR> "fzf colorschemes select"
+  KeyMap nmap <leader>ec :FzfLua colorschemes<CR> "fzf-lua colorschemes"
 KeyMapGroupEnd
 
 " eval current vimscrupt buffer

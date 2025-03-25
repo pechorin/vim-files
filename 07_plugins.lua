@@ -75,3 +75,16 @@ require('tiny-glimmer').setup({
     substitute = { enabled = false }
   },
 })
+
+-- fzf-lua
+require("fzf-lua").setup({
+  winopts = {
+    -- border = 'solid',
+    border = 'double',
+    backdrop = 100,
+
+    preview = {
+      border = 'solid'
+    }
+  }
+})
